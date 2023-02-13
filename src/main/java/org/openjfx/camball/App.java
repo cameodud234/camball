@@ -45,7 +45,7 @@ public class App extends Application {
 			boolean movingRight = true;
 			
 			double deltaX = 3;
-			double deltaY = 3;
+			double deltaY = 5;
 			
 			Random rand = new Random();
 			
@@ -63,7 +63,7 @@ public class App extends Application {
 				if(circle.getCenterY() + circle.getRadius() < widthY - 1 && movingDown) {
 					movingUp = false;
 					movingDown = true;
-					pixelY += deltaY + rand.nextInt(0, 5);
+					pixelY += deltaY;
 					
 				}
 				else {

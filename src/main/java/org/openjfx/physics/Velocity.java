@@ -1,15 +1,25 @@
 package org.openjfx.physics;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.List;
+
+import org.jblas.DoubleMatrix;
 
 public class Velocity {
 	
-	private List<Double> velocity;
+	private DoubleMatrix velocity;
 	
 	public Velocity(double speedX, double speedY) {
-		velocity = new ArrayList<Double>(Arrays.asList(speedX, speedY));
+		velocity = new DoubleMatrix(Arrays.asList(speedX, speedY));
+	}
+	
+	public Velocity(DoubleMatrix velocity) {
+		if(velocity.isRowVector()) {
+			velocity.transpose();
+			if(velocity.rows != 2) {
+				throw new VelocityException();
+			}
+		}
 	}
 	
 	public double getSpeedX() {
@@ -20,16 +30,16 @@ public class Velocity {
 		return velocity.get(1);
 	}
 	
-	public List<Double> getVelocity() {
+	public DoubleMatrix getVelocity() {
 		return velocity;
 	}
 	
 	public void setSpeedX(double speedX) {
-		velocity.set(0, speedX);
+		velocity.put(0, speedX);
 	}
 	
 	public void setSpeedY(double speedY) {
-		velocity.set(1, speedY);
+		velocity.put(1, speedY);
 	}
 	
 	public boolean equals(Velocity velocity) {
@@ -38,6 +48,14 @@ public class Velocity {
 			return true;
 		}
 		return false;
+	}
+	
+	public double getAngleBetween(Velocity velocity) {
+		
+		double angleRad = Math.acos(this.velocity.dot(velocity.getVelocity()) / (this.velocity.norm2() * velocity.getVelocity().norm2()));
+		
+		return angleRad;
+		
 	}
 
 }
