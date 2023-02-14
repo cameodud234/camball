@@ -115,7 +115,6 @@ public class App extends Application {
     
 		stage.show();
   
-  
 	}
 
   

@@ -1,5 +1,6 @@
 package org.openjfx.simobjects;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -15,48 +16,41 @@ public class TestBall {
 	double positionY = 40;
 	double radius = 10;
 	Paint color = Color.BLUE;
-	final int windowSizeX = 1000;
-	final int windowSizeY = 1000;
 	
 	Ball ball = new Ball(
 			velocity, positionX, 
 			positionY, radius, 
-			color, windowSizeX, windowSizeY
+			color
 	);
 	
 	@Test
 	public void testBallConstructorVelocity() {
-		assertTrue(ball.getVelocity().equals(velocity));
+		assertEquals(ball.getVelocity(), velocity);
 	}
 	
 	@Test
 	public void testBallConstructorPositionX() {
-		assertTrue(ball.getPositionX() == positionX);
+		assertEquals(ball.getPositionX(), positionX);
 	}
 	
 	@Test
 	public void testBallConstructorPositionY() {
-		assertTrue(ball.getPositionY() == positionY);
+		assertEquals(ball.getPositionY(), positionY);
 	}
 	
 	@Test
 	public void testBallConstructorRadius() {
-		assertTrue(ball.getRadius() == radius);
+		assertEquals(ball.getRadius(), radius);
 	}
 	
 	@Test 
 	public void testBallConstructorColor() {
-		assertTrue(ball.getColor().equals(color));
+		assertEquals(ball.getColor(), color);
 	}
 	
 	@Test
-	public void testBallConstructorWindowSizeX() {
-		assertTrue(ball.getWindowSizeX() == windowSizeX);
-	}
-	
-	@Test 
-	public void testBallConstructorWindowSizeY() {
-		assertTrue(ball.getWindowSizeY() == windowSizeY);
+	public void testBallConstructorBall() {
+		Ball newBall = new Ball(ball);
 	}
 	
 	@Test 

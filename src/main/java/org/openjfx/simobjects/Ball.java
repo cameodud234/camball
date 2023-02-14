@@ -11,29 +11,23 @@ public class Ball {
 	private Velocity velocity;
 	private double positionX;
 	private double positionY;
-	private int windowSizeX;
-	private int windowSizeY;
 	private double radius;
 	private Paint color;
 	private Circle circle;
 	
 	
-	
-	final private static String setVelocityError = "Velocity "
-			+ "must contain 2 double values.";
+	private static String illegalPosition = "Position must be greater than zero.";
 	
 
 	public Ball(Velocity velocity, double positionX, double positionY, 
-					double radius, Paint color, 
-						final int windowSizeX, final int windowSizeY) {
+					double radius, Paint color) {
 		
 		this.velocity = new Velocity(velocity.getSpeedX(), velocity.getSpeedY());
+		if(positionX < 0 || positionY < 0) throw new IllegalArgumentException(illegalPosition);
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.radius = radius;
 		this.color = color;
-		this.windowSizeX = windowSizeX;
-		this.windowSizeY = windowSizeY;
 		
 		this.circle = new Circle(this.positionX, this.positionY, this.radius);
 		this.circle.setFill(color);
@@ -44,8 +38,6 @@ public class Ball {
 		this.positionX = ball.getPositionX();
 		this.positionY = ball.getPositionY();
 		this.color = ball.getColor();
-		this.windowSizeX = ball.getWindowSizeX();
-		this.windowSizeY = ball.getWindowSizeY();
 	}
 	
 	
@@ -85,30 +77,10 @@ public class Ball {
 		return circle;
 	}
 	
-
-	public int getWindowSizeX() {
-		return windowSizeX;
-	}
-
-
-	public int getWindowSizeY() {
-		return windowSizeY;
-	}
-	
 	public void setVelocity(Velocity velocity) { 
 		this.velocity.setSpeedX(velocity.getSpeedX());
 		this.velocity.setSpeedY(velocity.getSpeedY());
 	}
-
-	public void setWindowSizeX(int windowSizeX) {
-		this.windowSizeX = windowSizeX;
-	}
-
-
-	public void setWindowSizeY(int windowSizeY) {
-		this.windowSizeY = windowSizeY;
-	}
-
 
 	public void setRadius(double radius) {
 		this.radius = radius;
@@ -122,6 +94,21 @@ public class Ball {
 
 	public void setCircle(Circle circle) {
 		this.circle = circle;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+		Ball ball = (Ball) o;
+		return velocity.equals(ball.velocity) &&
+				Double.compare(positionX, ball.getPositionX()) == 0 &&
+				Double.compare(positionY, ball.getPositionY()) == 0 &&
+				Double.compare(radius, ball.getRadius()) == 0 &&
+				color.equals(ball.getColor()) &&
+				circle.equals(ball.getCircle());
+				   
+				
 	}
 	
 }
