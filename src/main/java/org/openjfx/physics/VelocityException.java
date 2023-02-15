@@ -3,6 +3,10 @@ package org.openjfx.physics;
 public class VelocityException extends Exception {
 
 	private static final long serialVersionUID = 1L;
+	
+	public VelocityException() {
+		super();       
+	}
 
 	public VelocityException(String message) {
 		super(message);

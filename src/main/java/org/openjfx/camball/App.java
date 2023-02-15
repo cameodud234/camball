@@ -22,8 +22,8 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) {
 		
-		final int widthX = 1000;
-		final int widthY = 1000;
+		final int widthX = 800;
+		final int widthY = 800;
 		
 	  
 		Group root = new Group();
@@ -95,9 +95,7 @@ public class App extends Application {
 					}
 					
 				}
-				
-//				circle.setCenterX(pixelX);
-//				circle.setCenterY(pixelY);
+
 				
 			  
 				root.getChildren().add(circle);
