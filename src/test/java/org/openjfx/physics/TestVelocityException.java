@@ -26,10 +26,11 @@ public class TestVelocityException {
 //			assertEquals(throwValue, e.getCause());
 //		}
 //		System.setProperty("log4j.configurationFile", "/logs/log4j2.xml");
-		Logger logger = LogManager.getLogger("Hello");
+		Logger logger = LogManager.getLogger(TestVelocityException.class);
 		logger.debug("This is a debug message");
 	    logger.info("This is an info message");
 	    logger.warn("This is a warning message");
+	    logger.error("This is an error message");
 	}
 	
 //	@Test
