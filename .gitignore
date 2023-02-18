@@ -26,3 +26,5 @@ replay_pid*
 
 # mac os
 .DS_Store
+/.apt_generated/
+/.apt_generated_tests/

@@ -1,18 +1,20 @@
 package org.openjfx.physics;
 
 import java.text.MessageFormat;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class VelocityException extends Exception {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = LogManager.getLogger(Velocity.class);
 	
-	String messageKey = null;
-	Object[] messageArgs = null;
+	private String messageKey = null;
+	private Object[] messageArgs = null;
 	
-	public VelocityException() {
-		
-	}
+	public VelocityException() {}
 	
 	public VelocityException(String messageKey) {
 		this.messageKey = messageKey;
@@ -45,8 +47,14 @@ public class VelocityException extends Exception {
 		String formattedMsg = "";
 		
 		if(messageKey != null){
-			retrievedMessage = ResourceBundle.getBundle("message")
-					.getString(messageKey);
+			try {
+				retrievedMessage = ResourceBundle.getBundle("message")
+						.getString(messageKey);
+			}
+			catch(MissingResourceException e) {
+				log.error(e.getMessage(), e.getCause());
+			}
+			
 			MessageFormat messageFormatter = new MessageFormat(retrievedMessage);
 			
 			if(messageArgs == null) {
