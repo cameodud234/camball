@@ -107,8 +107,6 @@ public class Ball {
 				Double.compare(radius, ball.getRadius()) == 0 &&
 				color.equals(ball.getColor()) &&
 				circle.equals(ball.getCircle());
-				   
-				
 	}
 	
 }
