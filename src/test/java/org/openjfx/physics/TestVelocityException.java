@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 
 public class TestVelocityException {
 
-//	@Test
-//	public void TestVelocityExceptionContructorVelocityMsg() {
-//		String message = "This is a message by Cameron.";
-//		VelocityException exception = new VelocityException(message);
-//		assertEquals(message, exception.getMessage());
-//	}
-	
 	@Test
-	public void TestVelocityExceptionConstructorVelocityCause() {
+	public void TestVelocityExceptionContructorVelocityMsg() {
+		String message = "This is a message by Cameron.";
+		VelocityException exception = new VelocityException(message);
+		assertEquals(message, exception.getMessage());
+	}
+	
+//	@Test
+//	public void TestVelocityExceptionConstructorVelocityCause() {
 //		VelocityException throwValue = new VelocityException();
 //		try {
 //			throw new Exception(throwValue);
@@ -22,9 +22,7 @@ public class TestVelocityException {
 //		} catch (Exception e) {
 //			assertEquals(throwValue, e.getCause());
 //		}
-//		System.setProperty("log4j.configurationFile", "/logs/log4j2.xml");
-//		System.setProperty("log4j.configurationFile", "C:\\Users\\camer\\OneDrive\\Documents\\GitHub\\camball\\log4j2.xml");
-	}
+//	}
 	
 //	@Test
 //	public void TestVelocityExceptionConstructorVelocityMsgCause() {
