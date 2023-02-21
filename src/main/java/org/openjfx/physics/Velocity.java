@@ -7,9 +7,9 @@ import org.jblas.DoubleMatrix;
 
 public class Velocity {
 	
-	private DoubleMatrix velocity;
+	private static final String VELOCITY_EXCEPTION_MESSAGE = "The dimension of velocity must be 2, not {}";
 	
-	private static String velocityExceptionMessage = "Velocity must be in 2 dimensions!";
+	private DoubleMatrix velocity;
 	
 	public Velocity() {
 		velocity = new DoubleMatrix(2);
@@ -21,7 +21,7 @@ public class Velocity {
 	
 	public Velocity(DoubleMatrix velocity) throws VelocityException {
 		if(velocity.rows != 2) {
-			throw new VelocityException(velocityExceptionMessage);
+			throw new VelocityException(VELOCITY_EXCEPTION_MESSAGE, velocity.rows);
 		}
 		this.velocity = new DoubleMatrix(2);
 		this.velocity.put(0,  velocity.get(0));

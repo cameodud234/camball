@@ -11,7 +11,11 @@ public class Messages {
 	
 	public Messages() {}
 	
-	public String getString(String messageKey, Object... args) {
+	public static boolean containsKey(String messageKey) {
+		return RESOURCE_BUNDLE.containsKey(messageKey);
+	}
+	
+	public static String getString(String messageKey, Object... args) {
 		try {
 			String message = RESOURCE_BUNDLE.getString(messageKey);
 			return MessageFormat.format(message, args);
