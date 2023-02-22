@@ -48,11 +48,13 @@ public class VelocityException extends Exception {
 	    	message.append(super.getCause());
 	    }
 	    
-	    if(messageArgs == null) {
+	    if(messageArgs == null) {  
 	    	return message.toString();
 	    }
 	    
-	    MessageFormat messageFormatter = new MessageFormat(message.toString());
+	    String messageString = message.toString();
+	    
+	    MessageFormat messageFormatter = new MessageFormat(messageString);
 	    
 	    String formattedMessage = messageFormatter.format(messageArgs);
 	    
