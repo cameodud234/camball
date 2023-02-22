@@ -26,6 +26,7 @@ public class Ball {
 		if(positionX < 0 || positionY < 0) throw new IllegalArgumentException(illegalPosition);
 		this.positionX = positionX;
 		this.positionY = positionY;
+		// need to test if radius is greater than zero.
 		this.radius = radius;
 		this.color = color;
 		
