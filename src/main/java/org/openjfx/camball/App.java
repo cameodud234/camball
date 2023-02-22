@@ -4,7 +4,6 @@ package org.openjfx.camball;
 /**
  * JavaFX App
  */
-import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -14,7 +13,6 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.ToolBar;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 
 public class App extends Application {
@@ -22,8 +20,11 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) {
 		
-		final int widthX = 800;
-		final int widthY = 800;
+		private final int widthX = 800;
+		private final int widthY = 800;
+		
+		private final long framerateInterval = 16_666_67
+		
 	  
 		Group root = new Group();
    	  
@@ -40,7 +41,7 @@ public class App extends Application {
 			public void handle(long now) {
 				game.update();
 				root.getChildren().setAll(game.getCircle());
-			}    
+			}
 		};
 	  
 		timer.start();
