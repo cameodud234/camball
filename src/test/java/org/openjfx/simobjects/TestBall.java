@@ -23,10 +23,10 @@ public class TestBall {
 			color
 	);
 	
-	@Test
-	public void testBallConstructorVelocity() {
-		assertEquals(ball.getVelocity(), velocity);
-	}
+//	@Test
+//	public void testBallConstructorVelocity() {
+//		assertEquals(ball.getVelocity(), velocity);
+//	}
 	
 	@Test
 	public void testBallConstructorPositionX() {

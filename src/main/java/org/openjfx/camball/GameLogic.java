@@ -7,8 +7,8 @@ import javafx.scene.shape.Circle;
 
 public class GameLogic {
 	
-	private final int widthX;
-	private final int widthY;
+	private final double widthX;
+	private final double widthY;
 	
 	private double pixelY;
 	private boolean movingUp;
@@ -23,7 +23,7 @@ public class GameLogic {
 	
 	private Circle circle;
 	
-	public GameLogic(int widthX, int widthY) {
+	public GameLogic(double widthX, double widthY) {
 		this.widthX = widthX;
 		this.widthY = widthY;
 		
@@ -35,12 +35,12 @@ public class GameLogic {
 		movingLeft = false;
 		movingRight = true;
 		
-		deltaX = 3;
-		deltaY = 5;
+		deltaX = 1;
+		deltaY = 1;
 		
 		circle = new Circle(pixelX, pixelY, 20);
 		
-		circle.setFill(Color.BLUE);
+		circle.setFill(Color.WHITE);
 
 	}
 	
