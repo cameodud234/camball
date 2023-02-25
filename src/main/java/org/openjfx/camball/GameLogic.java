@@ -35,8 +35,8 @@ public class GameLogic {
 		movingLeft = false;
 		movingRight = true;
 		
-		deltaX = 1;
-		deltaY = 1;
+		deltaX = 8;
+		deltaY = 6;
 		
 		circle = new Circle(pixelX, pixelY, 20);
 		
@@ -46,7 +46,7 @@ public class GameLogic {
 	
 	public void update() {
 		
-		if(circle.getCenterY() + circle.getRadius() < widthY - 1 && movingDown) {
+		if(circle.getCenterY() + circle.getRadius() < widthY && movingDown) {
             movingUp = false;
             movingDown = true;
             pixelY += deltaY;
@@ -60,7 +60,7 @@ public class GameLogic {
             }
         }
         
-        if(circle.getCenterX() + circle.getRadius() < widthX - 1 && movingRight) {
+        if(circle.getCenterX() + circle.getRadius() < widthX && movingRight) {
             movingLeft = false;
             movingRight = true;
             pixelX += deltaX;

@@ -1,5 +1,10 @@
 package org.openjfx.camball;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import org.apache.logging.log4j.Logger;
+import org.openjfx.physics.Velocity;
 
 /**
  * JavaFX App
@@ -13,7 +18,6 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.control.ToolBar;
 import javafx.scene.paint.Color;
 
 public class App extends Application {
@@ -22,12 +26,15 @@ public class App extends Application {
 	public void start(Stage stage) {
 		
 		final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-		final double screenMaxBound = 0.80;
+		final double screenMaxBound = 0.90;
 		
 		final double widthX = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
 		final double widthY = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
 		
-		final double framerate = 1;
+		
+		final Logger log = LogManager.getLogger(App.class);
+		
+		final double framerate = 30;
 	  
 		Group root = new Group();
    	  
@@ -39,7 +46,9 @@ public class App extends Application {
 			
 			private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
 			
-			private long lastTime = 0; 
+			private long lastTime = 0;
+			
+			private long timer = 0;
 			
 			@Override
 			public void handle(long now) {
@@ -51,6 +60,9 @@ public class App extends Application {
 				if(now - lastTime > frameInterval) {
 					game.update();
 					root.getChildren().setAll(game.getCircle());
+					lastTime = now;
+					timer++;
+					log.info("The current frame is: {}", timer);
 				}
 			}
 		};
