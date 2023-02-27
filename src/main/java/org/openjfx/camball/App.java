@@ -34,7 +34,7 @@ public class App extends Application {
 		
 		final Logger log = LogManager.getLogger(App.class);
 		
-		final double framerate = 30;
+		final double framerate = 144;
 	  
 		Group root = new Group();
    	  

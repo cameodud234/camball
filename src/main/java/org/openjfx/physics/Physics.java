@@ -30,6 +30,5 @@ public class Physics {
 	public double getPixelToMeter() {
 		return pixelToMeter;
 	}
-	
 
 }

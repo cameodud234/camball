@@ -24,6 +24,7 @@ public class GameLogic {
 	private Circle circle;
 	
 	public GameLogic(double widthX, double widthY) {
+		
 		this.widthX = widthX;
 		this.widthY = widthY;
 		

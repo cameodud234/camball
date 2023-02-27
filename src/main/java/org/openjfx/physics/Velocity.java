@@ -68,5 +68,4 @@ public class Velocity {
 		return angleRad;
 		
 	}
-
 }
