@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.apache.logging.log4j.Logger;
+import org.openjfx.physics.Physics;
 import org.openjfx.physics.Velocity;
 
 /**
@@ -34,13 +35,15 @@ public class App extends Application {
 		
 		final Logger log = LogManager.getLogger(App.class);
 		
-		final double framerate = 144;
+		final double framerate = 120;
+		final double pixelToMeter = 20;
+		final Physics physics = new Physics(framerate, pixelToMeter);
 	  
 		Group root = new Group();
    	  
 		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
 		
-		GameLogic game = new GameLogic(widthX, widthY);
+		GameLogic game = new GameLogic(widthX, widthY, physics);
    
 		AnimationTimer timer = new AnimationTimer() {
 			
@@ -59,7 +62,7 @@ public class App extends Application {
 				
 				if(now - lastTime > frameInterval) {
 					game.update();
-					root.getChildren().setAll(game.getCircle());
+					root.getChildren().setAll(game.getBall().getCircle());
 					lastTime = now;
 					timer++;
 					log.info("The current frame is: {}", timer);

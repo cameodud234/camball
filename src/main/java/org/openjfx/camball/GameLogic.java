@@ -1,5 +1,10 @@
 package org.openjfx.camball;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jblas.DoubleMatrix;
+import org.openjfx.physics.Physics;
+import org.openjfx.physics.Velocity;
 import org.openjfx.simobjects.Ball;
 
 import javafx.scene.paint.Color;
@@ -7,81 +12,89 @@ import javafx.scene.shape.Circle;
 
 public class GameLogic {
 	
+	private final Physics physics;
+	
 	private final double widthX;
 	private final double widthY;
 	
-	private double pixelY;
+	private double positionY;
 	private boolean movingUp;
 	private boolean movingDown;
 	
-	private double pixelX;
+	private double positionX;
 	private boolean movingLeft;
 	private boolean movingRight;
 	
-	private double deltaX;
-	private double deltaY;
+	private Ball ball;
 	
-	private Circle circle;
+	final Logger log = LogManager.getLogger(GameLogic.class);
 	
-	public GameLogic(double widthX, double widthY) {
+	public GameLogic(double widthX, double widthY, Physics physics) {
 		
 		this.widthX = widthX;
 		this.widthY = widthY;
+		this.physics = physics;
 		
-		pixelY = 100;
+		positionY = 100;
 		movingUp = false;
 		movingDown = true;
 		
-		pixelX = 100;
+		positionX = 100;
 		movingLeft = false;
 		movingRight = true;
 		
-		deltaX = 8;
-		deltaY = 6;
-		
-		circle = new Circle(pixelX, pixelY, 20);
-		
-		circle.setFill(Color.WHITE);
+		Velocity intialVelocityBall = new Velocity(10, 5); // In meters per second
+		double radiusBall = 5;
+		this.ball = new Ball(intialVelocityBall, positionX, positionY, radiusBall, Color.WHITE);
 
 	}
 	
 	public void update() {
 		
-		if(circle.getCenterY() + circle.getRadius() < widthY && movingDown) {
+		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
+        log.info("pixelMoveRate: {}", pixelMoveRate.toString());
+		
+		if(ball.getPositionY() + ball.getRadius() < widthY && movingDown) {
             movingUp = false;
             movingDown = true;
-            pixelY += deltaY;
+            positionY += pixelMoveRate.get(1);
+            
         } else {
             movingUp = true;
             movingDown = false;
-            pixelY -= deltaY;
-            if(circle.getCenterY() - circle.getRadius() <= 0) {
+            ball.setVelocity(ball.getVelocity().getSpeedX(), - ball.getVelocity().getSpeedY());
+            positionY -= pixelMoveRate.get(1);
+            if(ball.getPositionY() - ball.getRadius() <= 0) {
                 movingUp = false;
                 movingDown = true;
             }
         }
         
-        if(circle.getCenterX() + circle.getRadius() < widthX && movingRight) {
+        if(ball.getPositionX() + ball.getRadius() < widthX && movingRight) {
             movingLeft = false;
             movingRight = true;
-            pixelX += deltaX;
+            positionX += pixelMoveRate.get(0);
         } else {
             movingLeft = true;
             movingRight = false;
-            pixelX -= deltaX;
-            if(circle.getCenterX() - circle.getRadius() <= 0) {
+            ball.setVelocity( - ball.getVelocity().getSpeedX(), ball.getVelocity().getSpeedY());
+            positionX -= pixelMoveRate.get(0);
+            if(ball.getPositionX() - ball.getRadius() <= 0) {
                 movingLeft = false;
                 movingRight = true;
             }
         }
-		
-		circle.setCenterX(pixelX);
-		circle.setCenterY(pixelY);
-		
+        
+        
+        
+        ball.move(positionX, positionY);
+        
+        log.info("Position: [{}, {}]", ball.getPositionX(), ball.getPositionY());
+        
 	}
 	
-	public Circle getCircle() {
-		return circle;
+	public Ball getBall() {
+		return ball;
 	}
 	
 }

@@ -15,18 +15,17 @@ public class Ball {
 	private Paint color;
 	private Circle circle;
 	
-	
 	private static String illegalPosition = "Position must be greater than zero.";
 	
 
-	public Ball(Velocity velocity, double positionX, double positionY, 
+	public Ball(Velocity velocity, double positionX, double positionY,
 					double radius, Paint color) {
 		
 		this.velocity = new Velocity(velocity.getSpeedX(), velocity.getSpeedY());
 		if(positionX < 0 || positionY < 0) throw new IllegalArgumentException(illegalPosition);
 		this.positionX = positionX;
 		this.positionY = positionY;
-		// need to test if radius is greater than zero.
+//		 need to test if radius is greater than zero.
 		this.radius = radius;
 		this.color = color;
 		
@@ -78,9 +77,22 @@ public class Ball {
 		return circle;
 	}
 	
+	public void setVelocity(double speedX, double speedY) {
+		this.velocity.setSpeedX(speedX);
+		this.velocity.setSpeedY(speedY);
+	}
+	
 	public void setVelocity(Velocity velocity) { 
 		this.velocity.setSpeedX(velocity.getSpeedX());
 		this.velocity.setSpeedY(velocity.getSpeedY());
+	}
+	
+	public void setPositionX(double positionX) {
+		this.circle.setCenterX(positionX);
+	}
+	
+	public void setPositionY(double positionY) {
+		this.circle.setCenterY(positionY);
 	}
 
 	public void setRadius(double radius) {
