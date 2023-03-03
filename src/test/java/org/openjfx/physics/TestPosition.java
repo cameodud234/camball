@@ -50,7 +50,7 @@ public class TestPosition {
 			DoubleMatrix newPositionArg = new DoubleMatrix(Arrays.asList(13.0, 64.0, 67.0));
 			Position newPosition = new Position(newPositionArg);
 		});
-		String expectedMessage = "Position must be in 2 dimensions!";
+		String expectedMessage = "The dimension of position must be 2, not 3";
 		assertEquals(expectedMessage, exception.getMessage());
 	}
 	
