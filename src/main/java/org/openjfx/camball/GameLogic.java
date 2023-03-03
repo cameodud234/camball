@@ -43,7 +43,7 @@ public class GameLogic {
 		movingLeft = false;
 		movingRight = true;
 		
-		Velocity intialVelocityBall = new Velocity(10, 5); // In meters per second
+		Velocity intialVelocityBall = new Velocity(30, 20); // In meters per second
 		double radiusBall = 5;
 		this.ball = new Ball(intialVelocityBall, positionX, positionY, radiusBall, Color.WHITE);
 
