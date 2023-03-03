@@ -1,108 +1,73 @@
 package org.openjfx.camball;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import org.apache.logging.log4j.Logger;
+import org.openjfx.physics.Physics;
+import org.openjfx.physics.Velocity;
 
 /**
  * JavaFX App
  */
-import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.control.ToolBar;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
 
 public class App extends Application {
 	
 	@Override
 	public void start(Stage stage) {
 		
-		final int widthX = 800;
-		final int widthY = 800;
+		final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+		final double screenMaxBound = 0.90;
 		
+		final double widthX = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
+		final double widthY = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
+		
+		
+		final Logger log = LogManager.getLogger(App.class);
+		
+		final double framerate = 120;
+		final double pixelToMeter = 20;
+		final Physics physics = new Physics(framerate, pixelToMeter);
 	  
 		Group root = new Group();
    	  
-		Scene scene = new Scene(root, widthX, widthY, Color.WHITE);
+		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
 		
-		ToolBar toolbar = new ToolBar();
-		
-		root.getChildren().add(toolbar);
+		GameLogic game = new GameLogic(widthX, widthY, physics);
    
-		// your game logic goes here  
 		AnimationTimer timer = new AnimationTimer() {
-			double pixelY = 100;
-			boolean movingUp = false;
-			boolean movingDown = true;
 			
-			double pixelX = 100;
-			boolean movingLeft = false;
-			boolean movingRight = true;
+			private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
 			
-			double deltaX = 3;
-			double deltaY = 5;
+			private long lastTime = 0;
 			
-			Random rand = new Random();
+			private long timer = 0;
 			
 			@Override
 			public void handle(long now) {
-			  
-				root.getChildren().clear();
-			  
-				Circle circle = new Circle(pixelX, pixelY, 20);
-				
-				circle.setFill(Color.BLUE);
-			  
-//				root.getChildren().remove(circle);
-			  
-				if(circle.getCenterY() + circle.getRadius() < widthY - 1 && movingDown) {
-					movingUp = false;
-					movingDown = true;
-					pixelY += deltaY;
-					
-				}
-				else {
-					
-					movingUp = true;
-					movingDown = false;
-					pixelY -= deltaY;
-					
-					if(circle.getCenterY() - circle.getRadius() <= 0) {
-						movingUp = false;
-						movingDown = true;
-					}
-					
+				if(lastTime == 0) {
+					lastTime = now;
+					return;
 				}
 				
-				if(circle.getCenterX() + circle.getRadius() < widthX - 1 && movingRight) {
-					movingLeft = false;
-					movingRight = true;
-					pixelX += deltaX;
+				if(now - lastTime > frameInterval) {
+					game.update();
+					root.getChildren().setAll(game.getBall().getCircle());
+					lastTime = now;
+					timer++;
+					log.info("The current frame is: {}", timer);
 				}
-				else {
-					movingLeft = true;
-					movingRight = false;
-					pixelX -= deltaX;
-					
-					if(circle.getCenterX() - circle.getRadius() <= 0) {
-						movingLeft = false;
-						movingRight = true;
-					}
-					
-				}
-
-				
-			  
-				root.getChildren().add(circle);
-            
 			}
-    
-	  
 		};
 	  
 		timer.start();

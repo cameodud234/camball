@@ -2,20 +2,30 @@ package org.openjfx.physics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-public class TestVelocityException {
+public class TestVelocityException extends TestVelocityExceptionTestCases {
 
-	@Test
-	public void TestVelocityExceptionContructorVelocityMsg() {
-		String message = "This is a message by Cameron.";
-		VelocityException exception = new VelocityException(message);
-		assertEquals(message, exception.getMessage());
+	@ParameterizedTest
+	@MethodSource("TestVelocityExceptionContructorVelocityMessageCases")
+	public void TestVelocityExceptionContructorVelocityMessage(String message) {
+		VelocityException velocityException = new VelocityException(message);
+		assertEquals(message, velocityException.getMessage());
 	}
 	
-	@Test
-	public void TestVelocityExceptionConstructorVelocityCause() {
-		VelocityException throwValue = new VelocityException();
+	@ParameterizedTest
+	@MethodSource("TestVelocityExceptionContructorVelocityMessageMessageArgsCases")
+	public <T> void TestVelocityExceptionContructorVelocityMessageMessageArgs(String message, T messageArg, String actualMessage) {
+		VelocityException velocityException = new VelocityException(message, messageArg);
+		String createdMessage = velocityException.getMessage();
+		assertEquals(createdMessage, actualMessage);
+	}
+	
+	
+	@ParameterizedTest
+	@MethodSource("TestVelocityExceptionConstructorVelocityCauseCases")
+	public void TestVelocityExceptionConstructorVelocityCause(Throwable throwValue) {
 		try {
 			throw new Exception(throwValue);
 			
@@ -24,17 +34,21 @@ public class TestVelocityException {
 		}
 	}
 	
-	@Test
-	public void TestVelocityExceptionConstructorVelocityMsgCause() {
-		
-		String message = "This is a message by Cameron.";
-		String localMessage = "This is a local message by Cameron.";
-		VelocityException throwValue = new VelocityException(localMessage);
+	@ParameterizedTest
+	@MethodSource("TestVelocityExceptionConstructorVelocityMessageCauseMessageArgsCases")
+	public <T> void TestVelocityExceptionConstructorVelocityMessageCauseMessageArgs1(String message, T messageArg, Throwable throwValue, String actualMessage) {
+		VelocityException velocityException = new VelocityException(message, throwValue, messageArg);
+		String createdMessage = velocityException.getMessage();
+		assertEquals(createdMessage, actualMessage);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("TestVelocityExceptionConstructorVelocityMessageCauseMessageArgsCases")
+	public <T> void TestVelocityExceptionConstructorVelocityMessageCauseMessageArgs2(String message, T messageArg, Throwable throwValue, String actualMessage) {
+		VelocityException velocityException = new VelocityException(message, throwValue, messageArg);
 		try {
-			throw new Exception(message, throwValue);
-			
+			throw velocityException;
 		} catch (Exception e) {
-			assertEquals(localMessage, e.getLocalizedMessage());
 			assertEquals(throwValue, e.getCause());
 		}
 	}
