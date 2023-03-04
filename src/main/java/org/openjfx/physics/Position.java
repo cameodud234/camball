@@ -8,7 +8,7 @@ public class Position {
 	
 	private DoubleMatrix position;
 	
-	private static final String POSITION_EXCEPTION_MESSAGE = "The dimension of position must be 2, not {}";
+	private static final String POSITION_EXCEPTION_MESSAGE = "The dimension of position must be 2, not {0}";
 	
 	public Position() {
 		position = new DoubleMatrix(2);

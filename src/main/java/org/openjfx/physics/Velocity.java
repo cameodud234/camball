@@ -7,7 +7,7 @@ import org.jblas.DoubleMatrix;
 
 public class Velocity {
 	
-	private static final String VELOCITY_EXCEPTION_MESSAGE = "The dimension of velocity must be 2, not {}";
+	private static final String VELOCITY_EXCEPTION_MESSAGE = "The dimension of velocity must be 2, not {0}";
 	
 	private DoubleMatrix velocity;
 	
