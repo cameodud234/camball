@@ -54,11 +54,20 @@ public class TestBall {
 		Ball newBall = new Ball(ball);
 	}
 	
-	@Test 
-	public void testBallSetVelocity() {
-		Velocity velocity = new Velocity(5,6);
-		ball.setVelocity(velocity);
-		assertTrue(ball.getVelocity().equals(velocity));
+	@Test
+	public void testBallSetCenterX() {
+		double centerX = 12;
+		ball.setCenterX(centerX);
+		assertEquals(ball.getCenterX(), centerX);
+		assertEquals(ball.getCircle().getCenterX(), centerX);
+	}
+	
+	@Test
+	public void testBallSetCenterY() {
+		double centerY = 12;
+		ball.setCenterY(centerY);
+		assertEquals(ball.getCenterY(), centerY);
+		assertEquals(ball.getCircle().getCenterY(), centerY);
 	}
 	
 	@Test
@@ -67,6 +76,21 @@ public class TestBall {
 		ball.setRadius(radius);
 		assertEquals(ball.getRadius(), radius);
 		assertEquals(ball.getCircle().getRadius(), radius);
+	}
+	
+	@Test 
+	public void testBallSetVelocityWithVelocity() {
+		Velocity velocity = new Velocity(5,6);
+		ball.setVelocity(velocity);
+		assertTrue(ball.getVelocity().equals(velocity));
+	}
+	
+	@Test
+	public void testBallSetVelocityWithSpeedXSpeedY() {
+		double speedX = 9;
+		double speedY = 33;
+		ball.setVelocity(speedX, speedY);
+		assertEquals(ball.getVelocity().getSpeedX(), speedX);
 	}
 	
 	@Test

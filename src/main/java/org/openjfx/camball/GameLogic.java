@@ -54,7 +54,7 @@ public class GameLogic {
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
         log.info("pixelMoveRate: {}", pixelMoveRate.toString());
 		
-		if(ball.getPositionY() + ball.getRadius() < widthY && movingDown) {
+		if(ball.getCenterY() + ball.getRadius() < widthY && movingDown) {
             movingUp = false;
             movingDown = true;
             positionY += pixelMoveRate.get(1);
@@ -64,13 +64,13 @@ public class GameLogic {
             movingDown = false;
             ball.setVelocity(ball.getVelocity().getSpeedX(), - ball.getVelocity().getSpeedY());
             positionY -= pixelMoveRate.get(1);
-            if(ball.getPositionY() - ball.getRadius() <= 0) {
+            if(ball.getCenterY() - ball.getRadius() <= 0) {
                 movingUp = false;
                 movingDown = true;
             }
         }
         
-        if(ball.getPositionX() + ball.getRadius() < widthX && movingRight) {
+        if(ball.getCenterX() + ball.getRadius() < widthX && movingRight) {
             movingLeft = false;
             movingRight = true;
             positionX += pixelMoveRate.get(0);
@@ -79,7 +79,7 @@ public class GameLogic {
             movingRight = false;
             ball.setVelocity( - ball.getVelocity().getSpeedX(), ball.getVelocity().getSpeedY());
             positionX -= pixelMoveRate.get(0);
-            if(ball.getPositionX() - ball.getRadius() <= 0) {
+            if(ball.getCenterX() - ball.getRadius() <= 0) {
                 movingLeft = false;
                 movingRight = true;
             }
@@ -88,7 +88,7 @@ public class GameLogic {
         
         ball.move(positionX, positionY);
         
-        log.info("Position: [{}, {}]", ball.getPositionX(), ball.getPositionY());
+        log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
         
 	}
 	
