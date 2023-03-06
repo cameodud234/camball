@@ -82,7 +82,7 @@ public class TestBall {
 	public void testBallSetVelocityWithVelocity() {
 		Velocity velocity = new Velocity(5,6);
 		ball.setVelocity(velocity);
-		assertTrue(ball.getVelocity().equals(velocity));
+		assertEquals(ball.getVelocity(), velocity);
 	}
 	
 	@Test
@@ -91,6 +91,14 @@ public class TestBall {
 		double speedY = 33;
 		ball.setVelocity(speedX, speedY);
 		assertEquals(ball.getVelocity().getSpeedX(), speedX);
+	}
+	
+	@Test
+	public void testBallSetColor() {
+		Paint color = Color.ALICEBLUE;
+		ball.setColor(color);
+		assertEquals(ball.getColor(), color);
+		assertEquals(ball.getCircle().getFill(), color);
 	}
 	
 	@Test
