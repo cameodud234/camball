@@ -31,24 +31,23 @@ public class Ball {
 		this.radius = radius;
 		this.color = color;
 		
-		this.circle = new Circle(this.centerX, this.centerY, this.radius);
-		this.circle.setFill(color);
+		circle = new Circle(this.centerX, this.centerY, this.radius);
+		circle.setFill(this.color);
 		
 	}
 	
 	public Ball(Ball ball) {
-		this.centerX = ball.getCenterX();
-		this.centerY = ball.getCenterY();
-		this.color = ball.getColor();
+		centerX = ball.getCenterX();
+		centerY = ball.getCenterY();
+		color = ball.getColor();
 	}
 	
-	public void move(double centerX, double centerY) {
-		this.centerX = centerX;
-		this.centerY = centerY;
+	public void move(double deltaX, double deltaY) {
+		this.centerX += deltaX;
+		this.centerY += deltaY;
 		
-		this.circle.setCenterX(this.centerX);
-		this.circle.setCenterY(this.centerY);
-		
+		circle.setCenterX(centerX);
+		circle.setCenterY(centerY);
 	}
 	
 	public Velocity getVelocity() {
