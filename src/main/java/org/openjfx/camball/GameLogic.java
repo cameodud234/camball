@@ -86,7 +86,6 @@ public class GameLogic {
         }
         
         
-        
         ball.move(positionX, positionY);
         
         log.info("Position: [{}, {}]", ball.getPositionX(), ball.getPositionY());
