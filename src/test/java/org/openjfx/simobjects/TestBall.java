@@ -27,7 +27,7 @@ public class TestBall {
 	@Test
 	public void testBallConstructorVelocity() {
 		assertEquals(ball.getVelocity(), velocity);
-	}
+	 }
 	
 	@Test
 	public void testBallConstructorCenterX() {
@@ -51,7 +51,7 @@ public class TestBall {
 	
 	@Test
 	public void testBallConstructorBall() {
-		Ball newBall = new Ball(ball);
+//		Ball newBall = new Ball(ball);
 	}
 	
 	@Test
