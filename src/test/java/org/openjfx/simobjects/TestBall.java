@@ -30,12 +30,12 @@ public class TestBall {
 	
 	@Test
 	public void testBallConstructorPositionX() {
-		assertEquals(ball.getPositionX(), positionX);
+		assertEquals(ball.getCenterX(), positionX);
 	}
 	
 	@Test
 	public void testBallConstructorPositionY() {
-		assertEquals(ball.getPositionY(), positionY);
+		assertEquals(ball.getCenterY(), positionY);
 	}
 	
 	@Test

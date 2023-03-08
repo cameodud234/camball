@@ -20,20 +20,20 @@ public class TestVelocity {
 	
 	@Test
 	void TestVelocityConstructorSpeedX() {
-		assertEquals(velocity.getSpeedX(), speedX);
+		assertEquals(velocity.getVelocityX(), speedX);
 	}
 	
 	@Test
 	void TestVelocityConstructorSpeedY() {
-		assertEquals(velocity.getSpeedY(), speedY);
+		assertEquals(velocity.getVelocityY(), speedY);
 	}
 	
 	@Test
 	void TestVelocityConstructorDoubleMatrixVelocity() throws VelocityException {
 		DoubleMatrix newVelocityArg = new DoubleMatrix(Arrays.asList(13.0, 64.0));
 		Velocity newVelocity = new Velocity(newVelocityArg);
-		assertEquals(newVelocity.getSpeedX(), newVelocityArg.get(0));
-		assertEquals(newVelocity.getSpeedY(), newVelocityArg.get(1));
+		assertEquals(newVelocity.getVelocityX(), newVelocityArg.get(0));
+		assertEquals(newVelocity.getVelocityY(), newVelocityArg.get(1));
 	}
 	
 	@Test
@@ -41,8 +41,8 @@ public class TestVelocity {
 		DoubleMatrix newVelocityArg = new DoubleMatrix(Arrays.asList(13.0, 64.0));
 		Velocity newVelocity = new Velocity(newVelocityArg);
 		newVelocityArg = newVelocityArg.transpose();
-		assertEquals(newVelocity.getSpeedX(), newVelocityArg.get(0));
-		assertEquals(newVelocity.getSpeedY(), newVelocityArg.get(1));
+		assertEquals(newVelocity.getVelocityX(), newVelocityArg.get(0));
+		assertEquals(newVelocity.getVelocityY(), newVelocityArg.get(1));
 	}
 	
 	@Test
@@ -53,21 +53,21 @@ public class TestVelocity {
 		});
 		String expectedMessage = "The dimension of velocity must be 2, not 3";
 		String s = exception.getMessage();
-//		assertEquals(expectedMessage, exception.getMessage());
+		assertEquals(expectedMessage, exception.getMessage());
 	}
 	
 	@Test
 	void TestSetSpeedX() {
 		double newSpeedX = 8;
-		velocity.setSpeedX(newSpeedX);
-		assertEquals(velocity.getSpeedX(), newSpeedX);
+		velocity.setVelocityX(newSpeedX);
+		assertEquals(velocity.getVelocityX(), newSpeedX);
 	}
 	
 	@Test
 	void TestSetSpeedY() {
 		double newSpeedY = 49;
-		velocity.setSpeedY(newSpeedY);
-		assertEquals(velocity.getSpeedY(), newSpeedY);
+		velocity.setVelocityY(newSpeedY);
+		assertEquals(velocity.getVelocityY(), newSpeedY);
 	}
 	
 	@Test 
