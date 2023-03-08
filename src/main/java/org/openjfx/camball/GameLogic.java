@@ -8,7 +8,6 @@ import org.openjfx.physics.Velocity;
 import org.openjfx.simobjects.Ball;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class GameLogic {
 	
