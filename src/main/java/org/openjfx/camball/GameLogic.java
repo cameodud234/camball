@@ -37,14 +37,26 @@ public class GameLogic {
 		
 		Velocity initialBallVelocity = new Velocity(30, 20); // In meters per second
 		double radiusBall = 40;
-		this.ball = new Ball(initialBallVelocity, centerX, centerY, radiusBall, Color.WHITE);
-
+		ball = new Ball(initialBallVelocity, centerX, centerY, radiusBall, Color.WHITE);
+		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
+		deltaX = pixelMoveRate.get(0);
+		deltaY = pixelMoveRate.get(1);
+		
 	}
 	
 	public void update() {
 		
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
         log.info("pixelMoveRate: {}", pixelMoveRate.toString());
+        
+        if(ball.getCenterX() + ball.getRadius() <= 0) {
+        	deltaX = pixelMoveRate.get(0);
+        }
+        else if(ball.getCenterX() + ball.getRadius() >= widthX) {
+        	deltaX = -pixelMoveRate.get(0);
+        }
+        
+        ball.move(deltaX, 0);
         
 		
 //		if(ball.getPositionY() + ball.getRadius() < widthY && movingDown) {
@@ -80,7 +92,7 @@ public class GameLogic {
         
         
         
-        ball.move(pixelMoveRate.get(0), pixelMoveRate.get(1));
+//        ball.move(pixelMoveRate.get(0), pixelMoveRate.get(1));
        
         log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
         

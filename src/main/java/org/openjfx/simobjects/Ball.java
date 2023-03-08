@@ -47,9 +47,9 @@ public class Ball {
 	}
 	
 	
-	public void move(double centerX, double centerY) {
-		this.centerX = centerX;
-		this.centerY = centerY;
+	public void move(double deltaX, double deltaY) {
+		this.centerX += deltaX;
+		this.centerY += deltaY;
 		
 		this.circle.setCenterX(this.centerX);
 		this.circle.setCenterY(this.centerY);
