@@ -8,7 +8,6 @@ import org.openjfx.physics.Velocity;
 import org.openjfx.simobjects.Ball;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class GameLogic {
 	
@@ -43,8 +42,8 @@ public class GameLogic {
 		movingLeft = false;
 		movingRight = true;
 		
-		Velocity intialVelocityBall = new Velocity(30, 20); // In meters per second
-		double radiusBall = 5;
+		Velocity intialVelocityBall = new Velocity(10, 15); // In meters per second
+		double radiusBall = 50;
 		this.ball = new Ball(intialVelocityBall, positionX, positionY, radiusBall, Color.WHITE);
 
 	}
@@ -54,7 +53,7 @@ public class GameLogic {
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
         log.info("pixelMoveRate: {}", pixelMoveRate.toString());
 		
-		if(ball.getPositionY() + ball.getRadius() < widthY && movingDown) {
+		if(ball.getCenterY() + ball.getRadius() < widthY && movingDown) {
             movingUp = false;
             movingDown = true;
             positionY += pixelMoveRate.get(1);
@@ -64,13 +63,13 @@ public class GameLogic {
             movingDown = false;
             ball.setVelocity(ball.getVelocity().getSpeedX(), - ball.getVelocity().getSpeedY());
             positionY -= pixelMoveRate.get(1);
-            if(ball.getPositionY() - ball.getRadius() <= 0) {
+            if(ball.getCenterY() - ball.getRadius() <= 0) {
                 movingUp = false;
                 movingDown = true;
             }
         }
         
-        if(ball.getPositionX() + ball.getRadius() < widthX && movingRight) {
+        if(ball.getCenterX() + ball.getRadius() < widthX && movingRight) {
             movingLeft = false;
             movingRight = true;
             positionX += pixelMoveRate.get(0);
@@ -79,17 +78,16 @@ public class GameLogic {
             movingRight = false;
             ball.setVelocity( - ball.getVelocity().getSpeedX(), ball.getVelocity().getSpeedY());
             positionX -= pixelMoveRate.get(0);
-            if(ball.getPositionX() - ball.getRadius() <= 0) {
+            if(ball.getCenterX() - ball.getRadius() <= 0) {
                 movingLeft = false;
                 movingRight = true;
             }
         }
         
         
+        ball.move(1.777, 3.555554);
         
-        ball.move(positionX, positionY);
-        
-        log.info("Position: [{}, {}]", ball.getPositionX(), ball.getPositionY());
+        log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
         
 	}
 	

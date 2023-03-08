@@ -3,9 +3,7 @@ package org.openjfx.camball;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.apache.logging.log4j.Logger;
 import org.openjfx.physics.Physics;
-import org.openjfx.physics.Velocity;
 
 /**
  * JavaFX App
@@ -31,7 +29,6 @@ public class App extends Application {
 		
 		final double widthX = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
 		final double widthY = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
-		
 		
 		final Logger log = LogManager.getLogger(App.class);
 		

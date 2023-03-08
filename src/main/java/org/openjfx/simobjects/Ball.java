@@ -9,25 +9,21 @@ import javafx.scene.shape.Circle;
 public class Ball {
 	
 	private Velocity velocity;
-	private double positionX;
-	private double positionY;
+	private double centerX;
+	private double centerY;
 	private double radius;
 	private Paint color;
 	private Circle circle;
 	
-	private static String ILLEGALPOSITIONARGUMENT = "Position must be greater than zero.";
 	private static String ILLEGALRADIUSARGUMENT = "Radius must be greater than zero.";
 	
-
-	public Ball(Velocity velocity, double positionX, double positionY,
+	
+	public Ball(Velocity velocity, double centerX, double centerY,
 					double radius, Paint color) {
 		
 		this.velocity = new Velocity(velocity.getSpeedX(), velocity.getSpeedY());
-		if(positionX < 0 || positionY < 0) {
-			throw new IllegalArgumentException(ILLEGALPOSITIONARGUMENT);
-		}
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.centerX = centerX;
+		this.centerY = centerY;
 //		 need to test if radius is greater than zero.
 		if(radius < 0) {
 			throw new IllegalArgumentException(ILLEGALRADIUSARGUMENT);
@@ -35,25 +31,23 @@ public class Ball {
 		this.radius = radius;
 		this.color = color;
 		
-		this.circle = new Circle(this.positionX, this.positionY, this.radius);
-		this.circle.setFill(color);
+		circle = new Circle(this.centerX, this.centerY, this.radius);
+		circle.setFill(this.color);
 		
 	}
 	
 	public Ball(Ball ball) {
-		this.positionX = ball.getPositionX();
-		this.positionY = ball.getPositionY();
-		this.color = ball.getColor();
+		centerX = ball.getCenterX();
+		centerY = ball.getCenterY();
+		color = ball.getColor();
 	}
 	
-	
-	public void move(double positionX, double positionY) {
-		this.positionX = positionX;
-		this.positionY = positionY;
+	public void move(double deltaX, double deltaY) {
+		this.centerX += deltaX;
+		this.centerY += deltaY;
 		
-		this.circle.setCenterX(this.positionX);
-		this.circle.setCenterY(this.positionY);
-		
+		circle.setCenterX(centerX);
+		circle.setCenterY(centerY);
 	}
 	
 	public Velocity getVelocity() {
@@ -61,12 +55,12 @@ public class Ball {
 	}
 	
 
-	public double getPositionX() {
-		return positionX;
+	public double getCenterX() {
+		return centerX;
 	}
 	
-	public double getPositionY() {
-		return positionY;
+	public double getCenterY() {
+		return centerY;
 	}
 
 	
@@ -88,30 +82,39 @@ public class Ball {
 		this.velocity.setSpeedY(speedY);
 	}
 	
-	public void setVelocity(Velocity velocity) { 
+	public void setVelocity(Velocity velocity) {
 		this.velocity.setSpeedX(velocity.getSpeedX());
 		this.velocity.setSpeedY(velocity.getSpeedY());
 	}
 	
-	public void setPositionX(double positionX) {
-		this.circle.setCenterX(positionX);
+	public void setCenterX(double centerX) {
+		this.centerX = centerX;
+		this.circle.setCenterX(centerX);
 	}
 	
-	public void setPositionY(double positionY) {
-		this.circle.setCenterY(positionY);
+	public void setCenterY(double centerY) {
+		this.centerY = centerY;
+		this.circle.setCenterY(centerY);
 	}
 
 	public void setRadius(double radius) {
+		if(radius < 0) {
+			throw new IllegalArgumentException(ILLEGALRADIUSARGUMENT);
+		}
 		this.radius = radius;
+		circle.setRadius(radius);
 	}
-
 
 	public void setColor(Paint color) {
 		this.color = color;
+		circle.setFill(color);
 	}
 
-
 	public void setCircle(Circle circle) {
+		setCenterX(circle.getCenterX());
+		setCenterY(circle.getCenterY());
+		setRadius(circle.getRadius());
+		setColor(circle.getFill());
 		this.circle = circle;
 	}
 	
@@ -121,8 +124,8 @@ public class Ball {
 		if(o == null || getClass() != o.getClass()) return false;
 		Ball ball = (Ball) o;
 		return velocity.equals(ball.velocity) &&
-				Double.compare(positionX, ball.getPositionX()) == 0 &&
-				Double.compare(positionY, ball.getPositionY()) == 0 &&
+				Double.compare(centerX, ball.getCenterX()) == 0 &&
+				Double.compare(centerY, ball.getCenterY()) == 0 &&
 				Double.compare(radius, ball.getRadius()) == 0 &&
 				color.equals(ball.getColor()) &&
 				circle.equals(ball.getCircle());
