@@ -37,13 +37,13 @@ public class GameLogic {
 		centerY = 100;
 		centerX = 100;
 		
-		radius = 10;
+		radius = 50;
 		
-		Velocity initialBallVelocity = new Velocity(8, 7); // In meters per second
+		Velocity initialBallVelocity = new Velocity(80, 60); // In meters per second
 		ball = new Ball(initialBallVelocity, centerX, centerY, radius, Color.WHITE);
-		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
-		deltaX = pixelMoveRate.get(0);
-		deltaY = pixelMoveRate.get(1);
+		DoubleMatrix initialPixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
+		deltaX = initialPixelMoveRate.get(0);
+		deltaY = initialPixelMoveRate.get(1);
 		
 	}
 	
@@ -53,25 +53,17 @@ public class GameLogic {
         log.info("pixelMoveRate: {}", pixelMoveRate.toString());
         
         if(ball.getCenterX() - ball.getRadius() <= 0) {
-        	radius /= 2;
-        	ball.setRadius(radius);
         	deltaX = pixelMoveRate.get(0);
         }
         else if(ball.getCenterX() + ball.getRadius() >= widthX) {
-        	radius /= 2;
-        	ball.setRadius(radius);
         	deltaX = -pixelMoveRate.get(0);
         }
         
         if(ball.getCenterY() - ball.getRadius() <= 0) {
-//        	radius *= 1.5;
-        	ball.setRadius(radius);
-        	deltaY = pixelMoveRate.get(0);
+        	deltaY = pixelMoveRate.get(1);
         }
         else if(ball.getCenterY() + ball.getRadius() >= widthY) {
-//        	radius *= 1.5;
-        	ball.setRadius(radius);
-        	deltaY = -pixelMoveRate.get(0);
+        	deltaY = -pixelMoveRate.get(1);
         }
         
         ball.move(deltaX, deltaY);
