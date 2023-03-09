@@ -17,12 +17,7 @@ public class Ball {
 	
 	private static String ILLEGALRADIUSARGUMENT = "Radius must be greater than zero.";
 	
-	
-	public Ball(Velocity velocity, double centerX, double centerY,
-					double radius, Paint color) {
-		
-		this.velocity = new Velocity(velocity.getSpeedX(), velocity.getSpeedY());
-		this.centerX = centerX;
+
 		this.centerY = centerY;
 //		 need to test if radius is greater than zero.
 		if(radius < 0) {
@@ -31,20 +26,11 @@ public class Ball {
 		this.radius = radius;
 		this.color = color;
 		
-		circle = new Circle(this.centerX, this.centerY, this.radius);
-		circle.setFill(this.color);
 		
 	}
 	
 	public Ball(Ball ball) {
-		centerX = ball.getCenterX();
-		centerY = ball.getCenterY();
-		color = ball.getColor();
-	}
-	
-	public void move(double deltaX, double deltaY) {
-		this.centerX += deltaX;
-		this.centerY += deltaY;
+
 		
 		circle.setCenterX(centerX);
 		circle.setCenterY(centerY);
@@ -77,24 +63,22 @@ public class Ball {
 		return circle;
 	}
 	
-	public void setVelocity(double speedX, double speedY) {
-		this.velocity.setSpeedX(speedX);
-		this.velocity.setSpeedY(speedY);
+	public void setVelocity(double velocityX, double velocityY) {
+		this.velocity.setVelocityX(velocityX);
+		this.velocity.setVelocityY(velocityY);
 	}
 	
-	public void setVelocity(Velocity velocity) {
-		this.velocity.setSpeedX(velocity.getSpeedX());
-		this.velocity.setSpeedY(velocity.getSpeedY());
+
 	}
 	
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
-		this.circle.setCenterX(centerX);
+
 	}
 	
 	public void setCenterY(double centerY) {
 		this.centerY = centerY;
-		this.circle.setCenterY(centerY);
+
 	}
 
 	public void setRadius(double radius) {
@@ -102,20 +86,12 @@ public class Ball {
 			throw new IllegalArgumentException(ILLEGALRADIUSARGUMENT);
 		}
 		this.radius = radius;
-		circle.setRadius(radius);
+
 	}
 
 	public void setColor(Paint color) {
 		this.color = color;
-		circle.setFill(color);
-	}
 
-	public void setCircle(Circle circle) {
-		setCenterX(circle.getCenterX());
-		setCenterY(circle.getCenterY());
-		setRadius(circle.getRadius());
-		setColor(circle.getFill());
-		this.circle = circle;
 	}
 	
 	@Override

@@ -16,13 +16,13 @@ public class GameLogic {
 	private final double widthX;
 	private final double widthY;
 	
-	private double positionY;
-	private boolean movingUp;
-	private boolean movingDown;
+	private double centerX;
+	private double centerY;
 	
-	private double positionX;
-	private boolean movingLeft;
-	private boolean movingRight;
+	private double radius;
+	
+	private double deltaX;
+	private double deltaY;
 	
 	private Ball ball;
 	
@@ -34,17 +34,17 @@ public class GameLogic {
 		this.widthY = widthY;
 		this.physics = physics;
 		
-		positionY = 100;
-		movingUp = false;
-		movingDown = true;
+		centerY = 100;
+		centerX = 100;
 		
-		positionX = 100;
-		movingLeft = false;
-		movingRight = true;
+		radius = 50;
 		
-		Velocity intialVelocityBall = new Velocity(10, 15); // In meters per second
-		double radiusBall = 50;
-		this.ball = new Ball(intialVelocityBall, positionX, positionY, radiusBall, Color.WHITE);
+		Velocity initialBallVelocity = new Velocity(80, 60); // In meters per second
+		ball = new Ball(initialBallVelocity, centerX, centerY, radius, Color.WHITE);
+		DoubleMatrix initialPixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
+		deltaX = initialPixelMoveRate.get(0);
+		deltaY = initialPixelMoveRate.get(1);
+		
 
 	}
 	
@@ -52,41 +52,16 @@ public class GameLogic {
 		
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
         log.info("pixelMoveRate: {}", pixelMoveRate.toString());
-		
-		if(ball.getCenterY() + ball.getRadius() < widthY && movingDown) {
-            movingUp = false;
-            movingDown = true;
-            positionY += pixelMoveRate.get(1);
-            
-        } else {
-            movingUp = true;
-            movingDown = false;
-            ball.setVelocity(ball.getVelocity().getSpeedX(), - ball.getVelocity().getSpeedY());
-            positionY -= pixelMoveRate.get(1);
-            if(ball.getCenterY() - ball.getRadius() <= 0) {
-                movingUp = false;
-                movingDown = true;
-            }
+       
+        
+        if(ball.getCenterY() - ball.getRadius() <= 0) {
+        	deltaY = pixelMoveRate.get(1);
+        }
+        else if(ball.getCenterY() + ball.getRadius() >= widthY) {
+        	deltaY = -pixelMoveRate.get(1);
         }
         
-        if(ball.getCenterX() + ball.getRadius() < widthX && movingRight) {
-            movingLeft = false;
-            movingRight = true;
-            positionX += pixelMoveRate.get(0);
-        } else {
-            movingLeft = true;
-            movingRight = false;
-            ball.setVelocity( - ball.getVelocity().getSpeedX(), ball.getVelocity().getSpeedY());
-            positionX -= pixelMoveRate.get(0);
-            if(ball.getCenterX() - ball.getRadius() <= 0) {
-                movingLeft = false;
-                movingRight = true;
-            }
-        }
-        
-        
-        ball.move(1.777, 3.555554);
-        
+
         log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
         
 	}

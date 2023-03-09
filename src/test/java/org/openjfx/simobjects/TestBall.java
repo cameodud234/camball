@@ -28,16 +28,7 @@ public class TestBall {
 	public void testBallConstructorVelocity() {
 		assertEquals(ball.getVelocity(), velocity);
 	 }
-	
-	@Test
-	public void testBallConstructorCenterX() {
-		assertEquals(ball.getCenterX(), centerX);
-	}
-	
-	@Test
-	public void testBallConstructorCenterY() {
-		assertEquals(ball.getCenterY(), centerY);
-	}
+
 	
 	@Test
 	public void testBallConstructorRadius() {

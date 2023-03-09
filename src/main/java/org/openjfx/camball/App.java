@@ -33,7 +33,7 @@ public class App extends Application {
 		final Logger log = LogManager.getLogger(App.class);
 		
 		final double framerate = 120;
-		final double pixelToMeter = 20;
+		final double pixelToMeter = 50;
 		final Physics physics = new Physics(framerate, pixelToMeter);
 	  
 		Group root = new Group();

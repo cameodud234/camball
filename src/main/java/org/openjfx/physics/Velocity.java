@@ -15,8 +15,8 @@ public class Velocity {
 		velocity = new DoubleMatrix(2);
 	}
 	
-	public Velocity(double speedX, double speedY) {
-		velocity = new DoubleMatrix(Arrays.asList(speedX, speedY));
+	public Velocity(double velocityX, double velocityY) {
+		velocity = new DoubleMatrix(Arrays.asList(velocityX, velocityY));
 	}
 	
 	public Velocity(DoubleMatrix velocity) throws VelocityException {
@@ -28,11 +28,11 @@ public class Velocity {
 		this.velocity.put(1, velocity.get(1));
 	}
 	
-	public double getSpeedX() {
+	public double getVelocityX() {
 		return velocity.get(0);
 	}
 	
-	public double getSpeedY() {
+	public double getVelocityY() {
 		return velocity.get(1);
 	}
 	
@@ -40,12 +40,12 @@ public class Velocity {
 		return velocity;
 	}
 	
-	public void setSpeedX(double speedX) {
-		velocity.put(0, speedX);
+	public void setVelocityX(double velocityX) {
+		velocity.put(0, velocityX);
 	}
 	
-	public void setSpeedY(double speedY) {
-		velocity.put(1, speedY);
+	public void setVelocityY(double velocityY) {
+		velocity.put(1, velocityY);
 	}
 	
 	@Override
@@ -53,8 +53,8 @@ public class Velocity {
 		if (this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		Velocity velocity = (Velocity) o;
-		return Double.compare(this.velocity.get(0), velocity.getSpeedX()) == 0 && 
-				Double.compare(this.velocity.get(1), velocity.getSpeedY()) == 0;
+		return Double.compare(this.velocity.get(0), velocity.getVelocityX()) == 0 && 
+				Double.compare(this.velocity.get(1), velocity.getVelocityY()) == 0;
 	}
 	
 	public double getAngleBetween(Velocity velocity) {
