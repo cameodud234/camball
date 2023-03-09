@@ -45,19 +45,14 @@ public class GameLogic {
 		deltaX = initialPixelMoveRate.get(0);
 		deltaY = initialPixelMoveRate.get(1);
 		
+
 	}
 	
 	public void update() {
 		
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(ball.getVelocity());
         log.info("pixelMoveRate: {}", pixelMoveRate.toString());
-        
-        if(ball.getCenterX() - ball.getRadius() <= 0) {
-        	deltaX = pixelMoveRate.get(0);
-        }
-        else if(ball.getCenterX() + ball.getRadius() >= widthX) {
-        	deltaX = -pixelMoveRate.get(0);
-        }
+       
         
         if(ball.getCenterY() - ball.getRadius() <= 0) {
         	deltaY = pixelMoveRate.get(1);
@@ -66,9 +61,7 @@ public class GameLogic {
         	deltaY = -pixelMoveRate.get(1);
         }
         
-        ball.move(deltaX, deltaY);
-        
-       
+
         log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
         
 	}

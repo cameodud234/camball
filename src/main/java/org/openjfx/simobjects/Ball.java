@@ -15,18 +15,9 @@ public class Ball {
 	private Paint color;
 	private Circle circle;
 	
-	private static String ILLEGALPOSITIONARGUMENT = "Position must be greater than zero.";
 	private static String ILLEGALRADIUSARGUMENT = "Radius must be greater than zero.";
 	
 
-	public Ball(Velocity velocity, double centerX, double centerY,
-					double radius, Paint color) {
-		
-		this.velocity = new Velocity(velocity.getVelocityX(), velocity.getVelocityY());
-		if(centerX < 0 || centerY < 0) {
-			throw new IllegalArgumentException(ILLEGALPOSITIONARGUMENT);
-		}
-		this.centerX = centerX; 
 		this.centerY = centerY;
 //		 need to test if radius is greater than zero.
 		if(radius < 0) {
@@ -35,25 +26,14 @@ public class Ball {
 		this.radius = radius;
 		this.color = color;
 		
-		this.circle = new Circle(this.centerX, this.centerY, this.radius);
-		this.circle.setFill(color);
 		
 	}
 	
 	public Ball(Ball ball) {
-		this.centerX = ball.getCenterX();
-		this.centerY = ball.getCenterY();
-		this.color = ball.getColor();
-	}
-	
-	
-	public void move(double deltaX, double deltaY) {
-		this.centerX += deltaX;
-		this.centerY += deltaY;
+
 		
-		this.circle.setCenterX(this.centerX);
-		this.circle.setCenterY(this.centerY);
-		
+		circle.setCenterX(centerX);
+		circle.setCenterY(centerY);
 	}
 	
 	public Velocity getVelocity() {
@@ -88,34 +68,30 @@ public class Ball {
 		this.velocity.setVelocityY(velocityY);
 	}
 	
-	public void setVelocity(Velocity velocity) { 
-		this.velocity.setVelocityX(velocity.getVelocityX());
-		this.velocity.setVelocityY(velocity.getVelocityY());
+
 	}
 	
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
-		this.circle.setCenterX(this.centerX);
+
 	}
 	
 	public void setCenterY(double centerY) {
 		this.centerY = centerY;
-		this.circle.setCenterY(this.centerY);
+
 	}
 
 	public void setRadius(double radius) {
+		if(radius < 0) {
+			throw new IllegalArgumentException(ILLEGALRADIUSARGUMENT);
+		}
 		this.radius = radius;
-		this.circle.setRadius(this.radius);
-	}
 
+	}
 
 	public void setColor(Paint color) {
 		this.color = color;
-		this.circle.setFill(this.color);
-	}
-	
-	public void setBall(Ball ball) {
-		
+
 	}
 	
 	@Override
