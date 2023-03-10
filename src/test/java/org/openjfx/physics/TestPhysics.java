@@ -32,5 +32,11 @@ public class TestPhysics extends TestPhysicsTestCases {
 		assertTrue(physics.getPixelMoveRate(velocity).compare(actualValue, Math.pow(10, -4.0)));
 	}
 	
+	@Test
+	void TestPhysicsEquals() {
+		Physics newPhysics = new Physics(framerate, pixelToMeter);
+		assertEquals(physics, newPhysics);
+	}
+	
 
 }
