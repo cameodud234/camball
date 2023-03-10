@@ -11,20 +11,20 @@ import org.junit.jupiter.api.Test;
 
 public class TestVelocity {
 	
-	double speedX = 5;
+	double velocityX = 5;
 			
-	double speedY = 2;
+	double velocityY = 2;
 	
-	Velocity velocity = new Velocity(speedX, speedY);
+	Velocity velocity = new Velocity(velocityX, velocityY);
 	
 	@Test
-	void TestVelocityConstructorSpeedX() {
-		assertEquals(velocity.getVelocityX(), speedX);
+	void TestVelocityConstructorVelocityX() {
+		assertEquals(velocity.getVelocityX(), velocityX);
 	}
 	
 	@Test
-	void TestVelocityConstructorSpeedY() {
-		assertEquals(velocity.getVelocityY(), speedY);
+	void TestVelocityConstructorVelocityY() {
+		assertEquals(velocity.getVelocityY(), velocityY);
 	}
 	
 	@Test
@@ -56,17 +56,17 @@ public class TestVelocity {
 	}
 	
 	@Test
-	void TestSetSpeedX() {
-		double newSpeedX = 8;
-		velocity.setVelocityX(newSpeedX);
-		assertEquals(velocity.getVelocityX(), newSpeedX);
+	void TestSetVelocityX() {
+		double newVelocityX = 8;
+		velocity.setVelocityX(newVelocityX);
+		assertEquals(velocity.getVelocityX(), newVelocityX);
 	}
 	
 	@Test
-	void TestSetSpeedY() {
-		double newSpeedY = 49;
-		velocity.setVelocityY(newSpeedY);
-		assertEquals(velocity.getVelocityY(), newSpeedY);
+	void TestSetVelocityY() {
+		double newVelocityY = 49;
+		velocity.setVelocityY(newVelocityY);
+		assertEquals(velocity.getVelocityY(), newVelocityY);
 	}
 	
 	@Test 
@@ -77,13 +77,13 @@ public class TestVelocity {
 	
 	@Test
 	void TestEquals() {
-		Velocity newVelocity = new Velocity(speedX, speedY);
+		Velocity newVelocity = new Velocity(velocityX, velocityY);
 		assertEquals(velocity, newVelocity);
 	}
 	
 	@Test
 	void TestNotEquals() {
-		Velocity newVelocity = new Velocity(speedX, 34);
+		Velocity newVelocity = new Velocity(velocityX, 34);
 		assertNotEquals(velocity, newVelocity);
 	}
 	

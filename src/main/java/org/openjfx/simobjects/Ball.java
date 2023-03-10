@@ -17,23 +17,39 @@ public class Ball {
 	
 	private static String ILLEGALRADIUSARGUMENT = "Radius must be greater than zero.";
 	
-
+	
+	public Ball(Velocity velocity, double centerX, double centerY,
+			double radius, Paint color) {
+		
+		this.velocity = new Velocity(velocity.getVelocityX(), velocity.getVelocityY());
+		
+		this.centerX = centerX; 
 		this.centerY = centerY;
-//		 need to test if radius is greater than zero.
+		
+		// need to test if radius is less than zero.
 		if(radius < 0) {
 			throw new IllegalArgumentException(ILLEGALRADIUSARGUMENT);
-		}
+		} 
+		
 		this.radius = radius;
+		
 		this.color = color;
 		
+		this.circle = new Circle(this.centerX, this.centerY, this.radius, this.color);
 		
 	}
 	
 	public Ball(Ball ball) {
-
-		
 		circle.setCenterX(centerX);
 		circle.setCenterY(centerY);
+	}
+	 
+	public void move(double deltaX, double deltaY) {
+		this.centerX += deltaX;
+		this.centerY += deltaY;
+		
+		this.circle.setCenterX(this.centerX);
+		this.circle.setCenterY(this.centerY);
 	}
 	
 	public Velocity getVelocity() {
@@ -68,17 +84,20 @@ public class Ball {
 		this.velocity.setVelocityY(velocityY);
 	}
 	
-
+	public void setVelocity(Velocity velocity) {
+		this.velocity = new Velocity();
+		this.velocity.setVelocityX(velocity.getVelocityX());
+		this.velocity.setVelocityY(velocity.getVelocityY());
 	}
 	
 	public void setCenterX(double centerX) {
 		this.centerX = centerX;
-
+		circle.setCenterX(this.centerX);
 	}
 	
 	public void setCenterY(double centerY) {
 		this.centerY = centerY;
-
+		circle.setCenterY(this.centerY);
 	}
 
 	public void setRadius(double radius) {
@@ -86,12 +105,12 @@ public class Ball {
 			throw new IllegalArgumentException(ILLEGALRADIUSARGUMENT);
 		}
 		this.radius = radius;
-
+		circle.setRadius(this.radius);
 	}
 
 	public void setColor(Paint color) {
 		this.color = color;
-
+		circle.setFill(this.color);
 	}
 	
 	@Override

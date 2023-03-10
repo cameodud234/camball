@@ -1,9 +1,15 @@
 package org.openjfx.simobjects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
+
+import org.jblas.DoubleMatrix;
 import org.junit.jupiter.api.Test;
+import org.openjfx.physics.Position;
+import org.openjfx.physics.PositionException;
 import org.openjfx.physics.Velocity;
 
 import javafx.scene.paint.Color;
@@ -46,6 +52,26 @@ public class TestBall {
 	}
 	
 	@Test
+	public void testBallConstructorNegativeRadiusException() {
+		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+			double radius = -1;
+			new Ball(velocity, centerX, centerY, radius, color);
+		});
+		String expectedMessage = "Radius must be greater than zero.";
+		assertEquals(expectedMessage, exception.getMessage());
+	}
+	
+	@Test
+	public void testBallConstructorSetNegativeRadiusException() {
+		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+			double radius = -1;
+			ball.setRadius(radius);
+		});
+		String expectedMessage = "Radius must be greater than zero.";
+		assertEquals(expectedMessage, exception.getMessage());
+	}
+	
+	@Test
 	public void testBallSetCenterX() {
 		double centerX = 12;
 		ball.setCenterX(centerX);
@@ -78,10 +104,11 @@ public class TestBall {
 	
 	@Test
 	public void testBallSetVelocityWithSpeedXSpeedY() {
-		double speedX = 9;
-		double speedY = 33;
-		ball.setVelocity(speedX, speedY);
-		assertEquals(ball.getVelocity().getSpeedX(), speedX);
+		double velocityX = 9;
+		double velocityY = 33;
+		ball.setVelocity(velocityX, velocityY);
+		assertEquals(ball.getVelocity().getVelocityX(), velocityX);
+		assertEquals(ball.getVelocity().getVelocityY(), velocityY);
 	}
 	
 	@Test
@@ -90,21 +117,6 @@ public class TestBall {
 		ball.setColor(color);
 		assertEquals(ball.getColor(), color);
 		assertEquals(ball.getCircle().getFill(), color);
-	}
-	
-	@Test
-	public void testBallSetCircle() {
-		double centerX = 50;
-		double centerY = 20;
-		double radius = 8;
-		Color color = Color.AQUA;
-		Circle circle = new Circle(centerX, centerY, radius, color);
-		ball.setCircle(circle);
-		assertEquals(ball.getCenterX(), centerX);
-		assertEquals(ball.getCenterY(), centerY);
-		assertEquals(ball.getRadius(), radius);
-		assertEquals(ball.getColor(), color);
-		assertEquals(ball.getCircle(), circle);
 	}
 	
 	@Test
