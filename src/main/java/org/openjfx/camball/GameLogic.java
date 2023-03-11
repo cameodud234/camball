@@ -33,10 +33,10 @@ public class GameLogic {
 		double radius = 50;
 		
 		Velocity initialBallVelocity1 = new Velocity(80, 60); // In meters per second
-		ball1 = new Ball(initialBallVelocity1, physics, centerX, centerY, widthX, widthY, radius, Color.WHITE);
+		ball1 = new Ball(initialBallVelocity1, physics, centerX, centerY, radius, Color.WHITE);
 		
 		Velocity initialBallVelocity2 = new Velocity(40, 60);
-		ball2 = new Ball(initialBallVelocity2, physics, centerX, centerY, widthX, widthY, radius + 25, Color.AQUA);
+		ball2 = new Ball(initialBallVelocity2, physics, centerX, centerY, radius + 25, Color.AQUA);
 
 	}
 	

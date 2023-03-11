@@ -8,11 +8,15 @@ public class Physics {
 	private final double framerate;
 	
 	private double pixelToMeter;
+	private double screenWidthX;
+	private double screenWidthY;
 	
-	public Physics(double framerate, double pixelToMeter) {
+	public Physics(double framerate, double pixelToMeter, double screenWidthX, double screenWidthY) {
 		
 		this.framerate = framerate;
 		this.pixelToMeter = pixelToMeter;
+		this.screenWidthX = screenWidthX;
+		this.screenWidthY = screenWidthY;
 		
 	}
 	
@@ -30,6 +34,14 @@ public class Physics {
 	
 	public double getPixelToMeter() {
 		return pixelToMeter;
+	}
+	
+	public double getScreenWidthX() {
+		return screenWidthX;
+	}
+	
+	public double getScreenWidthY() {
+		return screenWidthY;
 	}
 	
 	@Override
