@@ -135,15 +135,16 @@ public class TestBall {
 		assertEquals(ball, newBall);
 	}
 	
-//	@Test
-//	public void testBallMove() {
-//		double deltaX = 29;
-//		double deltaY = -3.6;
-//		double beforeCenterX = ball.getCenterX();
-//		double beforeCenterY = ball.getCenterY();
-//		ball.move(deltaX, deltaY);
-//		assertEquals(ball.getCenterX(), beforeCenterX + deltaX);
-//		assertEquals(ball.getCenterY(), beforeCenterY + deltaY);
-//	}
+	@Test
+	public void testBallMove() {
+		double beforeCenterX = ball.getCenterX();
+		double beforeCenterY = ball.getCenterY();
+		DoubleMatrix delta = physics.getPixelMoveRate(ball.getVelocity());
+		double deltaX = delta.get(0);
+		double deltaY = delta.get(1);
+		ball.move();
+		assertEquals(ball.getCenterX(), beforeCenterX + deltaX);
+		assertEquals(ball.getCenterY(), beforeCenterY + deltaY);
+	}
 
 }
