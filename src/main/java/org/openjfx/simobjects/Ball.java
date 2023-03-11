@@ -62,17 +62,17 @@ public class Ball {
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
 		
 		if(centerX - radius <= 0) {
-        	deltaX = pixelMoveRate.get(0);
+        	deltaX = Math.abs(pixelMoveRate.get(0));
         }
         else if(centerX + radius >= boundX) {
-        	deltaX = -pixelMoveRate.get(0);
+        	deltaX = -Math.abs(pixelMoveRate.get(0));
         }
         
         if(centerY - radius <= 0) {
-        	deltaY = pixelMoveRate.get(1);
+        	deltaY = Math.abs(pixelMoveRate.get(1));
         }
         else if(centerY + radius >= boundY) {
-        	deltaY = -pixelMoveRate.get(1);
+        	deltaY = -Math.abs(pixelMoveRate.get(1));
         }
         
         centerX += deltaX;
