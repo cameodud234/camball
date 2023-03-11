@@ -14,7 +14,10 @@ public class TestPhysics extends TestPhysicsTestCases {
 	
 	double pixelToMeter = 10;
 	
-	Physics physics = new Physics(framerate, pixelToMeter);
+	double screenWidthX = 400;
+	double screenWidthY = 300;
+	
+	Physics physics = new Physics(framerate, pixelToMeter, screenWidthX, screenWidthY);
 	
 	@Test
 	void TestPhysicsConstructorFramerate() {
@@ -34,7 +37,7 @@ public class TestPhysics extends TestPhysicsTestCases {
 	
 	@Test
 	void TestPhysicsEquals() {
-		Physics newPhysics = new Physics(framerate, pixelToMeter);
+		Physics newPhysics = new Physics(framerate, pixelToMeter, screenWidthX, screenWidthY);
 		assertEquals(physics, newPhysics);
 	}
 

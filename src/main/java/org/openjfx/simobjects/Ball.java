@@ -30,13 +30,14 @@ public class Ball {
 		
 		this.velocity = new Velocity(velocity.getVelocityX(), velocity.getVelocityY());
 		
-		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter());
-		
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
 		this.boundX = boundX;
 		this.boundY = boundY;
+		
+		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter(), 
+				this.boundX, this.boundY);
 		
 		// need to test if radius is less than zero.
 		if(radius < 0) {
@@ -55,7 +56,7 @@ public class Ball {
 		deltaY = pixelMoveRate.get(1);
 
 	}
-	 
+	
 	public void move() {
 		
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
@@ -79,6 +80,22 @@ public class Ball {
         circle.setCenterX(centerX);
         circle.setCenterY(centerY);
 		
+	}
+	
+	public double getBoundX() {
+		return boundX;
+	}
+
+	public double getBoundY() {
+		return boundY;
+	}
+
+	public double getDeltaY() {
+		return deltaY;
+	}
+
+	public double getDeltaX() {
+		return deltaX;
 	}
 	
 	public Velocity getVelocity() {
@@ -138,6 +155,22 @@ public class Ball {
 		}
 		this.radius = radius;
 		circle.setRadius(this.radius);
+	}
+	
+	public void setDeltaX(double deltaX) {
+		this.deltaX = deltaX;
+	}
+
+	public void setDeltaY(double deltaY) {
+		this.deltaY = deltaY;
+	}
+	
+	public void setBoundX(double boundX) {
+		this.boundX = boundX;
+	}
+	
+	public void setBoundY(double boundY) {
+		this.boundY = boundY;
 	}
 
 	public void setColor(Paint color) {

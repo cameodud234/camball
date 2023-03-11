@@ -40,7 +40,7 @@ public class App extends Application {
 		
 		final double framerate = 120;
 		final double pixelToMeter = 50;
-		final Physics physics = new Physics(framerate, pixelToMeter);
+		final Physics physics = new Physics(framerate, pixelToMeter, widthX, widthY);
 	  
 		Group root = new Group();
    	  

@@ -20,13 +20,14 @@ import javafx.scene.shape.Circle;
 public class TestBall {
 	
 	Velocity velocity = new Velocity(1,2);
-	Physics physics = new Physics(60, 10);
 	double centerX = 100;
 	double centerY = 40;
 	double boundX = 800;
 	double boundY = 600;
 	double radius = 10;
 	Paint color = Color.BLUE;
+	
+	Physics physics = new Physics(60, 10, boundX, boundY);
 	
 	Ball ball = new Ball(
 			velocity, physics, 
