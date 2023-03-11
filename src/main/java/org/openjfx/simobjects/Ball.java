@@ -25,7 +25,6 @@ public class Ball {
 	
 	private static String ILLEGALRADIUSARGUMENT = "Radius must be greater than zero.";
 	
-	
 	public Ball(Velocity velocity, Physics physics, double centerX, double centerY,
 			double boundX, double boundY, double radius, Paint color) {
 		
@@ -54,7 +53,7 @@ public class Ball {
 		
 		deltaX = pixelMoveRate.get(0);
 		deltaY = pixelMoveRate.get(1);
-		
+
 	}
 	 
 	public void move() {

@@ -37,6 +37,5 @@ public class TestPhysics extends TestPhysicsTestCases {
 		Physics newPhysics = new Physics(framerate, pixelToMeter);
 		assertEquals(physics, newPhysics);
 	}
-	
 
 }
