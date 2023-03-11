@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import org.jblas.DoubleMatrix;
 import org.junit.jupiter.api.Test;
+import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.PositionException;
 import org.openjfx.physics.Velocity;
@@ -19,21 +20,30 @@ import javafx.scene.shape.Circle;
 public class TestBall {
 	
 	Velocity velocity = new Velocity(1,2);
+	Physics physics = new Physics(60, 10);
 	double centerX = 100;
 	double centerY = 40;
+	double boundX = 800;
+	double boundY = 600;
 	double radius = 10;
 	Paint color = Color.BLUE;
 	
 	Ball ball = new Ball(
-			velocity, centerX, 
-			centerY, radius, 
-			color
+			velocity, physics, 
+			centerX, centerY,
+			boundX, boundY,
+			radius, color
 	);
 	
 	@Test
 	public void testBallConstructorVelocity() {
 		assertEquals(ball.getVelocity(), velocity);
 	 }
+	
+//	@Test
+//	public void testBallConstructorPhysics() {
+//		assertEquals(ball.getPhysics(), physics);
+//	}
 
 	
 	@Test
@@ -55,7 +65,7 @@ public class TestBall {
 	public void testBallConstructorNegativeRadiusException() {
 		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
 			double radius = -1;
-			new Ball(velocity, centerX, centerY, radius, color);
+			new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
 		});
 		String expectedMessage = "Radius must be greater than zero.";
 		assertEquals(expectedMessage, exception.getMessage());
@@ -120,12 +130,19 @@ public class TestBall {
 	}
 	
 	@Test
+	public void testBallEquals() {
+		Ball newBall = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
+		assertEquals(ball, newBall);
+	}
+	
+	@Test
 	public void testBallMove() {
-		double deltaX = 29;
-		double deltaY = -3.6;
 		double beforeCenterX = ball.getCenterX();
 		double beforeCenterY = ball.getCenterY();
-		ball.move(deltaX, deltaY);
+		DoubleMatrix delta = physics.getPixelMoveRate(ball.getVelocity());
+		double deltaX = delta.get(0);
+		double deltaY = delta.get(1);
+		ball.move();
 		assertEquals(ball.getCenterX(), beforeCenterX + deltaX);
 		assertEquals(ball.getCenterY(), beforeCenterY + deltaY);
 	}

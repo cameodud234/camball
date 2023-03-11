@@ -1,5 +1,10 @@
 package org.openjfx.camball;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +23,7 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class App extends Application {
 	
@@ -59,7 +65,8 @@ public class App extends Application {
 				
 				if(now - lastTime > frameInterval) {
 					game.update();
-					root.getChildren().setAll(game.getBall().getCircle());
+					Collection<Circle> balls = List.of(game.getBall1().getCircle(), game.getBall2().getCircle());
+					root.getChildren().setAll(balls);
 					lastTime = now;
 					timer++;
 					log.info("The current frame is: {}", timer);
