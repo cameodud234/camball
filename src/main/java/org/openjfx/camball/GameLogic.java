@@ -42,7 +42,7 @@ public class GameLogic {
 		Velocity initialBallVelocity2 = new Velocity(-40, 60);
 		ball2 = new Ball(initialBallVelocity2, physics, centerX2, centerY2, 
 				screenWidthX, screenWidthY, radius + 25, Color.AQUA);
-
+		
 	}
 	
 	public void update() {

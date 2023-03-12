@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class TestBall {
+public class TestBall extends TestBallMoveTestCases {
 	
 	Velocity velocity = new Velocity(1,2);
 	double centerX = 100;
@@ -41,10 +41,10 @@ public class TestBall {
 		assertEquals(ball.getVelocity(), velocity);
 	 }
 	
-//	@Test
-//	public void testBallConstructorPhysics() {
-//		assertEquals(ball.getPhysics(), physics);
-//	}
+	@Test
+	public void testBallConstructorPhysics() {
+		assertEquals(ball.getPhysics(), physics);
+	}
 
 	
 	@Test
@@ -137,7 +137,7 @@ public class TestBall {
 	}
 	
 	@Test
-	public void testBallMove() {
+	public void testBallMove(Velocity velocity, DoubleMatrix pixelMoveRate, List<Double> delta) {
 		double beforeCenterX = ball.getCenterX();
 		double beforeCenterY = ball.getCenterY();
 		DoubleMatrix delta = physics.getPixelMoveRate(ball.getVelocity());

@@ -1,6 +1,5 @@
 package org.openjfx.simobjects;
 
-
 import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Velocity;
