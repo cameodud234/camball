@@ -1,7 +1,5 @@
 package org.openjfx.camball;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class App extends Application {
 		
 		final double framerate = 120;
 		final double pixelToMeter = 50;
-		final Physics physics = new Physics(framerate, pixelToMeter);
+		final Physics physics = new Physics(framerate, pixelToMeter, widthX, widthY);
 	  
 		Group root = new Group();
    	  

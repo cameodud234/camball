@@ -1,6 +1,5 @@
 package org.openjfx.simobjects;
 
-
 import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Velocity;
@@ -30,13 +29,14 @@ public class Ball {
 		
 		this.velocity = new Velocity(velocity.getVelocityX(), velocity.getVelocityY());
 		
-		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter());
-		
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
 		this.boundX = boundX;
 		this.boundY = boundY;
+		
+		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter(), 
+				this.boundX, this.boundY);
 		
 		// need to test if radius is less than zero.
 		if(radius < 0) {
@@ -48,37 +48,53 @@ public class Ball {
 		this.color = color;
 		
 		circle = new Circle(this.centerX, this.centerY, this.radius, this.color);
-		
+		 
 		DoubleMatrix pixelMoveRate = this.physics.getPixelMoveRate(this.velocity);
 		
 		deltaX = pixelMoveRate.get(0);
 		deltaY = pixelMoveRate.get(1);
 
 	}
-	 
+	
 	public void move() {
-		
+
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
 		
 		if(centerX - radius <= 0) {
-        	deltaX = pixelMoveRate.get(0);
+        	deltaX = Math.abs(pixelMoveRate.get(0));
         }
         else if(centerX + radius >= boundX) {
-        	deltaX = -pixelMoveRate.get(0);
+        	deltaX = -Math.abs(pixelMoveRate.get(0));
         }
         
         if(centerY - radius <= 0) {
-        	deltaY = pixelMoveRate.get(1);
+        	deltaY = Math.abs(pixelMoveRate.get(1));
         }
         else if(centerY + radius >= boundY) {
-        	deltaY = -pixelMoveRate.get(1);
+        	deltaY = -Math.abs(pixelMoveRate.get(1));
         }
         
         centerX += deltaX;
-        centerY += deltaY;
+        centerY += deltaY;                       
         circle.setCenterX(centerX);
         circle.setCenterY(centerY);
 		
+	}
+	
+	public double getBoundX() {
+		return boundX;
+	}
+
+	public double getBoundY() {
+		return boundY;
+	}
+
+	public double getDeltaY() {
+		return deltaY;
+	}
+
+	public double getDeltaX() {
+		return deltaX;
 	}
 	
 	public Velocity getVelocity() {
@@ -139,12 +155,44 @@ public class Ball {
 		this.radius = radius;
 		circle.setRadius(this.radius);
 	}
+	
+	public void setDeltaX(double deltaX) {
+		this.deltaX = deltaX;
+	}
+
+	public void setDeltaY(double deltaY) {
+		this.deltaY = deltaY;
+	}
+	
+	public void setBoundX(double boundX) {
+		this.boundX = boundX;
+	}
+	
+	public void setBoundY(double boundY) {
+		this.boundY = boundY;
+	}
 
 	public void setColor(Paint color) {
 		this.color = color;
 		circle.setFill(this.color);
 	}
 	
+	@Override
+	public int hashCode() {
+		int result = velocity.hashCode();
+//		result = 31 * result + physics.hashCode();
+		result = 31 * result + Double.hashCode(centerX);
+		result = 31 * result + Double.hashCode(centerY);
+		result = 31 * result + Double.hashCode(boundX);
+		result = 31 * result + Double.hashCode(boundY);
+		result = 31 * result + Double.hashCode(deltaX);
+		result = 31 * result + Double.hashCode(deltaY);
+		result = 31 * result + Double.hashCode(radius);
+		result = 31 * result + color.hashCode();
+		
+		return result;		
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if(this == o) return true;
