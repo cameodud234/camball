@@ -13,7 +13,7 @@ public class TestPhysicsTestCases {
 				Arguments.of(new Velocity(2.0,3.0), new DoubleMatrix(Arrays.asList(0.16666667, 0.25))),
 				Arguments.of(new Velocity(9.0,30.0), new DoubleMatrix(Arrays.asList(0.75, 2.5))),
 				Arguments.of(new Velocity(5.5,6.9), new DoubleMatrix(Arrays.asList(0.45833333, 0.575))),
-				Arguments.of(new Velocity(-36, 56), new DoubleMatrix(Arrays.asList(-3.        ,  4.66666667)))
+				Arguments.of(new Velocity(-36, 56), new DoubleMatrix(Arrays.asList(-3.0, 4.66666667)))
 		);
 	}
 	
