@@ -1,13 +1,17 @@
 package org.openjfx.simobjects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.jblas.DoubleMatrix;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.PositionException;
@@ -137,15 +141,34 @@ public class TestBall extends TestBallMoveTestCases {
 	}
 	
 	@Test
-	public void testBallMove(Velocity velocity, DoubleMatrix pixelMoveRate, List<Double> delta) {
-		double beforeCenterX = ball.getCenterX();
-		double beforeCenterY = ball.getCenterY();
-		DoubleMatrix delta = physics.getPixelMoveRate(ball.getVelocity());
-		double deltaX = delta.get(0);
-		double deltaY = delta.get(1);
+	public void testBallHashCode() {
+		Ball ball1 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
+		Ball ball2 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
+		Velocity velocity = new Velocity(43, 6);
+		Ball ball3 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
+		
+		int hash1 = ball1.hashCode();
+		int hash2 = ball2.hashCode();
+		int hash3 = ball3.hashCode();
+		
+		assertEquals(hash1, hash2);
+		assertNotEquals(hash2, hash3);
+		
+	}
+	
+	@ParameterizedTest
+	@MethodSource("TestBallMoveTestCases")
+	public void testBallMove(Velocity velocity, List<Double> centers, List<Double> actualCenterAfter) {
+		double boundX = 500;
+		double boundY = 600;
+		double centerX = centers.get(0);
+		double centerY = centers.get(1);
+		Ball ball = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
 		ball.move();
-		assertEquals(ball.getCenterX(), beforeCenterX + deltaX);
-		assertEquals(ball.getCenterY(), beforeCenterY + deltaY);
+		double epsilonX = Math.abs(ball.getCenterX() - actualCenterAfter.get(0)) / actualCenterAfter.get(0);
+		double epsilonY = Math.abs(ball.getCenterY() - actualCenterAfter.get(1)) / actualCenterAfter.get(1);
+		assertTrue(epsilonX < 0.05);
+		assertTrue(epsilonY < 0.05);
 	}
 
 }

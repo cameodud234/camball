@@ -48,7 +48,7 @@ public class Ball {
 		this.color = color;
 		
 		circle = new Circle(this.centerX, this.centerY, this.radius, this.color);
-		
+		 
 		DoubleMatrix pixelMoveRate = this.physics.getPixelMoveRate(this.velocity);
 		
 		deltaX = pixelMoveRate.get(0);
@@ -58,6 +58,7 @@ public class Ball {
 	
 	public void move() {
 		
+
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
 		
 		if(centerX - radius <= 0) {
@@ -175,6 +176,23 @@ public class Ball {
 	public void setColor(Paint color) {
 		this.color = color;
 		circle.setFill(this.color);
+	}
+	
+	@Override
+	public int hashCode() {
+		int result = velocity.hashCode();
+		
+		result = 31 * result + Double.hashCode(centerX);
+		result = 31 * result + Double.hashCode(centerY);
+		result = 31 * result + Double.hashCode(boundX);
+		result = 31 * result + Double.hashCode(boundY);
+		result = 31 * result + Double.hashCode(deltaX);
+		result = 31 * result + Double.hashCode(deltaY);
+		result = 31 * result + Double.hashCode(radius);
+		result = 31 * result + color.hashCode();
+		result = 31 * result + circle.hashCode();
+		
+		return result;		
 	}
 	
 	@Override

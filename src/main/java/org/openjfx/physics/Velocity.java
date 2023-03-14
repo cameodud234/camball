@@ -49,6 +49,12 @@ public class Velocity {
 	}
 	
 	@Override
+	public int hashCode() {
+		int result = velocity.hashCode();
+		return result;
+	}
+	
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
@@ -60,7 +66,7 @@ public class Velocity {
 	public double getAngleBetween(Velocity velocity) {
 		
 		double angleRad = 
-				Math.acos( 
+				Math.acos(
 					this.velocity.dot(velocity.getVelocity()) / 
 					(this.velocity.norm2() * velocity.getVelocity().norm2())
 		);
