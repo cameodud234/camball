@@ -57,7 +57,6 @@ public class Ball {
 	}
 	
 	public void move() {
-		
 
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
 		
@@ -76,7 +75,7 @@ public class Ball {
         }
         
         centerX += deltaX;
-        centerY += deltaY;
+        centerY += deltaY;                       
         circle.setCenterX(centerX);
         circle.setCenterY(centerY);
 		
@@ -181,7 +180,7 @@ public class Ball {
 	@Override
 	public int hashCode() {
 		int result = velocity.hashCode();
-		
+//		result = 31 * result + physics.hashCode();
 		result = 31 * result + Double.hashCode(centerX);
 		result = 31 * result + Double.hashCode(centerY);
 		result = 31 * result + Double.hashCode(boundX);
@@ -190,11 +189,10 @@ public class Ball {
 		result = 31 * result + Double.hashCode(deltaY);
 		result = 31 * result + Double.hashCode(radius);
 		result = 31 * result + color.hashCode();
-		result = 31 * result + circle.hashCode();
 		
 		return result;		
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if(this == o) return true;

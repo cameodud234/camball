@@ -76,6 +76,21 @@ public class TestVelocity {
 	}
 	
 	@Test
+	void TestHashCode() {
+		Velocity v1 = new Velocity(87, 39);
+		Velocity v2 = new Velocity(87, 39);
+		Velocity v3 = new Velocity(89, 4930);
+		
+		int hashCode1 = v1.hashCode();
+		int hashCode2 = v2.hashCode();
+		int hashCode3 = v3.hashCode();
+		
+		assertEquals(hashCode1, hashCode2);
+		assertNotEquals(hashCode2, hashCode3);
+		
+	}
+	
+	@Test
 	void TestEquals() {
 		Velocity newVelocity = new Velocity(velocityX, velocityY);
 		assertEquals(velocity, newVelocity);

@@ -31,7 +31,10 @@ public class TestBall extends TestBallMoveTestCases {
 	double radius = 10;
 	Paint color = Color.BLUE;
 	
-	Physics physics = new Physics(60, 10, boundX, boundY);
+	double framerate = 60;
+	double pixelToMeter = 10;
+	
+	Physics physics = new Physics(framerate, pixelToMeter, boundX, boundY);
 	
 	Ball ball = new Ball(
 			velocity, physics, 
@@ -142,10 +145,10 @@ public class TestBall extends TestBallMoveTestCases {
 	
 	@Test
 	public void testBallHashCode() {
+		Velocity newVelocity = new Velocity(432, 539);
 		Ball ball1 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
 		Ball ball2 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		Velocity velocity = new Velocity(43, 6);
-		Ball ball3 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
+		Ball ball3 = new Ball(newVelocity, physics, centerX, centerY, boundX, boundY, radius, color);
 		
 		int hash1 = ball1.hashCode();
 		int hash2 = ball2.hashCode();

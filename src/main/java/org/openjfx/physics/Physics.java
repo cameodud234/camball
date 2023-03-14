@@ -45,6 +45,15 @@ public class Physics {
 	}
 	
 	@Override
+	public int hashCode() {
+		int result = Double.hashCode(framerate);
+		result = 31 * result + Double.hashCode(pixelToMeter);
+		result = 31 * result + Double.hashCode(screenWidthX);
+		result = 31 * result + Double.hashCode(screenWidthY);
+		return result;
+	}
+	
+	@Override
 	public boolean equals(Object o) {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
