@@ -180,7 +180,7 @@ public class Ball {
 	@Override
 	public int hashCode() {
 		int result = velocity.hashCode();
-//		result = 31 * result + physics.hashCode();
+		result = 31 * result + physics.hashCode();
 		result = 31 * result + Double.hashCode(centerX);
 		result = 31 * result + Double.hashCode(centerY);
 		result = 31 * result + Double.hashCode(boundX);
