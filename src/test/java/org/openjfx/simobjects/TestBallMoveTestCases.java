@@ -3,13 +3,12 @@ package org.openjfx.simobjects;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.jblas.DoubleMatrix;
 import org.junit.jupiter.params.provider.Arguments;
 import org.openjfx.physics.Velocity;
 
 public class TestBallMoveTestCases {
 	
-	public static Stream<Arguments> TestBallMoveTestCases() {
+	public static Stream<Arguments> TestBallMoveTestCasesArgs() {
 		return Stream.of(
 				Arguments.of(new Velocity(2.0,3.0), Arrays.asList(4.0, 0.25), Arrays.asList(4.33333333, 0.75)),
 				Arguments.of(new Velocity(9.0,30.0), Arrays.asList(0.75, 2.5), Arrays.asList(2.25, 7.5)),

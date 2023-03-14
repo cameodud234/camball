@@ -155,7 +155,7 @@ public class TestBall extends TestBallMoveTestCases {
 	}
 	
 	@ParameterizedTest
-	@MethodSource("TestBallMoveTestCases")
+	@MethodSource("TestBallMoveTestCasesArgs")
 	public void testBallMove(Velocity velocity, List<Double> centers, List<Double> actualCenterAfter) {
 		double boundX = 500;
 		double boundY = 600;
