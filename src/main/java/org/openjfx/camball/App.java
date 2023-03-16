@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.openjfx.physics.Physics;
+import org.openjfx.physics.Position;
 import org.openjfx.simobjects.Ball;
 
 /**
@@ -40,7 +41,7 @@ public class App extends Application {
 		
 		final Logger log = LogManager.getLogger(App.class);
 		
-		final double framerate = 120;
+		final double framerate = 240;
 		final double pixelToMeter = 50;
 		final Physics physics = new Physics(framerate, pixelToMeter, widthX, widthY);
 	  
@@ -58,6 +59,12 @@ public class App extends Application {
 			
 			private long timer = 0;
 			
+			private double centerX = 450;
+			private double centerY = 500;
+			
+			private Position circle1Position = new Position(centerX, centerY);
+			private Position circle2Position = new Position(centerX - 100, centerY - 100);
+			
 			@Override
 			public void handle(long now) {
 				if(lastTime == 0) {
@@ -67,13 +74,26 @@ public class App extends Application {
 				
 				if(now - lastTime > frameInterval) {
 					game.update();
-					Collection<List<Ball>> balls = new ArrayList<>();
-					Circle circle = new Circle(250, 300, 20, Color.ALICEBLUE);
-					List<Circle> ballList = new ArrayList<>(List.of(circle));
-					root.getChildren().setAll(ballList);
+					Circle circle1 = new Circle(circle1Position.getPositionX(), circle1Position.getPositionY(), 20, Color.ALICEBLUE);
+					Circle circle2 = new Circle(circle2Position.getPositionX(), circle2Position.getPositionY(), 30, Color.ALICEBLUE);
+					List<Circle> circles = new ArrayList<>(List.of(circle1, circle2));
+					root.getChildren().clear();
+					root.getChildren().addAll(circles);
 					lastTime = now;
 					timer++;
 					log.info("The current frame is: {}", timer);
+					
+					circle1Position.setPositionX(circle1Position.getPositionX() + 3);
+					circle1Position.setPositionY(circle1Position.getPositionY() - 2);
+					
+					circle2Position.setPositionX(circle2Position.getPositionX() + 3);
+					circle2Position.setPositionY(circle2Position.getPositionY() + 2);
+					
+					circle1.setCenterX(circle1Position.getPositionX());
+					circle1.setCenterY(circle1Position.getPositionY());
+					
+					circle2.setCenterX(circle2Position.getPositionX());
+					circle2.setCenterY(circle2Position.getPositionY());
 				}
 			}
 		};
