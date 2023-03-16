@@ -67,12 +67,10 @@ public class App extends Application {
 				
 				if(now - lastTime > frameInterval) {
 					game.update();
-//					Collection<List<Ball>> balls = new ArrayList<>();
-//					List<Ball> ballList = List.of(game.getBall1());
-//					balls.add(ballList);
-					Set<Ball> balls = new HashSet<>();
-					balls.add(game.getBall1());
-					root.getChildren().setAll(balls);
+					Collection<List<Ball>> balls = new ArrayList<>();
+					Circle circle = new Circle(250, 300, 20, Color.ALICEBLUE);
+					List<Circle> ballList = new ArrayList<>(List.of(circle));
+					root.getChildren().setAll(ballList);
 					lastTime = now;
 					timer++;
 					log.info("The current frame is: {}", timer);
