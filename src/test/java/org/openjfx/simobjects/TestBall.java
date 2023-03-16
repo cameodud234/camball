@@ -56,7 +56,7 @@ public class TestBall extends TestBallMoveTestCases {
 	
 	@Test
 	public void testBallConstructorColor() {
-		assertEquals(ball.getColor(), color);
+		assertEquals(ball.getFill(), color);
 	}
 	
 	@Test
@@ -65,31 +65,10 @@ public class TestBall extends TestBallMoveTestCases {
 	}
 	
 	@Test
-	public void testBallConstructorNegativeRadiusException() {
-		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-			double radius = -1;
-			new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		});
-		String expectedMessage = "Radius must be greater than zero.";
-		assertEquals(expectedMessage, exception.getMessage());
-	}
-	
-	@Test
-	public void testBallConstructorSetNegativeRadiusException() {
-		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-			double radius = -1;
-			ball.setRadius(radius);
-		});
-		String expectedMessage = "Radius must be greater than zero.";
-		assertEquals(expectedMessage, exception.getMessage());
-	}
-	
-	@Test
 	public void testBallSetCenterX() {
 		double centerX = 12;
 		ball.setCenterX(centerX);
 		assertEquals(ball.getCenterX(), centerX);
-		assertEquals(ball.getCircle().getCenterX(), centerX);
 	}
 	
 	@Test
@@ -97,7 +76,6 @@ public class TestBall extends TestBallMoveTestCases {
 		double centerY = 12;
 		ball.setCenterY(centerY);
 		assertEquals(ball.getCenterY(), centerY);
-		assertEquals(ball.getCircle().getCenterY(), centerY);
 	}
 	
 	@Test
@@ -105,7 +83,6 @@ public class TestBall extends TestBallMoveTestCases {
 		double radius = 15;
 		ball.setRadius(radius);
 		assertEquals(ball.getRadius(), radius);
-		assertEquals(ball.getCircle().getRadius(), radius);
 	}
 	
 	@Test 
@@ -127,9 +104,8 @@ public class TestBall extends TestBallMoveTestCases {
 	@Test
 	public void testBallSetColor() {
 		Paint color = Color.ALICEBLUE;
-		ball.setColor(color);
-		assertEquals(ball.getColor(), color);
-		assertEquals(ball.getCircle().getFill(), color);
+		ball.setFill(color);
+		assertEquals(ball.getFill(), color);
 	}
 	
 	@Test

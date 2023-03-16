@@ -1,12 +1,16 @@
 package org.openjfx.camball;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.openjfx.physics.Physics;
+import org.openjfx.simobjects.Ball;
 
 /**
  * JavaFX App
@@ -63,7 +67,11 @@ public class App extends Application {
 				
 				if(now - lastTime > frameInterval) {
 					game.update();
-					Collection<Circle> balls = List.of(game.getBall1().getCircle(), game.getBall2().getCircle());
+//					Collection<List<Ball>> balls = new ArrayList<>();
+//					List<Ball> ballList = List.of(game.getBall1());
+//					balls.add(ballList);
+					Set<Ball> balls = new HashSet<>();
+					balls.add(game.getBall1());
 					root.getChildren().setAll(balls);
 					lastTime = now;
 					timer++;

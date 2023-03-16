@@ -50,7 +50,7 @@ public class GameLogic {
 //        log.info("Position: [{}, {}]", ball1.getCenterX(), ball1.getCenterY());
         
         ball1.move();
-        ball2.move();
+//        ball2.move();
         
 	}
 	
