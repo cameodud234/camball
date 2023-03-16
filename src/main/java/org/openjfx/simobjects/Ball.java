@@ -41,25 +41,29 @@ public class Ball extends Circle {
 
 		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
 		
-		if(super.getCenterX() - super.getRadius() <= 0) {
-        	deltaX = Math.abs(pixelMoveRate.get(0));
-        }
-        else if(super.getCenterX() + super.getRadius() >= boundX) {
-        	deltaX = -Math.abs(pixelMoveRate.get(0));
-        }
+//		if(super.getCenterX() - super.getRadius() <= 0) {
+//        	deltaX = Math.abs(pixelMoveRate.get(0));
+//        }
+//        else if(super.getCenterX() + super.getRadius() >= boundX) {
+//        	deltaX = -Math.abs(pixelMoveRate.get(0));
+//        }
+//        
+//        if(super.getCenterY() - super.getRadius() <= 0) {
+//        	deltaY = Math.abs(pixelMoveRate.get(1));
+//        }
+//        else if(super.getCenterY() + super.getRadius() >= boundY) {
+//        	deltaY = -Math.abs(pixelMoveRate.get(1));
+//        }
         
-        if(super.getCenterY() - super.getRadius() <= 0) {
-        	deltaY = Math.abs(pixelMoveRate.get(1));
-        }
-        else if(super.getCenterY() + super.getRadius() >= boundY) {
-        	deltaY = -Math.abs(pixelMoveRate.get(1));
-        }
+//        double centerX = super.getCenterX() + deltaX;
+//        double centerY = super.getCenterY() + deltaY;
+		
+		double x = super.getCenterX() + deltaX;
+		
+		super.setCenterX(x);
         
-        double centerX = super.getCenterX();
-        double centerY = super.getCenterY();
-        
-        super.setCenterX(centerX + deltaX);
-        super.setCenterY(centerY + deltaY);
+//        super.setCenterX(super.getCenterX() + deltaX);
+//        super.setCenterY(super.getCenterY() + deltaY);
 		
 	}
 	

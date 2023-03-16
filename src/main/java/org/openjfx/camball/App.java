@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
+import org.openjfx.physics.Velocity;
 import org.openjfx.simobjects.Ball;
 
 /**
@@ -52,51 +53,47 @@ public class App extends Application {
 		GameLogic game = new GameLogic(widthX, widthY, physics);
    
 		AnimationTimer timer = new AnimationTimer() {
-			
-			private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
-			
-			private long lastTime = 0;
-			
-			private long timer = 0;
-			
-			private double centerX = 450;
-			private double centerY = 500;
-			
-			private Position circle1Position = new Position(centerX, centerY);
-			private Position circle2Position = new Position(centerX - 100, centerY - 100);
-			
-			@Override
-			public void handle(long now) {
-				if(lastTime == 0) {
-					lastTime = now;
-					return;
-				}
-				
-				if(now - lastTime > frameInterval) {
-					game.update();
-					Circle circle1 = new Circle(circle1Position.getPositionX(), circle1Position.getPositionY(), 20, Color.ALICEBLUE);
-					Circle circle2 = new Circle(circle2Position.getPositionX(), circle2Position.getPositionY(), 30, Color.ALICEBLUE);
-					List<Circle> circles = new ArrayList<>(List.of(circle1, circle2));
-					root.getChildren().clear();
-					root.getChildren().addAll(circles);
-					lastTime = now;
-					timer++;
-					log.info("The current frame is: {}", timer);
-					
-					circle1Position.setPositionX(circle1Position.getPositionX() + 3);
-					circle1Position.setPositionY(circle1Position.getPositionY() - 2);
-					
-					circle2Position.setPositionX(circle2Position.getPositionX() + 3);
-					circle2Position.setPositionY(circle2Position.getPositionY() + 2);
-					
-					circle1.setCenterX(circle1Position.getPositionX());
-					circle1.setCenterY(circle1Position.getPositionY());
-					
-					circle2.setCenterX(circle2Position.getPositionX());
-					circle2.setCenterY(circle2Position.getPositionY());
-				}
-			}
+		    
+		    private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
+		    
+		    private long lastTime = 0;
+		    
+		    private long timer = 0;
+		   
+		    private Velocity velocity = new Velocity(2, 3);
+		    private Position position = new Position(100, 100);
+		    private double radius = 20;
+		    
+		    private double deltaX = 4;
+		    private double deltaY = 3;
+		    
+		    @Override
+		    public void handle(long now) {
+		        if(lastTime == 0) {
+		            lastTime = now;
+		            return;
+		        }
+		        
+		        if(now - lastTime > frameInterval) {
+//		            game.update();
+		            Ball ball = new Ball(velocity, physics, position.getPositionX(), position.getPositionY(), widthX, widthY, radius, Color.ANTIQUEWHITE);
+		            log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
+		            root.getChildren().clear();
+		            root.getChildren().add(ball);
+		            
+		            lastTime = now;
+		            timer++;
+		            log.info("The current frame is: {}", timer);
+		            
+		            
+		            position.setPositionX(ball.getCenterX() + deltaX);
+		            position.setPositionY(ball.getCenterY() + deltaY);
+		            
+		            
+		        }
+		    }
 		};
+
 	  
 		timer.start();
       
