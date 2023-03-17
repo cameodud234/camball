@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
@@ -50,7 +50,7 @@ public class App extends Application {
    	  
 		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
 		
-		GameLogic game = new GameLogic(widthX, widthY, physics);
+//		GameLogic game = new GameLogic(widthX, widthY, physics);
    
 		AnimationTimer timer = new AnimationTimer() {
 		    
@@ -60,12 +60,11 @@ public class App extends Application {
 		    
 		    private long timer = 0;
 		   
-		    private Velocity velocity = new Velocity(2, 3);
-		    private Position position = new Position(100, 100);
+		    private Velocity velocity = new Velocity(90, 60);
+		    private Position position = new Position(100, 600);
 		    private double radius = 20;
 		    
-		    private double deltaX = 4;
-		    private double deltaY = 3;
+		    private DoubleMatrix delta = physics.getPixelMoveRate(velocity);
 		    
 		    @Override
 		    public void handle(long now) {
@@ -75,8 +74,29 @@ public class App extends Application {
 		        }
 		        
 		        if(now - lastTime > frameInterval) {
-//		            game.update();
-		            Ball ball = new Ball(velocity, physics, position.getPositionX(), position.getPositionY(), widthX, widthY, radius, Color.ANTIQUEWHITE);
+		        	
+		            Ball ball = new Ball(velocity, physics, position, widthX, widthY, radius, Color.ANTIQUEWHITE);
+		            
+		            if(ball.getCenterX() - ball.getRadius() <= 0) {
+		            	delta.put(0, Math.abs(delta.get(0)));
+		            }
+		            
+		            else if(ball.getCenterX() + ball.getRadius() >= widthX) {
+		            	delta.put(0, -Math.abs(delta.get(0)));
+		            }
+		            
+		            if(ball.getCenterY() - ball.getRadius() <= 0)  {
+		            	delta.put(1, Math.abs(delta.get(1)));
+		            }
+		            
+		            else if(ball.getCenterY() + ball.getRadius() >= widthY)  {
+		            	delta.put(1, -Math.abs(delta.get(1)));
+		            }
+		            
+		            position.setPositionX(ball.getCenterX() + delta.get(0));
+		            position.setPositionY(ball.getCenterY() + delta.get(1));
+		            
+		            
 		            log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
 		            root.getChildren().clear();
 		            root.getChildren().add(ball);
@@ -84,10 +104,6 @@ public class App extends Application {
 		            lastTime = now;
 		            timer++;
 		            log.info("The current frame is: {}", timer);
-		            
-		            
-		            position.setPositionX(ball.getCenterX() + deltaX);
-		            position.setPositionY(ball.getCenterY() + deltaY);
 		            
 		            
 		        }

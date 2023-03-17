@@ -2,6 +2,7 @@ package org.openjfx.simobjects;
 
 import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
+import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
 
 import javafx.scene.paint.Paint;
@@ -17,10 +18,10 @@ public class Ball extends Circle {
 	private double deltaX;
 	private double deltaY;
 	
-	public Ball(Velocity velocity, Physics physics, double centerX, double centerY,
+	public Ball(Velocity velocity, Physics physics, Position position,
 			double boundX, double boundY, double radius, Paint color) {
 		
-		super(centerX, centerY, radius, color);
+		super(position.getPositionX(), position.getPositionY(), radius, color);
 		
 		this.velocity = new Velocity(velocity.getVelocityX(), velocity.getVelocityY());
 		
@@ -35,36 +36,6 @@ public class Ball extends Circle {
 		deltaX = pixelMoveRate.get(0);
 		deltaY = pixelMoveRate.get(1);
 	
-	}
-	
-	public void move() {
-
-		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
-		
-//		if(super.getCenterX() - super.getRadius() <= 0) {
-//        	deltaX = Math.abs(pixelMoveRate.get(0));
-//        }
-//        else if(super.getCenterX() + super.getRadius() >= boundX) {
-//        	deltaX = -Math.abs(pixelMoveRate.get(0));
-//        }
-//        
-//        if(super.getCenterY() - super.getRadius() <= 0) {
-//        	deltaY = Math.abs(pixelMoveRate.get(1));
-//        }
-//        else if(super.getCenterY() + super.getRadius() >= boundY) {
-//        	deltaY = -Math.abs(pixelMoveRate.get(1));
-//        }
-        
-//        double centerX = super.getCenterX() + deltaX;
-//        double centerY = super.getCenterY() + deltaY;
-		
-		double x = super.getCenterX() + deltaX;
-		
-		super.setCenterX(x);
-        
-//        super.setCenterX(super.getCenterX() + deltaX);
-//        super.setCenterY(super.getCenterY() + deltaY);
-		
 	}
 	
 	public double getBoundX() {
@@ -131,7 +102,7 @@ public class Ball extends Circle {
 		result = 31 * result + Double.hashCode(super.getRadius());
 		result = 31 * result + super.getFill().hashCode();
 		
-		return result;		
+		return result;
 	}
 
 	@Override
