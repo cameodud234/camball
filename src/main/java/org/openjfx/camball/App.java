@@ -50,7 +50,7 @@ public class App extends Application {
    	  
 		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
 		
-//		GameLogic game = new GameLogic(widthX, widthY, physics);
+		GameLogic game = new GameLogic(widthX, widthY, physics);
    
 		AnimationTimer timer = new AnimationTimer() {
 		    
@@ -75,32 +75,12 @@ public class App extends Application {
 		        
 		        if(now - lastTime > frameInterval) {
 		        	
-		            Ball ball = new Ball(velocity, physics, position, widthX, widthY, radius, Color.ANTIQUEWHITE);
-		            
-		            if(ball.getCenterX() - ball.getRadius() <= 0) {
-		            	delta.put(0, Math.abs(delta.get(0)));
-		            }
-		            
-		            else if(ball.getCenterX() + ball.getRadius() >= widthX) {
-		            	delta.put(0, -Math.abs(delta.get(0)));
-		            }
-		            
-		            if(ball.getCenterY() - ball.getRadius() <= 0)  {
-		            	delta.put(1, Math.abs(delta.get(1)));
-		            }
-		            
-		            else if(ball.getCenterY() + ball.getRadius() >= widthY)  {
-		            	delta.put(1, -Math.abs(delta.get(1)));
-		            }
-		            
-		            position.setPositionX(ball.getCenterX() + delta.get(0));
-		            position.setPositionY(ball.getCenterY() + delta.get(1));
-		            
-		            
-		            log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
-		            root.getChildren().clear();
-		            root.getChildren().add(ball);
-		            
+		        	
+		        	game.updateState();
+		        	
+		        	game.setState(null);
+//		       		      
+		            root.getChildren().add(game.getBall());
 		            lastTime = now;
 		            timer++;
 		            log.info("The current frame is: {}", timer);

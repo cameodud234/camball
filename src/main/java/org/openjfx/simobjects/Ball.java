@@ -1,5 +1,7 @@
 package org.openjfx.simobjects;
 
+import java.lang.Thread.State;
+
 import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
@@ -11,10 +13,12 @@ import javafx.scene.shape.Circle;
 public class Ball extends Circle {
 	
 	private final Physics physics;
+	private final double boundX;
+	private final double boundY;
 	
+	private DoubleMatrix pixelMoveRate;
 	private Velocity velocity;
-	private double boundX;
-	private double boundY;
+	private Position position;
 	private double deltaX;
 	private double deltaY;
 	
@@ -25,17 +29,42 @@ public class Ball extends Circle {
 		
 		this.velocity = new Velocity(velocity.getVelocityX(), velocity.getVelocityY());
 		
+		this.position = new Position(position.getPositionX(), position.getPositionY());
+		
 		this.boundX = boundX;
 		this.boundY = boundY;
 		
 		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter(), 
 				this.boundX, this.boundY);
 		 
-		DoubleMatrix pixelMoveRate = this.physics.getPixelMoveRate(this.velocity);
+		pixelMoveRate = this.physics.getPixelMoveRate(this.velocity);
 		
 		deltaX = pixelMoveRate.get(0);
 		deltaY = pixelMoveRate.get(1);
 	
+	}
+	
+	public void move() {
+		
+		pixelMoveRate = this.physics.getPixelMoveRate(velocity);
+		
+		if(super.getCenterX() - super.getRadius() <= 0) {
+        	deltaX = Math.abs(pixelMoveRate.get(0));
+        }
+        else if(super.getCenterX() + super.getRadius() >= boundX) {
+        	deltaX = -Math.abs(pixelMoveRate.get(0));
+        }
+        
+        if(super.getCenterY() - super.getRadius() <= 0) {
+        	deltaY = Math.abs(pixelMoveRate.get(1));
+        }
+        else if(super.getCenterY() + super.getRadius() >= boundY) {
+        	deltaY = -Math.abs(pixelMoveRate.get(1));
+        }
+        
+        super.setCenterX(super.getCenterX() + deltaX);
+        super.setCenterY(super.getCenterY() + deltaY);
+        
 	}
 	
 	public double getBoundX() {
@@ -62,6 +91,10 @@ public class Ball extends Circle {
 		return physics;
 	}
 	
+	public Position getPosition() {
+		return position;
+	}
+	
 	public void setVelocity(double velocityX, double velocityY) {
 		this.velocity.setVelocityX(velocityX);
 		this.velocity.setVelocityY(velocityY);
@@ -73,20 +106,28 @@ public class Ball extends Circle {
 		this.velocity.setVelocityY(velocity.getVelocityY());
 	}
 	
+	public void setPosition(double positionX, double positionY) {
+		position.setPositionX(positionX);
+		position.setPositionY(positionY);
+		super.setCenterX(position.getPositionX());
+		super.setCenterY(position.getPositionY());
+	}
+	
+	public void setPosition(Position position) {
+		this.position.setPositionX(position.getPositionX());
+		this.position.setPositionY(position.getPositionY());
+		
+		super.setCenterX(this.position.getPositionX());
+		super.setCenterY(this.position.getPositionY());
+		
+	}
+	
 	public void setDeltaX(double deltaX) {
 		this.deltaX = deltaX;
 	}
 
 	public void setDeltaY(double deltaY) {
 		this.deltaY = deltaY;
-	}
-	
-	public void setBoundX(double boundX) {
-		this.boundX = boundX;
-	}
-	
-	public void setBoundY(double boundY) {
-		this.boundY = boundY;
 	}
 	
 	@Override

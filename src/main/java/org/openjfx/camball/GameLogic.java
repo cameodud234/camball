@@ -12,61 +12,32 @@ import javafx.scene.paint.Color;
 
 public class GameLogic {
 	
-//	private final Physics physics;
-//	
-//	private final double screenWidthX;
-//	private final double screenWidthY;
-//	
-//	private final Velocity velocity;
-//	private final Position position;
-//	private double radius;
-//	
-//	final Logger log = LogManager.getLogger(GameLogic.class);
-//	
-//	public GameLogic(double screenWidthX, double screenWidthY, Physics physics) {
-//		
-//		this.screenWidthX = screenWidthX;
-//		this.screenWidthY = screenWidthY;
-//		
-//		// put screenWidthX and screenWidthY in physics and use this to get ball bounds in ball class
-//		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter(), 
-//				screenWidthX, screenWidthY);
-//		
-//		
-//		velocity = new Velocity(-80, -60); // In meters per second
-//		position = new Position(100, 100);
-//		radius = 50;
-//		
-//	}
+	private final Object lock = new Object();
+	private GameLogicState state;
+	private final Ball ball;
 	
-	public void move(Ball ball) {
-
+	final Logger log = LogManager.getLogger(GameLogic.class);
+	
+	public GameLogic(double screenWidthX, double screenWidthY, Physics physics) {
 		
-//		if(super.getCenterX() - super.getRadius() <= 0) {
-//        	deltaX = Math.abs(pixelMoveRate.get(0));
-//        }
-//        else if(super.getCenterX() + super.getRadius() >= boundX) {
-//        	deltaX = -Math.abs(pixelMoveRate.get(0));
-//        }
-//        
-//        if(super.getCenterY() - super.getRadius() <= 0) {
-//        	deltaY = Math.abs(pixelMoveRate.get(1));
-//        }
-//        else if(super.getCenterY() + super.getRadius() >= boundY) {
-//        	deltaY = -Math.abs(pixelMoveRate.get(1));
-//        }
-        
-//        double centerX = super.getCenterX() + deltaX;
-//        double centerY = super.getCenterY() + deltaY;
-		
-        
-//        super.setCenterX(super.getCenterX() + deltaX);
-//        super.setCenterY(super.getCenterY() + deltaY);
+		state = new GameLogicState();
+		Velocity velocity = new Velocity(90, 120);
+		Position position = new Position(300, 300);
+		double radius = 20;
+		Color color = Color.ALICEBLUE;
+		ball = new Ball(velocity, physics, position, screenWidthX, screenWidthY, radius, color);
 		
 	}
 	
-	public void update() {
-
+	public void updateState() {
+		
+		synchronized(lock) {
+			log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
+			
+			ball.move();
+			
+		}
+		
 //        log.info("Position: [{}, {}]", ball1.getCenterX(), ball1.getCenterY());
         
 //        ball1.setCenterX(ball1.getCenterX() + 3);
@@ -76,11 +47,18 @@ public class GameLogic {
         
 	}
 	
-//	public Ball getBall() {
-//		Ball ball = new Ball(velocity, physics, position.getPositionX(), position.getPositionY(), 
-//				screenWidthX, screenWidthY, radius, Color.WHITE);
-//		
-//		return ball;
-//	}
+	
+	public void setState(GameLogicState state) {
+		synchronized(lock) {
+			
+			// Change velocity here.
+			
+		}
+	}
+	
+	public Ball getBall() {
+		
+		return ball;
+	}
 	
 }
