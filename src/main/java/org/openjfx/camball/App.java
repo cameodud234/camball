@@ -12,7 +12,6 @@ import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
-import org.openjfx.simobjects.Ball;
 
 /**
  * JavaFX App
@@ -43,14 +42,14 @@ public class App extends Application {
 		final Logger log = LogManager.getLogger(App.class);
 		
 		final double framerate = 240;
-		final double pixelToMeter = 50;
+		final double pixelToMeter = 60;
 		final Physics physics = new Physics(framerate, pixelToMeter, widthX, widthY);
 	  
 		Group root = new Group();
    	  
 		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
 		
-		GameLogic game = new GameLogic(widthX, widthY, physics);
+		
    
 		AnimationTimer timer = new AnimationTimer() {
 		    
@@ -59,12 +58,14 @@ public class App extends Application {
 		    private long lastTime = 0;
 		    
 		    private long timer = 0;
-		   
-		    private Velocity velocity = new Velocity(90, 60);
-		    private Position position = new Position(100, 600);
-		    private double radius = 20;
 		    
-		    private DoubleMatrix delta = physics.getPixelMoveRate(velocity);
+		    Velocity velocity = new Velocity(10, -10);
+			Position position = new Position(80, 80);
+			DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
+			double deltaX = pixelMoveRate.get(0);
+			double deltaY = pixelMoveRate.get(1);
+			double radius = 20;
+			Color color = Color.ALICEBLUE;
 		    
 		    @Override
 		    public void handle(long now) {
@@ -76,15 +77,35 @@ public class App extends Application {
 		        if(now - lastTime > frameInterval) {
 		        	
 		        	
-		        	game.updateState();
+		        	Circle circle = new Circle(position.getPositionX(), position.getPositionY(), radius, color);
+					
+					if(circle.getCenterX() - circle.getRadius() <= 0) {
+						deltaX = Math.abs(pixelMoveRate.get(0));
+			        }
+			        else if(circle.getCenterX() + circle.getRadius() >= widthX) {
+			        	deltaX = -Math.abs(pixelMoveRate.get(0));
+			        }
+			        
+			        if(circle.getCenterY() - circle.getRadius() <= 0) {
+			        	deltaY = Math.abs(pixelMoveRate.get(1));
+			        }
+			        else if(circle.getCenterY() + circle.getRadius() >= widthY) {
+			        	deltaY = -Math.abs(pixelMoveRate.get(1));
+			        }
+			        
+			        circle.setCenterX(circle.getCenterX() + deltaX);
+			        circle.setCenterY(circle.getCenterY() + deltaY);
 		        	
-		        	game.setState(null);
-//		       		      
-		            root.getChildren().add(game.getBall());
+		        	position.setPositionX(circle.getCenterX() + deltaX);
+		        	position.setPositionY(circle.getCenterY() + deltaY);
+		        	
+		        	root.getChildren().clear();
+		            root.getChildren().add(circle);
 		            lastTime = now;
 		            timer++;
 		            log.info("The current frame is: {}", timer);
-		            
+		            log.info("Position: [{}, {}]", circle.getCenterX(), circle.getCenterY());
+		            log.info("Physics Move Rate: [{}, {}]", pixelMoveRate.get(0), pixelMoveRate.get(1));
 		            
 		        }
 		    }

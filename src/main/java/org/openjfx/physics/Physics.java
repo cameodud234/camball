@@ -1,7 +1,6 @@
 package org.openjfx.physics;
 
 import org.jblas.DoubleMatrix;
-import org.openjfx.simobjects.Ball;
 
 public class Physics {
 	
