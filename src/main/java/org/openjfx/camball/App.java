@@ -1,10 +1,6 @@
 package org.openjfx.camball;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,23 +45,37 @@ public class App extends Application {
    	  
 		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
 		
-		
    
 		AnimationTimer timer = new AnimationTimer() {
+			
+			private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
 		    
-		    private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
-		    
-		    private long lastTime = 0;
-		    
-		    private long timer = 0;
-		    
-		    Velocity velocity = new Velocity(10, -10);
-			Position position = new Position(80, 80);
-			DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
-			double deltaX = pixelMoveRate.get(0);
-			double deltaY = pixelMoveRate.get(1);
-			double radius = 20;
-			Color color = Color.ALICEBLUE;
+			private final Random randomNumber = new Random();
+			double boundRadius = Math.min(randomNumber.nextInt(20, 100), Math.min(screenBounds.getWidth(), screenBounds.getHeight()) );
+			double[] boundPosition = {0 + boundRadius, Math.min(screenBounds.getWidth(), screenBounds.getHeight()) - boundRadius};
+			double[] boundVelocity = {-50, 50};
+			
+			double[] randomInitialVelocity = {randomNumber.nextDouble(boundVelocity[0], boundVelocity[1]), randomNumber.nextDouble(boundVelocity[0], boundVelocity[1])};
+			double[] randomInitialPosition = {randomNumber.nextDouble(boundPosition[0], boundPosition[1]), randomNumber.nextDouble(boundPosition[0], boundPosition[1])};
+			
+			private final Velocity velocity = new Velocity(randomInitialVelocity[0], randomInitialVelocity[1]);
+			private final Position position = new Position(randomInitialPosition[0], randomInitialPosition[1]);
+			private double radius = boundRadius;
+			
+			private DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
+			private double[] delta = {pixelMoveRate.get(0), pixelMoveRate.get(1)};
+			
+			Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Color.GREEN, Color.GRAY, Color.PURPLE};
+			
+			Color randomColor = color[randomNumber.nextInt(0, color.length)];
+			Color chosenColor = randomColor;
+			private Circle circle = new Circle(randomNumber.nextDouble(boundPosition[0], boundPosition[1]), randomNumber.nextDouble(boundPosition[0], boundPosition[1]), 
+					randomNumber.nextDouble(boundRadius), randomColor);
+			
+			
+			private double lastTime = 0;
+			double timer = 0;
+			
 		    
 		    @Override
 		    public void handle(long now) {
@@ -77,27 +87,27 @@ public class App extends Application {
 		        if(now - lastTime > frameInterval) {
 		        	
 		        	
-		        	Circle circle = new Circle(position.getPositionX(), position.getPositionY(), radius, color);
+		        	Circle circle = new Circle(position.getPositionX(), position.getPositionY(), radius, chosenColor);
 					
 					if(circle.getCenterX() - circle.getRadius() <= 0) {
-						deltaX = Math.abs(pixelMoveRate.get(0));
+						delta[0] = Math.abs(pixelMoveRate.get(0));
 			        }
 			        else if(circle.getCenterX() + circle.getRadius() >= widthX) {
-			        	deltaX = -Math.abs(pixelMoveRate.get(0));
+			        	delta[0] = -Math.abs(pixelMoveRate.get(0));
 			        }
 			        
 			        if(circle.getCenterY() - circle.getRadius() <= 0) {
-			        	deltaY = Math.abs(pixelMoveRate.get(1));
+			        	delta[1] = Math.abs(pixelMoveRate.get(1));
 			        }
 			        else if(circle.getCenterY() + circle.getRadius() >= widthY) {
-			        	deltaY = -Math.abs(pixelMoveRate.get(1));
+			        	delta[1] = -Math.abs(pixelMoveRate.get(1));
 			        }
 			        
-			        circle.setCenterX(circle.getCenterX() + deltaX);
-			        circle.setCenterY(circle.getCenterY() + deltaY);
+			        circle.setCenterX(circle.getCenterX() + delta[0]);
+			        circle.setCenterY(circle.getCenterY() + delta[1]);
 		        	
-		        	position.setPositionX(circle.getCenterX() + deltaX);
-		        	position.setPositionY(circle.getCenterY() + deltaY);
+		        	position.setPositionX(circle.getCenterX() + delta[0]);
+		        	position.setPositionY(circle.getCenterY() + delta[1]);
 		        	
 		        	root.getChildren().clear();
 		            root.getChildren().add(circle);
