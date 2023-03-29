@@ -1,5 +1,7 @@
 package org.openjfx.physics;
 
+import java.util.List;
+
 import org.jblas.DoubleMatrix;
 
 public class Physics {
@@ -20,7 +22,8 @@ public class Physics {
 	}
 	
 	public DoubleMatrix getPixelMoveRate(Velocity velocity) {
-		return (velocity.getVelocity().mul(pixelToMeter)).div(framerate);
+		DoubleMatrix privateVelocity = (velocity.getVelocity().mul(pixelToMeter)).div(framerate);
+		return new DoubleMatrix(List.of(privateVelocity.get(0), privateVelocity.get(1)));
 	}
 	
 	public void setPixelToMeter(double pixelToMeter) {

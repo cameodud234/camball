@@ -19,20 +19,20 @@ public class TestPosition {
 	
 	@Test
 	void TestPositionConstructorPositionX() {
-		assertEquals(position.getPositionX(), positionX);
+		assertEquals(position.getX(), positionX);
 	}
 	
 	@Test
 	void TestPositionConstructorPositionY() {
-		assertEquals(position.getPositionY(), positionY);
+		assertEquals(position.getY(), positionY);
 	}
 	
 	@Test
 	void TestPositionConstructorDoubleMatrixPosition() throws PositionException {
 		DoubleMatrix newPositionArg = new DoubleMatrix(Arrays.asList(13.0, 64.0));
 		Position newPosition = new Position(newPositionArg);
-		assertEquals(newPosition.getPositionX(), newPositionArg.get(0));
-		assertEquals(newPosition.getPositionY(), newPositionArg.get(1));
+		assertEquals(newPosition.getX(), newPositionArg.get(0));
+		assertEquals(newPosition.getY(), newPositionArg.get(1));
 	}
 	
 	@Test
@@ -40,8 +40,8 @@ public class TestPosition {
 		DoubleMatrix newPositionArg = new DoubleMatrix(Arrays.asList(13.0, 64.0));
 		Position newPosition = new Position(newPositionArg);
 		newPositionArg = newPositionArg.transpose();
-		assertEquals(newPosition.getPositionX(), newPositionArg.get(0));
-		assertEquals(newPosition.getPositionY(), newPositionArg.get(1));
+		assertEquals(newPosition.getX(), newPositionArg.get(0));
+		assertEquals(newPosition.getY(), newPositionArg.get(1));
 	}
 	
 	@Test
@@ -57,15 +57,15 @@ public class TestPosition {
 	@Test
 	void TestSetPositionX() {
 		double newPositionX = 8;
-		position.setPositionX(newPositionX);
-		assertEquals(position.getPositionX(), newPositionX);
+		position.setX(newPositionX);
+		assertEquals(position.getX(), newPositionX);
 	}
 	
 	@Test
 	void TestSetPositionY() {
 		double newPositionY = 49;
-		position.setPositionY(newPositionY);
-		assertEquals(position.getPositionY(), newPositionY);
+		position.setY(newPositionY);
+		assertEquals(position.getY(), newPositionY);
 	}
 	
 	@Test 
