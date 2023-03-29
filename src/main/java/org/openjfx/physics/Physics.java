@@ -7,15 +7,15 @@ public class Physics {
 	private final double framerate;
 	
 	private double pixelToMeter;
-	private double screenWidthX;
-	private double screenWidthY;
+	private double screenWidth;
+	private double screenHeight;
 	
-	public Physics(double framerate, double pixelToMeter, double screenWidthX, double screenWidthY) {
+	public Physics(double framerate, double pixelToMeter, double screenWidth, double screenHeight) {
 		
 		this.framerate = framerate;
 		this.pixelToMeter = pixelToMeter;
-		this.screenWidthX = screenWidthX;
-		this.screenWidthY = screenWidthY;
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
 		
 	}
 	
@@ -35,20 +35,20 @@ public class Physics {
 		return pixelToMeter;
 	}
 	
-	public double getScreenWidthX() {
-		return screenWidthX;
+	public double getScreenWidth() {
+		return screenWidth;
 	}
 	
-	public double getScreenWidthY() {
-		return screenWidthY;
+	public double getScreenHeight() {
+		return screenHeight;
 	}
 	
 	@Override
 	public int hashCode() {
 		int result = Double.hashCode(framerate);
 		result = 31 * result + Double.hashCode(pixelToMeter);
-		result = 31 * result + Double.hashCode(screenWidthX);
-		result = 31 * result + Double.hashCode(screenWidthY);
+		result = 31 * result + Double.hashCode(screenWidth);
+		result = 31 * result + Double.hashCode(screenHeight);
 		return result;
 	}
 	

@@ -100,7 +100,7 @@ public class BallSimulation extends AnimationTimer {
         if(now - lastTime > frameInterval) {
         	
         	
-        	Circle circle = new Circle(position.getPositionX(), position.getPositionY(), radius, chosenColor);
+        	Circle circle = new Circle(position.getX(), position.getY(), radius, chosenColor);
 			
 			if(circle.getCenterX() - circle.getRadius() <= 0) {
 				delta.set(0, Math.abs(pixelMoveRate.get(0)));
@@ -119,8 +119,8 @@ public class BallSimulation extends AnimationTimer {
 	        circle.setCenterX(circle.getCenterX() + delta.get(0));
 	        circle.setCenterY(circle.getCenterY() + delta.get(1));
         	
-        	position.setPositionX(circle.getCenterX() + delta.get(0));
-        	position.setPositionY(circle.getCenterY() + delta.get(1));
+        	position.setX(circle.getCenterX() + delta.get(0));
+        	position.setY(circle.getCenterY() + delta.get(1));
         	
         	root.getChildren().clear();
             root.getChildren().add(circle);
