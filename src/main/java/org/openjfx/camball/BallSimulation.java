@@ -1,7 +1,9 @@
 package org.openjfx.camball;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,20 +34,13 @@ public class BallSimulation extends AnimationTimer {
     private final double width;
     private final double height;
     
-//    private final BallState ballState;
+    List<Ball> balls;
+    List<BallState> ballStates;
     
-    private final List<Double> randomInitialPosition;
-    private final List<Double> randomInitialVelocity;
-	
-	private final Velocity velocity;
-	private final Position position;
-	private double radius;
-	
-	private DoubleMatrix pixelMoveRate;
-	private List<Double> delta;
+    private final int ballCount;
 
 	Color chosenColor;
-	
+	 
 	private double lastTime;
 	double timer;
 	
@@ -61,33 +56,15 @@ public class BallSimulation extends AnimationTimer {
 		this.frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
 		this.pixelToMeter = pixelToMeter;
 		
-		double boundRadius = Math.min(randomNumber.nextInt(20, 100), Math.min(width, height) );
-		double[] boundPosition = {0 + boundRadius, Math.min(width, height) - boundRadius};
-		double[] boundVelocity = {-50, 50};
+		balls = new ArrayList<Ball>();
+		ballStates = new ArrayList<BallState>();
 		
-		randomInitialVelocity = new ArrayList<Double>( 
-				List.of(
-						randomNumber.nextDouble(boundVelocity[0], boundVelocity[1]), 
-						randomNumber.nextDouble(boundVelocity[0], boundVelocity[1])
-				)
-		);
+		ballCount = 9;
 		
-		randomInitialPosition = new ArrayList<Double>( 
-				List.of(
-						randomNumber.nextDouble(boundPosition[0], boundPosition[1]), 
-						randomNumber.nextDouble(boundPosition[0], boundPosition[1])
-				)
-		);
-		
-		velocity = new Velocity(randomInitialVelocity.get(0), randomInitialVelocity.get(1));
-		position = new Position(randomInitialPosition.get(0), randomInitialPosition.get(1));
-		radius = boundRadius;
-		
-		pixelMoveRate = physics.getPixelMoveRate(velocity);
-		delta = new ArrayList<Double>(List.of(pixelMoveRate.get(0), pixelMoveRate.get(1)));
-		
-		Color randomColor = color[randomNumber.nextInt(0, color.length)];
-		chosenColor = randomColor;
+		for(int i = 0; i < ballCount; i++) {
+			BallState ballState = new BallState(width, height);
+			ballStates.add(ballState);
+		}
 		
 		lastTime = 0;
 		timer = 0;
@@ -104,20 +81,26 @@ public class BallSimulation extends AnimationTimer {
         
         if(now - lastTime > frameInterval) {
         	
+        	balls.clear();
         	
-        	Ball ball = new Ball(velocity, position, radius, chosenColor, physics);
+        	for(int i = 0; i < ballCount; i++) {
+        		
+        		BallState ballState = ballStates.get(i);
+        		Ball ball = new Ball(ballState.getVelocity(), ballState.getPosition(),
+        				ballState.getRadius(), ballState.getColor(), physics);
+        		balls.add(ball);
+        		
+        	}	
         	
-        	ball.move(physics.getPixelMoveRate(velocity));
-			
-			
+//        	ballState.update();
         	
         	root.getChildren().clear();
-            root.getChildren().add(ball);
+            root.getChildren().addAll(balls);
             lastTime = now;
             timer++;
             log.info("The current frame is: {}", timer);
-            log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
-            log.info("Physics Move Rate: [{}, {}]", pixelMoveRate.get(0), pixelMoveRate.get(1));
+//            log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
+//            log.info("Physics Move Rate: [{}, {}]", pixelMoveRate.get(0), pixelMoveRate.get(1));
             
         }
     }

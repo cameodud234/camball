@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
@@ -12,6 +11,8 @@ import org.openjfx.physics.Velocity;
 import javafx.scene.paint.Color;
 
 public class BallState {
+	
+private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Color.GREEN, Color.GRAY, Color.PURPLE};
 	
 	private final double screenWidth;
 	private final double screenHeight;
@@ -23,13 +24,10 @@ public class BallState {
     private final List<Double> randomInitialVelocity;
     private final Random randomNumber;
     private double radius;
-    
-    private DoubleMatrix pixelMoveRate;
-	private List<Double> delta;
 	
 	Color chosenColor;
-    
-    public BallState(double screenWidth, double screenHeight, Physics physics) {
+	
+	public BallState(double screenWidth, double screenHeight) {
     	
     	this.screenWidth = screenWidth;
     	this.screenHeight = screenHeight;
@@ -56,12 +54,50 @@ public class BallState {
 		position = new Position(randomInitialPosition.get(0), randomInitialPosition.get(1));
 		radius = boundRadius;
 		
-		pixelMoveRate = physics.getPixelMoveRate(velocity);
-		delta = new ArrayList<Double>(List.of(pixelMoveRate.get(0), pixelMoveRate.get(1)));
-		
 		Color randomColor = color[randomNumber.nextInt(0, color.length)];
 		chosenColor = randomColor;
     	
     }
+	
+	public double getRadius() {
+		return radius;
+	}
+
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
+
+	public Color getColor() {
+		return chosenColor;
+	}
+
+	public void setColor(Color color) {
+		this.chosenColor = chosenColor;
+	}
+
+	public double getScreenWidth() {
+		return screenWidth;
+	}
+
+	public double getScreenHeight() {
+		return screenHeight;
+	}
+
+	public Velocity getVelocity() {
+		return velocity;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public List<Double> getRandomInitialPosition() {
+		return randomInitialPosition;
+	}
+
+	public List<Double> getRandomInitialVelocity() {
+		return randomInitialVelocity;
+	}
+    
 
 }

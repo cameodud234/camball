@@ -1,6 +1,7 @@
 package org.openjfx.objects;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
@@ -81,6 +82,18 @@ public class Ball extends Circle {
 	
 	public DoubleMatrix getDelta() {
 		return new DoubleMatrix(List.of(delta.get(0), delta.get(1)));
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Ball ball = (Ball) o;
+		return Double.compare(ball.boundWidth, boundWidth) == 0 &&
+				Double.compare(ball.boundHeight, boundHeight) == 0 &&
+				Objects.equals(velocity, ball.velocity) &&
+				Objects.equals(position, ball.position) &&
+				Objects.equals(delta, ball.delta);
 	}
 
 }
