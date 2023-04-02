@@ -29,6 +29,29 @@ public class Ball extends Circle {
 		delta = new DoubleMatrix(List.of(physicsValues.get(0), physicsValues.get(1)));
 	}
 	
+	
+	public void move(DoubleMatrix pixelMoveRate) {
+		if(super.getCenterX() - super.getRadius() <= 0) {
+			delta.put(0, Math.abs(pixelMoveRate.get(0)));
+        }
+        else if(super.getCenterX() + super.getRadius() >= boundWidth) {
+        	delta.put(0, -Math.abs(pixelMoveRate.get(0)));
+        }
+        
+        if(super.getCenterY() - super.getRadius() <= 0) {
+        	delta.put(1, Math.abs(pixelMoveRate.get(1)));
+        }
+        else if(super.getCenterY() + super.getRadius() >= boundHeight) {
+        	delta.put(1, -Math.abs(pixelMoveRate.get(1)));
+        }
+        
+        super.setCenterX(super.getCenterX() + delta.get(0));
+        super.setCenterY(super.getCenterY() + delta.get(1));
+    	
+    	position.setX(super.getCenterX());
+    	position.setY(super.getCenterY());
+	}
+	
 	public void setVelocity(Velocity velocity) {
 		this.velocity.setX(velocity.getX());
 		this.velocity.setY(velocity.getY());

@@ -82,8 +82,15 @@ public class TestPosition {
 	
 	@Test
 	void TestNotEquals() {
-		Position newPosition = new Position(positionX, 34);
+		Position newPosition = new Position(2, positionY);
 		assertNotEquals(position, newPosition);
+		newPosition.setX(positionX);
+		newPosition.setY(32);
+		assertNotEquals(position, newPosition);
+		newPosition.setX(342);
+		newPosition.setY(32);
+		assertNotEquals(position, newPosition);
+		
 	}
 	
 

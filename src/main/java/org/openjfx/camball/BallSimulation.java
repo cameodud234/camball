@@ -7,6 +7,8 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jblas.DoubleMatrix;
+import org.openjfx.objects.Ball;
+import org.openjfx.objects.BallState;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
@@ -19,6 +21,7 @@ import javafx.scene.shape.Circle;
 public class BallSimulation extends AnimationTimer {
 	
 	private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Color.GREEN, Color.GRAY, Color.PURPLE};
+	
 	private final Logger log = LogManager.getLogger(BallSimulation.class);
 	private final Group root;
 	private final Physics physics;
@@ -28,6 +31,8 @@ public class BallSimulation extends AnimationTimer {
     private final Random randomNumber;
     private final double width;
     private final double height;
+    
+//    private final BallState ballState;
     
     private final List<Double> randomInitialPosition;
     private final List<Double> randomInitialVelocity;
@@ -66,6 +71,7 @@ public class BallSimulation extends AnimationTimer {
 						randomNumber.nextDouble(boundVelocity[0], boundVelocity[1])
 				)
 		);
+		
 		randomInitialPosition = new ArrayList<Double>( 
 				List.of(
 						randomNumber.nextDouble(boundPosition[0], boundPosition[1]), 
@@ -86,7 +92,6 @@ public class BallSimulation extends AnimationTimer {
 		lastTime = 0;
 		timer = 0;
 		
-		
 	}
 	
     
@@ -100,34 +105,18 @@ public class BallSimulation extends AnimationTimer {
         if(now - lastTime > frameInterval) {
         	
         	
-        	Circle circle = new Circle(position.getX(), position.getY(), radius, chosenColor);
-			
-			if(circle.getCenterX() - circle.getRadius() <= 0) {
-				delta.set(0, Math.abs(pixelMoveRate.get(0)));
-	        }
-	        else if(circle.getCenterX() + circle.getRadius() >= width) {
-	        	delta.set(0, -Math.abs(pixelMoveRate.get(0)));
-	        }
-	        
-	        if(circle.getCenterY() - circle.getRadius() <= 0) {
-	        	delta.set(1, Math.abs(pixelMoveRate.get(1)));
-	        }
-	        else if(circle.getCenterY() + circle.getRadius() >= height) {
-	        	delta.set(1, -Math.abs(pixelMoveRate.get(1)));
-	        }
-	        
-	        circle.setCenterX(circle.getCenterX() + delta.get(0));
-	        circle.setCenterY(circle.getCenterY() + delta.get(1));
+        	Ball ball = new Ball(velocity, position, radius, chosenColor, physics);
         	
-        	position.setX(circle.getCenterX() + delta.get(0));
-        	position.setY(circle.getCenterY() + delta.get(1));
+        	ball.move(physics.getPixelMoveRate(velocity));
+			
+			
         	
         	root.getChildren().clear();
-            root.getChildren().add(circle);
+            root.getChildren().add(ball);
             lastTime = now;
             timer++;
             log.info("The current frame is: {}", timer);
-            log.info("Position: [{}, {}]", circle.getCenterX(), circle.getCenterY());
+            log.info("Position: [{}, {}]", ball.getCenterX(), ball.getCenterY());
             log.info("Physics Move Rate: [{}, {}]", pixelMoveRate.get(0), pixelMoveRate.get(1));
             
         }
