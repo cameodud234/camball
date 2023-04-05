@@ -59,10 +59,10 @@ public class BallSimulation extends AnimationTimer {
 		balls = new ArrayList<Ball>();
 		ballStates = new ArrayList<BallState>();
 		
-		ballCount = 9;
+		ballCount = 4;
 		
 		for(int i = 0; i < ballCount; i++) {
-			BallState ballState = new BallState(width, height);
+			BallState ballState = new BallState(width, height, physics);
 			ballStates.add(ballState);
 		}
 		
@@ -92,7 +92,13 @@ public class BallSimulation extends AnimationTimer {
         		
         	}	
         	
-//        	ballState.update();
+        	
+        	
+        	for(BallState ballState: ballStates) {
+        		ballState.update();
+        	} 
+        	
+//        	physics.checkCollisions(balls);
         	
         	root.getChildren().clear();
             root.getChildren().addAll(balls);

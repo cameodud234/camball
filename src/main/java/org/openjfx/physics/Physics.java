@@ -26,6 +26,8 @@ public class Physics {
 		return new DoubleMatrix(List.of(privateVelocity.get(0), privateVelocity.get(1)));
 	}
 	
+	
+	
 	public void setPixelToMeter(double pixelToMeter) {
 		this.pixelToMeter = pixelToMeter;
 	}

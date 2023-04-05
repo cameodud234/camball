@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
@@ -16,6 +17,8 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	
 	private final double screenWidth;
 	private final double screenHeight;
+	private final Physics physics;
+	private final DoubleMatrix delta;
 	
 	private final Velocity velocity;
 	private final Position position;
@@ -27,14 +30,15 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	
 	Color chosenColor;
 	
-	public BallState(double screenWidth, double screenHeight) {
+	public BallState(double screenWidth, double screenHeight, Physics physics) {
     	
     	this.screenWidth = screenWidth;
     	this.screenHeight = screenHeight;
+    	this.physics = physics;
     	randomNumber = new Random();
     	double boundRadius = Math.min(randomNumber.nextInt(20, 100), Math.min(screenWidth, screenHeight) );
 		double[] boundPosition = {0 + boundRadius, Math.min(screenWidth, screenHeight) - boundRadius};
-		double[] boundVelocity = {-50, 50};
+		double[] boundVelocity = {-100, 100};
 		
 		randomInitialVelocity = new ArrayList<Double>( 
 				List.of(
@@ -54,10 +58,36 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 		position = new Position(randomInitialPosition.get(0), randomInitialPosition.get(1));
 		radius = boundRadius;
 		
+		delta = physics.getPixelMoveRate(velocity);
+		
 		Color randomColor = color[randomNumber.nextInt(0, color.length)];
 		chosenColor = randomColor;
     	
-    }
+    }     
+	
+	public void update() {
+		
+//		delta = physics.getPixelMoveRate(velocity);
+		
+		
+		if(position.getX() - radius <= 0) {
+			delta.put(0, Math.abs(delta.get(0)));
+        }
+        else if(position.getX() + radius >= screenWidth) {
+        	delta.put(0, -Math.abs(delta.get(0)));
+        }
+        
+        if(position.getY() - radius <= 0) {
+        	delta.put(1, Math.abs(delta.get(1)));
+        }
+        else if(position.getY() + radius >= screenHeight) {
+        	delta.put(1, -Math.abs(delta.get(1)));
+        }
+        
+        position.setX(position.getX() + delta.get(0));
+        position.setY(position.getY() + delta.get(1));
+		
+	}
 	
 	public double getRadius() {
 		return radius;
