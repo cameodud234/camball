@@ -1,18 +1,14 @@
 package org.openjfx.camball;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import org.openjfx.physics.Physics;
 
 /**
  * JavaFX App
  */
 
 import javafx.animation.AnimationTimer;
+import org.openjfx.physics.Physics;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
@@ -31,48 +27,23 @@ public class App extends Application {
 		final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 		final double screenMaxBound = 0.90;
 		
-		final double widthX = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
-		final double widthY = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
+		final double width = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
+		final double height = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
 		
 		final Logger log = LogManager.getLogger(App.class);
 		
-		final double framerate = 120;
-		final double pixelToMeter = 50;
-		final Physics physics = new Physics(framerate, pixelToMeter, widthX, widthY);
+		final double framerate = 240;
+		final double pixelToMeter = 60;
+		final Physics physics = new Physics(framerate, pixelToMeter, width, height);
 	  
 		Group root = new Group();
    	  
-		Scene scene = new Scene(root, widthX, widthY, Color.BLACK);
+		Scene scene = new Scene(root, width, height, Color.BLACK);
 		
-		GameLogic game = new GameLogic(widthX, widthY, physics);
    
-		AnimationTimer timer = new AnimationTimer() {
-			
-			private final long frameInterval = (long) (( (1/framerate) * Math.pow(10, 9)));
-			
-			private long lastTime = 0;
-			
-			private long timer = 0;
-			
-			@Override
-			public void handle(long now) {
-				if(lastTime == 0) {
-					lastTime = now;
-					return;
-				}
-				
-				if(now - lastTime > frameInterval) {
-					game.update();
-					Collection<Circle> balls = List.of(game.getBall1().getCircle(), game.getBall2().getCircle());
-					root.getChildren().setAll(balls);
-					lastTime = now;
-					timer++;
-					log.info("The current frame is: {}", timer);
-				}
-			}
-		};
+		BallSimulation ballSimulation = new BallSimulation(root, width, height, framerate, pixelToMeter);
 	  
-		timer.start();
+		ballSimulation.start();
       
 		stage.setScene(scene);
 		

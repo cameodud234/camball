@@ -28,11 +28,11 @@ public class Velocity {
 		this.velocity.put(1, velocity.get(1));
 	}
 	
-	public double getVelocityX() {
+	public double getX() {
 		return velocity.get(0);
 	}
 	
-	public double getVelocityY() {
+	public double getY() {
 		return velocity.get(1);
 	}
 	
@@ -40,11 +40,11 @@ public class Velocity {
 		return velocity;
 	}
 	
-	public void setVelocityX(double velocityX) {
+	public void setX(double velocityX) {
 		velocity.put(0, velocityX);
 	}
 	
-	public void setVelocityY(double velocityY) {
+	public void setY(double velocityY) {
 		velocity.put(1, velocityY);
 	}
 	
@@ -59,8 +59,8 @@ public class Velocity {
 		if (this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		Velocity velocity = (Velocity) o;
-		return Double.compare(this.velocity.get(0), velocity.getVelocityX()) == 0 && 
-				Double.compare(this.velocity.get(1), velocity.getVelocityY()) == 0;
+		return Double.compare(this.velocity.get(0), velocity.getX()) == 0 && 
+				Double.compare(this.velocity.get(1), velocity.getY()) == 0;
 	}
 	
 	public double getAngleBetween(Velocity velocity) {

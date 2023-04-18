@@ -1,28 +1,32 @@
 package org.openjfx.physics;
 
+import java.util.List;
+
 import org.jblas.DoubleMatrix;
-import org.openjfx.simobjects.Ball;
 
 public class Physics {
 	
 	private final double framerate;
 	
 	private double pixelToMeter;
-	private double screenWidthX;
-	private double screenWidthY;
+	private double screenWidth;
+	private double screenHeight;
 	
-	public Physics(double framerate, double pixelToMeter, double screenWidthX, double screenWidthY) {
+	public Physics(double framerate, double pixelToMeter, double screenWidth, double screenHeight) {
 		
 		this.framerate = framerate;
 		this.pixelToMeter = pixelToMeter;
-		this.screenWidthX = screenWidthX;
-		this.screenWidthY = screenWidthY;
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
 		
 	}
 	
 	public DoubleMatrix getPixelMoveRate(Velocity velocity) {
-		return (velocity.getVelocity().mul(pixelToMeter)).div(framerate);
+		DoubleMatrix privateVelocity = (velocity.getVelocity().mul(pixelToMeter)).div(framerate);
+		return new DoubleMatrix(List.of(privateVelocity.get(0), privateVelocity.get(1)));
 	}
+	
+	
 	
 	public void setPixelToMeter(double pixelToMeter) {
 		this.pixelToMeter = pixelToMeter;
@@ -36,20 +40,20 @@ public class Physics {
 		return pixelToMeter;
 	}
 	
-	public double getScreenWidthX() {
-		return screenWidthX;
+	public double getScreenWidth() {
+		return screenWidth;
 	}
 	
-	public double getScreenWidthY() {
-		return screenWidthY;
+	public double getScreenHeight() {
+		return screenHeight;
 	}
 	
 	@Override
 	public int hashCode() {
 		int result = Double.hashCode(framerate);
 		result = 31 * result + Double.hashCode(pixelToMeter);
-		result = 31 * result + Double.hashCode(screenWidthX);
-		result = 31 * result + Double.hashCode(screenWidthY);
+		result = 31 * result + Double.hashCode(screenWidth);
+		result = 31 * result + Double.hashCode(screenHeight);
 		return result;
 	}
 	

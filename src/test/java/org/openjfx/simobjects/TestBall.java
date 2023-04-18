@@ -1,172 +1,92 @@
 package org.openjfx.simobjects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
+import org.jblas.DoubleMatrix;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openjfx.objects.Ball;
 import org.openjfx.physics.Physics;
+import org.openjfx.physics.Position;
 import org.openjfx.physics.Velocity;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class TestBall extends TestBallMoveTestCases {
 	
-	Velocity velocity = new Velocity(1,2);
-	double centerX = 100;
-	double centerY = 40;
-	double boundX = 800;
-	double boundY = 600;
-	double radius = 10;
-	Paint color = Color.BLUE;
-	
-	double framerate = 60;
-	double pixelToMeter = 10;
-	
-	Physics physics = new Physics(framerate, pixelToMeter, boundX, boundY);
-	
-	Ball ball = new Ball(
-			velocity, physics, 
-			centerX, centerY,
-			boundX, boundY,
-			radius, color
-	);
+	Velocity velocity = new Velocity(-23, 44);
+	Position position = new Position(250, 540);
+	double radius = 0.1;
+	Color color = Color.ALICEBLUE;
+	double framerate = 120;
+	double screenWidth = 500;
+	double screenHeight = 700;
+	double pixelToMeter = 20;
+	Physics physics = new Physics(framerate, pixelToMeter, screenWidth, screenHeight);
+	Ball ball = new Ball(velocity, position, radius, color, physics);
 	
 	@Test
 	public void testBallConstructorVelocity() {
 		assertEquals(ball.getVelocity(), velocity);
-	 }
+	}
 	
 	@Test
-	public void testBallConstructorPhysics() {
-		assertEquals(ball.getPhysics(), physics);
+	public void testBallConstructorPosition() {
+		assertEquals(ball.getPosition(), position);
+		assertEquals(ball.getCenterX(), position.getX());
+		assertEquals(ball.getCenterY(), position.getY());
 	}
-
+	 
+	@Test
+	public void testBallConstructorBoundWidth() {
+		assertEquals(ball.getBoundWidth(), screenWidth);
+	}
+	
+	@Test
+	public void testBallConstructorBoundHeight() {
+		assertEquals(ball.getBoundHeight(), screenHeight);
+	}
 	
 	@Test
 	public void testBallConstructorRadius() {
 		assertEquals(ball.getRadius(), radius);
 	}
 	
-	@Test
-	public void testBallConstructorColor() {
-		assertEquals(ball.getColor(), color);
-	}
-	
-	@Test
-	public void testBallConstructorBall() {
-//		Ball newBall = new Ball(ball);
-	}
-	
-	@Test
-	public void testBallConstructorNegativeRadiusException() {
-		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-			double radius = -1;
-			new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		});
-		String expectedMessage = "Radius must be greater than zero.";
-		assertEquals(expectedMessage, exception.getMessage());
-	}
-	
-	@Test
-	public void testBallConstructorSetNegativeRadiusException() {
-		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-			double radius = -1;
-			ball.setRadius(radius);
-		});
-		String expectedMessage = "Radius must be greater than zero.";
-		assertEquals(expectedMessage, exception.getMessage());
-	}
-	
-	@Test
-	public void testBallSetCenterX() {
-		double centerX = 12;
-		ball.setCenterX(centerX);
-		assertEquals(ball.getCenterX(), centerX);
-		assertEquals(ball.getCircle().getCenterX(), centerX);
-	}
-	
-	@Test
-	public void testBallSetCenterY() {
-		double centerY = 12;
-		ball.setCenterY(centerY);
-		assertEquals(ball.getCenterY(), centerY);
-		assertEquals(ball.getCircle().getCenterY(), centerY);
-	}
-	
-	@Test
-	public void testBallSetRadius() {
-		double radius = 15;
-		ball.setRadius(radius);
-		assertEquals(ball.getRadius(), radius);
-		assertEquals(ball.getCircle().getRadius(), radius);
-	}
-	
 	@Test 
-	public void testBallSetVelocityWithVelocity() {
-		Velocity velocity = new Velocity(5,6);
-		ball.setVelocity(velocity);
-		assertEquals(ball.getVelocity(), velocity);
+	public void testBallConstructorColor() {
+		assertEquals(ball.getFill(), color);
 	}
 	
 	@Test
-	public void testBallSetVelocityWithSpeedXSpeedY() {
-		double velocityX = 9;
-		double velocityY = 33;
-		ball.setVelocity(velocityX, velocityY);
-		assertEquals(ball.getVelocity().getVelocityX(), velocityX);
-		assertEquals(ball.getVelocity().getVelocityY(), velocityY);
+	public void testBallSetVelocity() {
+		Velocity newVelocity = new Velocity(45,87);
+		Ball newBall = new Ball(newVelocity, position, radius, color, physics);
+		assertEquals(newBall.getVelocity(), newVelocity);
 	}
 	
 	@Test
-	public void testBallSetColor() {
-		Paint color = Color.ALICEBLUE;
-		ball.setColor(color);
-		assertEquals(ball.getColor(), color);
-		assertEquals(ball.getCircle().getFill(), color);
-	}
-	
-	@Test
-	public void testBallEquals() {
-		Ball newBall = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		assertEquals(ball, newBall);
-	}
-	
-	@Test
-	public void testBallHashCode() {
-		Velocity newVelocity = new Velocity(432, 539);
-		Ball ball1 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		Ball ball2 = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		Ball ball3 = new Ball(newVelocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		
-		int hash1 = ball1.hashCode();
-		int hash2 = ball2.hashCode();
-		int hash3 = ball3.hashCode();
-		
-		assertEquals(hash1, hash2);
-		assertNotEquals(hash2, hash3);
-		
+	public void testBallSetPosition() {
+		Position newPosition = new Position(240, 300);
+		Ball newBall = new Ball(velocity, newPosition, radius, color, physics);
+		assertEquals(newBall.getPosition(), newPosition);
 	}
 	
 	@ParameterizedTest
 	@MethodSource("TestBallMoveTestCasesArgs")
-	public void testBallMove(Velocity velocity, List<Double> centers, List<Double> actualCenterAfter) {
-		double boundX = 500;
-		double boundY = 600;
-		double centerX = centers.get(0);
-		double centerY = centers.get(1);
-		Ball ball = new Ball(velocity, physics, centerX, centerY, boundX, boundY, radius, color);
-		ball.move();
-		double epsilonX = Math.abs(ball.getCenterX() - actualCenterAfter.get(0)) / actualCenterAfter.get(0);
-		double epsilonY = Math.abs(ball.getCenterY() - actualCenterAfter.get(1)) / actualCenterAfter.get(1);
-		assertTrue(epsilonX < 0.05);
-		assertTrue(epsilonY < 0.05);
+	public void testBallMove(Velocity velocity, Position position, Position finalPosition) {
+		Ball newBall = new Ball(velocity, position, radius, color, physics);
+		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
+		newBall.move(pixelMoveRate);
+		double decimalPlaces = 2;
+		assertTrue(equalsWithTolerance(newBall.getPosition().getX(), finalPosition.getX(), decimalPlaces));
+	    assertTrue(equalsWithTolerance(newBall.getPosition().getY(), finalPosition.getY(), decimalPlaces));
+	}
+	
+	public static boolean equalsWithTolerance(double a, double b, double decimalPlaces) {
+	    double tolerance = Math.pow(10, -decimalPlaces);
+	    return Math.abs(a - b) < tolerance;
 	}
 
 }

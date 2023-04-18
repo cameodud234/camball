@@ -27,11 +27,11 @@ public class Position {
 		this.position.put(1, position.get(1));
 	}
 	
-	public double getPositionX() {
+	public double getX() {
 		return position.get(0);
 	}
 	
-	public double getPositionY() {
+	public double getY() {
 		return position.get(1);
 	}
 	
@@ -39,11 +39,11 @@ public class Position {
 		return position;
 	}
 	
-	public void setPositionX(double positionX) {
+	public void setX(double positionX) {
 		position.put(0, positionX);
 	}
 	
-	public void setPositionY(double positionY) {
+	public void setY(double positionY) {
 		position.put(1, positionY);
 	}
 	
@@ -52,8 +52,8 @@ public class Position {
 		if (this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		Position position = (Position) o;
-		return Double.compare(this.position.get(0), position.getPositionX()) == 0 && 
-				Double.compare(this.position.get(1), position.getPositionY()) == 0;
+		return Double.compare(this.position.get(0), position.getX()) == 0 && 
+				Double.compare(this.position.get(1), position.getY()) == 0;
 	}
 	
 	public double getAngleBetween(Position position) {
