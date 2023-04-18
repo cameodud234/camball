@@ -59,7 +59,7 @@ public class BallSimulation extends AnimationTimer {
 		balls = new ArrayList<Ball>();
 		ballStates = new ArrayList<BallState>();
 		
-		ballCount = 4;
+		ballCount = 40;
 		
 		for(int i = 0; i < ballCount; i++) {
 			BallState ballState = new BallState(width, height, physics);

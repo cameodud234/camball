@@ -42,7 +42,6 @@ public class App extends Application {
 		
    
 		BallSimulation ballSimulation = new BallSimulation(root, width, height, framerate, pixelToMeter);
-
 	  
 		ballSimulation.start();
       
