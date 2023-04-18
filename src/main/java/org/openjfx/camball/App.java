@@ -7,8 +7,6 @@ import org.apache.logging.log4j.Logger;
  * JavaFX App
  */
 
-import javafx.animation.AnimationTimer;
-import org.openjfx.physics.Physics;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
@@ -17,7 +15,6 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class App extends Application {
 	
@@ -34,7 +31,6 @@ public class App extends Application {
 		
 		final double framerate = 240;
 		final double pixelToMeter = 60;
-		final Physics physics = new Physics(framerate, pixelToMeter, width, height);
 	  
 		Group root = new Group();
    	  
