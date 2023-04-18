@@ -1,28 +1,20 @@
 package org.openjfx.camball;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jblas.DoubleMatrix;
 import org.openjfx.objects.Ball;
 import org.openjfx.objects.BallState;
 import org.openjfx.physics.Physics;
-import org.openjfx.physics.Position;
-import org.openjfx.physics.Velocity;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class BallSimulation extends AnimationTimer {
-	
-	private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Color.GREEN, Color.GRAY, Color.PURPLE};
 	
 	private final Logger log = LogManager.getLogger(BallSimulation.class);
 	private final Group root;
@@ -59,7 +51,7 @@ public class BallSimulation extends AnimationTimer {
 		balls = new ArrayList<Ball>();
 		ballStates = new ArrayList<BallState>();
 		
-		ballCount = 40;
+		ballCount = 3;
 		
 		for(int i = 0; i < ballCount; i++) {
 			BallState ballState = new BallState(width, height, physics);
@@ -91,7 +83,6 @@ public class BallSimulation extends AnimationTimer {
         		balls.add(ball);
         		
         	}	
-        	
         	
         	
         	for(BallState ballState: ballStates) {
