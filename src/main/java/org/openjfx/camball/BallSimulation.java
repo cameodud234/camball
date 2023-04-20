@@ -2,12 +2,14 @@ package org.openjfx.camball;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openjfx.objects.Ball;
 import org.openjfx.objects.BallState;
+import org.openjfx.physics.Collisions;
 import org.openjfx.physics.Physics;
 
 import javafx.animation.AnimationTimer;
@@ -28,6 +30,8 @@ public class BallSimulation extends AnimationTimer {
     
     List<Ball> balls;
     List<BallState> ballStates;
+    
+    Collisions collisions;
     
     private final int ballCount;
 
@@ -57,6 +61,8 @@ public class BallSimulation extends AnimationTimer {
 			BallState ballState = new BallState(width, height, physics);
 			ballStates.add(ballState);
 		}
+		
+		collisions = new Collisions(balls);
 		
 		lastTime = 0;
 		timer = 0;
@@ -89,7 +95,12 @@ public class BallSimulation extends AnimationTimer {
         		ballState.update();
         	} 
         	
-//        	physics.checkCollisions(balls);
+        	collisions.updateBallStates(balls);
+        	
+        	if(collisions.containsCollisions()) {
+        		Map<Ball, Ball> collidingBalls = collisions.getCollidingBalls();
+        		
+        	}
         	
         	root.getChildren().clear();
             root.getChildren().addAll(balls);
