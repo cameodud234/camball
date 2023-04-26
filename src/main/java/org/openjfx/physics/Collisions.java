@@ -19,6 +19,7 @@ public class Collisions {
 	}
 	
 	public void updateBallStates(List<Ball> balls) {
+		// doesn't work if balls list changes in size
 		for(int i = 0 ; i < this.balls.size(); i++) {
 			Ball thisBall = this.balls.get(i);
 			Ball parameterBall = balls.get(i);
@@ -38,6 +39,25 @@ public class Collisions {
 	
 	public Map<Ball, Ball> getCollidingBalls() {
 		return new HashMap<Ball,Ball>(collidingBalls);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+		
+		Collisions collisions = (Collisions) o;
+		
+		if(balls.size() != collisions.getBalls().size()) {
+			return false;
+		}
+//		if(collidingBalls.size() != collisions.getCollidingBalls().size()) {
+//			return false;
+//		}
+		
+		return balls.equals(collisions.getBalls());
+//		return balls.equals(collisions.getBalls()) &&
+//				collidingBalls.equals(collisions.getCollidingBalls());
 	}
 
 }
