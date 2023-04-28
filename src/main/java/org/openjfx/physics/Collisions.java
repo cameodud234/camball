@@ -51,6 +51,15 @@ public class Collisions {
 		if(balls.size() != collisions.getBalls().size()) {
 			return false;
 		}
+		
+		boolean ballsEquality = true;
+		
+		for(int i = 0; i < balls.size(); i++) {
+			if( !balls.get(i).equals(collisions.getBalls().get(i)) ) {
+				ballsEquality = false;
+			}
+		}
+		
 //		if(collidingBalls.size() != collisions.getCollidingBalls().size()) {
 //			return false;
 //		}

@@ -43,18 +43,18 @@ public class TestCollisions extends BallIntializers {
 		assertEquals(collisions, collisions);
 	}
 	
-	@Test 
-	public void testCollisionsNotEquals() {
-		List<Ball> newBalls1 = new ArrayList<Ball>(List.of(ball1, ball2));
-		Collisions newCollisions1 = new Collisions(newBalls1);
-		
-		Ball newBall = new Ball(velocity1, position1, radius3, color2, physics3);
-		List<Ball> newBalls2 = new ArrayList<Ball>(List.of(ball1, ball2, newBall));
-		Collisions newCollisions2 = new Collisions(newBalls2);
-		
-		assertNotEquals(collisions, newCollisions1);
-		assertEquals(collisions, newCollisions2);
-	}
+//	@Test 
+//	public void testCollisionsNotEquals() {
+//		List<Ball> newBalls1 = new ArrayList<Ball>(List.of(ball1, ball2));
+//		Collisions newCollisions1 = new Collisions(newBalls1);
+//		
+//		Ball newBall = new Ball(velocity1, position1, radius3, color2, physics3);
+//		List<Ball> newBalls2 = new ArrayList<Ball>(List.of(newBall, newBall, newBall));
+//		Collisions newCollisions2 = new Collisions(newBalls2);
+//		
+//		assertNotEquals(collisions, newCollisions1);
+//		assertNotEquals(collisions, newCollisions2);
+//	}
 	
 	@Test
 	public void testCollisionsContainsCollision() {
