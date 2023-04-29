@@ -28,6 +28,10 @@ public class Collisions {
 			
 		}
 	}
+	
+	public void updateCollidingBalls() {
+		
+	}
 	 
 	public boolean containsCollisions() {
 		return false;
@@ -38,6 +42,7 @@ public class Collisions {
 	}
 	
 	public Map<Ball, Ball> getCollidingBalls() {
+		// write 
 		return new HashMap<Ball,Ball>(collidingBalls);
 	}
 	
@@ -50,14 +55,6 @@ public class Collisions {
 		
 		if(balls.size() != collisions.getBalls().size()) {
 			return false;
-		}
-		
-		boolean ballsEquality = true;
-		
-		for(int i = 0; i < balls.size(); i++) {
-			if( !balls.get(i).equals(collisions.getBalls().get(i)) ) {
-				ballsEquality = false;
-			}
 		}
 		
 		if(collidingBalls.size() != collisions.getCollidingBalls().size()) {

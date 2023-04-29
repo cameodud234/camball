@@ -102,7 +102,7 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	}
 
 	public void setColor(Color color) {
-		this.chosenColor = chosenColor;
+		this.chosenColor = color;
 	}
 
 	public double getScreenWidth() {

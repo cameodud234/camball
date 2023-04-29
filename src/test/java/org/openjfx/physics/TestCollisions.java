@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.openjfx.objects.Ball;
@@ -21,6 +23,8 @@ public class TestCollisions extends BallIntializers {
 	
 	Collisions collisions = new Collisions(balls);
 	
+//	Map<Ball, Ball> collidingBalls = collisions.;
+	
 	@Test
 	public void testCollisionsConstructorBall() {
 		assertEquals(collisions.getBalls(), balls);
@@ -28,7 +32,7 @@ public class TestCollisions extends BallIntializers {
 	
 	@Test
 	public void testCollisionsGetCollidingBalls() {
-		// Need to write test cases for this.
+//		assertEquals(collisions.getCollidingBalls(), collidingBalls);
 	}
 	
 	@Test
