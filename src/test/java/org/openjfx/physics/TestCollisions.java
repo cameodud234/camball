@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,9 @@ public class TestCollisions extends BallIntializers {
 	
 	Ball ball3 = new Ball(velocity3, position3, radius3, color3, mass3, physics);
 	
-	List<Ball> balls = new ArrayList<Ball>(List.of(ball1, ball2, ball3));
+	Ball ball4 = new Ball(velocity4, position4, radius4, color4, mass4, physics);
+	
+	List<Ball> balls = new ArrayList<Ball>(List.of(ball1, ball2, ball3, ball4));
 	
 	Collisions collisions = new Collisions(balls);
 	
@@ -37,7 +40,7 @@ public class TestCollisions extends BallIntializers {
 	
 	@Test
 	public void testCollisionsEquals() {
-		List<Ball> newBalls = new ArrayList<Ball>(List.of(ball1, ball2, ball3));
+		List<Ball> newBalls = new ArrayList<Ball>(List.of(ball1, ball2, ball3, ball4));
 		Collisions newCollisions1 = new Collisions(newBalls);
 		Collisions newCollisions2 = collisions;
 		
@@ -63,5 +66,15 @@ public class TestCollisions extends BallIntializers {
 	public void testCollisionsContainsCollision() {
 		// Need to create test cases for this.
 	}
+	
+//	@Test
+//	public void testCollisionsBallPositionComparatorX() {
+//		List<Ball> balls = new ArrayList<Ball>(List.of(ball1, ball2, ball3, ball4));
+//		List<Ball> sortedBalls = new ArrayList<Ball>(List.of(ball2, ball3, ball1, ball4));
+//		
+//		Collections.sort(balls, );
+//		
+//		assertEquals(balls, sortedBalls);
+//	}
 	
 }
