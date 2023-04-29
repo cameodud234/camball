@@ -13,17 +13,19 @@ import javafx.scene.shape.Circle;
 
 public class Ball extends Circle {
 	
-	private final Velocity velocity;
-	private final Position position;
+	private Velocity velocity; // in meters/seconds^2
+	private Position position; // in meters
+	private double mass; // in kilograms
 	
 	private double boundWidth;
 	private double boundHeight;
 	private DoubleMatrix delta;
 	
-	public Ball(Velocity velocity, Position position, double radius, Color color, Physics physics) {
+	public Ball(Velocity velocity, Position position, double radius, Color color, double mass,Physics physics) {
 		super(position.getX(), position.getY(), radius, color);
 		this.velocity = new Velocity(velocity.getX(), velocity.getY());
 		this.position = new Position(position.getX(), position.getY());
+		this.mass = mass;
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
 		DoubleMatrix physicsValues = physics.getPixelMoveRate(velocity);
@@ -65,12 +67,20 @@ public class Ball extends Circle {
 		this.position.setY(position.getY());
 	}
 	
+	public void setMass(double mass) {
+		this.mass = mass;
+	}
+	
 	public Velocity getVelocity() {
 		return new Velocity(velocity.getX(), velocity.getY());
 	}
 	
 	public Position getPosition() {
 		return new Position(position.getX(), position.getY());
+	}
+	
+	public double getMass() {
+		return mass;
 	}
 	
 	public double getBoundWidth() {
@@ -93,6 +103,7 @@ public class Ball extends Circle {
 				Double.compare(ball.boundHeight, boundHeight) == 0 &&
 				Objects.equals(velocity, ball.velocity) &&
 				Objects.equals(position, ball.position) &&
+				Double.compare(mass, ball.getMass()) == 0 &&
 				Objects.equals(delta, ball.delta);
 	}
 

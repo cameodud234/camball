@@ -2,12 +2,14 @@ package org.openjfx.camball;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openjfx.objects.Ball;
 import org.openjfx.objects.BallState;
+import org.openjfx.physics.Collisions;
 import org.openjfx.physics.Physics;
 
 import javafx.animation.AnimationTimer;
@@ -28,6 +30,8 @@ public class BallSimulation extends AnimationTimer {
     
     List<Ball> balls;
     List<BallState> ballStates;
+    
+    Collisions collisions;
     
     private final int ballCount;
 
@@ -58,6 +62,8 @@ public class BallSimulation extends AnimationTimer {
 			ballStates.add(ballState);
 		}
 		
+		collisions = new Collisions(balls);
+		
 		lastTime = 0;
 		timer = 0;
 		
@@ -79,17 +85,21 @@ public class BallSimulation extends AnimationTimer {
         		
         		BallState ballState = ballStates.get(i);
         		Ball ball = new Ball(ballState.getVelocity(), ballState.getPosition(),
-        				ballState.getRadius(), ballState.getColor(), physics);
+        				ballState.getRadius(), ballState.getColor(), ballState.getMass(), physics);
         		balls.add(ball);
         		
         	}	
-        	
         	
         	for(BallState ballState: ballStates) {
         		ballState.update();
         	} 
         	
-//        	physics.checkCollisions(balls);
+        	collisions.updateBallStates(balls);
+        	collisions.calculateCollisions();
+        	
+        	if(collisions.containsCollisions()) {
+        		Map<Ball, Ball> collidingBalls = collisions.getCollidingBalls();
+        	}
         	
         	root.getChildren().clear();
             root.getChildren().addAll(balls);
@@ -100,8 +110,6 @@ public class BallSimulation extends AnimationTimer {
 //            log.info("Physics Move Rate: [{}, {}]", pixelMoveRate.get(0), pixelMoveRate.get(1));
             
         }
-    }
-    
-    
+    }  
     
 }
