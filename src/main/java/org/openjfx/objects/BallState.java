@@ -22,6 +22,7 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	
 	private final Velocity velocity;
 	private final Position position;
+	private final double mass;
 	
 	private final List<Double> randomInitialPosition;
     private final List<Double> randomInitialVelocity;
@@ -39,6 +40,7 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
     	double boundRadius = Math.min(randomNumber.nextInt(20, 100), Math.min(screenWidth, screenHeight) );
 		double[] boundPosition = {0 + boundRadius, Math.min(screenWidth, screenHeight) - boundRadius};
 		double[] boundVelocity = {-100, 100};
+		double[] boundMass = {1, 50};
 		
 		randomInitialVelocity = new ArrayList<Double>( 
 				List.of(
@@ -56,6 +58,7 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 		
 		velocity = new Velocity(randomInitialVelocity.get(0), randomInitialVelocity.get(1));
 		position = new Position(randomInitialPosition.get(0), randomInitialPosition.get(1));
+		mass = randomNumber.nextDouble(boundMass[0], boundMass[1]);
 		radius = boundRadius;
 		
 		delta = physics.getPixelMoveRate(velocity);
@@ -119,6 +122,10 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 
 	public Position getPosition() {
 		return position;
+	}
+	
+	public double getMass() {
+		return mass;
 	}
 
 	public List<Double> getRandomInitialPosition() {

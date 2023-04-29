@@ -85,7 +85,7 @@ public class BallSimulation extends AnimationTimer {
         		
         		BallState ballState = ballStates.get(i);
         		Ball ball = new Ball(ballState.getVelocity(), ballState.getPosition(),
-        				ballState.getRadius(), ballState.getColor(), physics);
+        				ballState.getRadius(), ballState.getColor(), ballState.getMass(), physics);
         		balls.add(ball);
         		
         	}	

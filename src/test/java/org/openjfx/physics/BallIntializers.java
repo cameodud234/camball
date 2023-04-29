@@ -13,16 +13,19 @@ public class BallIntializers {
 	
 	Velocity velocity1 = new Velocity(-3, 24);
 	Position position1 = new Position(98, 54);
+	double mass1 = 4;
 	double radius1 = 10;
 	Color color1 = Color.ALICEBLUE;
 	
 	Velocity velocity2 = new Velocity(-23, 44);
 	Position position2 = new Position(200, 340);
+	double mass2 = 9;
 	double radius2 = 33;
 	Color color2 = Color.AQUAMARINE;
 	
 	Velocity velocity3 = new Velocity(36, 12);
 	Position position3 = new Position(250, 540);
+	double mass3 = 19;
 	double radius3 = 12;
 	Color color3 = Color.BISQUE;
 	
