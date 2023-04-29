@@ -11,11 +11,11 @@ import org.openjfx.objects.Ball;
 
 public class TestCollisions extends BallIntializers {
 	
-	Ball ball1 = new Ball(velocity1, position1, radius1, color1, physics1);
+	Ball ball1 = new Ball(velocity1, position1, radius1, color1, physics);
 	
-	Ball ball2 = new Ball(velocity2, position2, radius2, color2, physics2);
+	Ball ball2 = new Ball(velocity2, position2, radius2, color2, physics);
 	
-	Ball ball3 = new Ball(velocity3, position3, radius3, color3, physics3);
+	Ball ball3 = new Ball(velocity3, position3, radius3, color3, physics);
 	
 	List<Ball> balls = new ArrayList<Ball>(List.of(ball1, ball2, ball3));
 	
@@ -26,7 +26,7 @@ public class TestCollisions extends BallIntializers {
 		assertEquals(collisions.getBalls(), balls);
 	}
 	
-	@Test 
+	@Test
 	public void testCollisionsGetCollidingBalls() {
 		// Need to write test cases for this.
 	}
@@ -43,18 +43,18 @@ public class TestCollisions extends BallIntializers {
 		assertEquals(collisions, collisions);
 	}
 	
-//	@Test 
-//	public void testCollisionsNotEquals() {
-//		List<Ball> newBalls1 = new ArrayList<Ball>(List.of(ball1, ball2));
-//		Collisions newCollisions1 = new Collisions(newBalls1);
-//		
-//		Ball newBall = new Ball(velocity1, position1, radius3, color2, physics3);
-//		List<Ball> newBalls2 = new ArrayList<Ball>(List.of(newBall, newBall, newBall));
-//		Collisions newCollisions2 = new Collisions(newBalls2);
-//		
-//		assertNotEquals(collisions, newCollisions1);
-//		assertNotEquals(collisions, newCollisions2);
-//	}
+ 	@Test
+	public void testCollisionsNotEquals() {
+		List<Ball> newBalls1 = new ArrayList<Ball>(List.of(ball1, ball2));
+		Collisions newCollisions1 = new Collisions(newBalls1);
+		
+		Ball newBall = new Ball(velocity1, position1, radius3, color2, physics);
+		List<Ball> newBalls2 = new ArrayList<Ball>(List.of(newBall, newBall, newBall));
+		Collisions newCollisions2 = new Collisions(newBalls2);
+		
+		assertNotEquals(collisions, newCollisions1);
+		assertNotEquals(collisions, newCollisions2);
+	}
 	
 	@Test
 	public void testCollisionsContainsCollision() {

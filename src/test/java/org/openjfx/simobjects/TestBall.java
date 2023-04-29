@@ -1,6 +1,7 @@
 package org.openjfx.simobjects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.jblas.DoubleMatrix;
@@ -71,6 +72,24 @@ public class TestBall extends TestBallMoveTestCases {
 		Position newPosition = new Position(240, 300);
 		Ball newBall = new Ball(velocity, newPosition, radius, color, physics);
 		assertEquals(newBall.getPosition(), newPosition);
+	}
+	
+	@Test
+	public void testBallEquals() {
+		Ball newBall = new Ball(velocity, position, radius, color, physics);
+		assertEquals(ball, newBall);
+	}
+	
+	@Test 
+	public void testBallNotEquals() {
+		Velocity newVelocity = new Velocity(34,65);
+		Position newPosition = new Position(244,545);
+		double newRadius = 45;
+		Color newColor = Color.AZURE;
+		Physics newPhysics = new Physics(60, pixelToMeter, 1000, 1000);
+		
+		Ball newBall = new Ball(newVelocity, position, radius, color, physics);
+		assertNotEquals(ball, newBall);
 	}
 	
 	@ParameterizedTest

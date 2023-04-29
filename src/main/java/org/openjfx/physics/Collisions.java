@@ -60,13 +60,12 @@ public class Collisions {
 			}
 		}
 		
-//		if(collidingBalls.size() != collisions.getCollidingBalls().size()) {
-//			return false;
-//		}
+		if(collidingBalls.size() != collisions.getCollidingBalls().size()) {
+			return false;
+		}
 		
-		return balls.equals(collisions.getBalls());
-//		return balls.equals(collisions.getBalls()) &&
-//				collidingBalls.equals(collisions.getCollidingBalls());
+		return balls.equals(collisions.getBalls()) &&
+				collidingBalls.equals(collisions.getCollidingBalls());
 	}
 
 }
