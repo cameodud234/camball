@@ -90,16 +90,15 @@ public class BallSimulation extends AnimationTimer {
         		
         	}	
         	
-        	
         	for(BallState ballState: ballStates) {
         		ballState.update();
         	} 
         	
         	collisions.updateBallStates(balls);
+        	collisions.calculateCollisions();
         	
         	if(collisions.containsCollisions()) {
         		Map<Ball, Ball> collidingBalls = collisions.getCollidingBalls();
-        		
         	}
         	
         	root.getChildren().clear();
@@ -111,8 +110,6 @@ public class BallSimulation extends AnimationTimer {
 //            log.info("Physics Move Rate: [{}, {}]", pixelMoveRate.get(0), pixelMoveRate.get(1));
             
         }
-    }
-    
-    
+    }  
     
 }

@@ -31,19 +31,7 @@ public class Collisions {
 		}
 	}
 	
-	public void updateCollidingBalls() {
-		
-	}
-	 
-	public boolean containsCollisions() {
-		return false;
-	}
-	
-	public List<Ball> getBalls() {
-		return new ArrayList<Ball>(balls);
-	}
-	
-	public Map<Ball, Ball> getCollidingBalls() {
+	public void calculateCollisions() {
 		
 		Map<Ball, Ball> temporaryCollidingBalls = new HashMap<Ball, Ball>();
 		
@@ -57,7 +45,7 @@ public class Collisions {
 		
 		if(ballList.size() < 2) {
 			collidingBalls.clear();
-			return collidingBalls;
+			return;
 		}
 		
 		for(int i = 1; i < ballList.size(); i++) {
@@ -69,7 +57,7 @@ public class Collisions {
 		
 		if(temporaryCollidingBalls.isEmpty()) {
 			collidingBalls.clear();
-			return collidingBalls;
+			return;
 		}
 		
 		List<Ball> prunedBallList = new ArrayList<>();
@@ -85,7 +73,7 @@ public class Collisions {
 		
 		if(prunedBallList.size() < 2) {
 			collidingBalls.clear();
-			return collidingBalls;
+			return;
 		}
 		
 		for(int i = 1; i < prunedBallList.size(); i++) {
@@ -94,7 +82,21 @@ public class Collisions {
 				collidingBalls.put(prunedBallList.get(i), prunedBallList.get(i-1));
 			}
 		}
-		
+	}
+	
+	public void updateCollidingBalls() {
+		calculateCollisions();
+	}
+	 
+	public boolean containsCollisions() {
+		return collidingBalls.size() != 0;
+	}
+	
+	public List<Ball> getBalls() {
+		return new ArrayList<Ball>(balls);
+	}
+	
+	public Map<Ball, Ball> getCollidingBalls() {
 		return new HashMap<Ball,Ball>(collidingBalls);
 	}
 	
@@ -132,8 +134,19 @@ public class Collisions {
 		}
 	}
 	
-	private boolean isColliding(Ball ball1, Ball ball2) {
-		return false;
+	private boolean isColliding(Ball o1, Ball o2) {
+		
+		if(Double.compare(distance(o1, o2), o1.getRadius() + o2.getRadius()) == 1) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private double distance(Ball o1, Ball o2) {
+		double dx = o1.getCenterX() - o2.getCenterX();
+		double dy = o1.getCenterY() - o2.getCenterY();
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 	}
 
 }

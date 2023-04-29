@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,16 +25,25 @@ public class TestCollisions extends BallIntializers {
 	
 	Collisions collisions = new Collisions(balls);
 	
-//	Map<Ball, Ball> collidingBalls = collisions.;
-	
 	@Test
 	public void testCollisionsConstructorBall() {
 		assertEquals(collisions.getBalls(), balls);
 	}
 	
 	@Test
+	public void testCollisionsCalculateCollisions() {
+		Collisions newCollisions = new Collisions(balls);
+		Map<Ball, Ball> actualCollidingBalls = new HashMap<>();
+		actualCollidingBalls.put(ball1, ball4);
+		actualCollidingBalls.put(ball4, ball1);
+		newCollisions.calculateCollisions();
+		assertEquals(newCollisions.getCollidingBalls(), actualCollidingBalls);
+	}
+	
+	@Test
 	public void testCollisionsGetCollidingBalls() {
-//		assertEquals(collisions.getCollidingBalls(), collidingBalls);
+		Map<Ball, Ball> collidingBalls = new HashMap<>();
+		assertEquals(collisions.getCollidingBalls(), collidingBalls);
 	}
 	
 	@Test
@@ -46,7 +54,6 @@ public class TestCollisions extends BallIntializers {
 		
 		assertEquals(collisions, newCollisions1);
 		assertEquals(collisions, newCollisions2);
-		assertEquals(collisions, collisions);
 	}
 	
  	@Test
@@ -55,7 +62,7 @@ public class TestCollisions extends BallIntializers {
 		Collisions newCollisions1 = new Collisions(newBalls1);
 		
 		Ball newBall = new Ball(velocity1, position1, radius3, color2, mass1, physics);
-		List<Ball> newBalls2 = new ArrayList<Ball>(List.of(newBall, newBall, newBall));
+		List<Ball> newBalls2 = new ArrayList<Ball>(List.of(newBall, newBall, newBall, newBall));
 		Collisions newCollisions2 = new Collisions(newBalls2);
 		
 		assertNotEquals(collisions, newCollisions1);
@@ -64,17 +71,8 @@ public class TestCollisions extends BallIntializers {
 	
 	@Test
 	public void testCollisionsContainsCollision() {
-		// Need to create test cases for this.
+		Collisions newCollisions = new Collisions(balls);
+		newCollisions.calculateCollisions();
 	}
-	
-//	@Test
-//	public void testCollisionsBallPositionComparatorX() {
-//		List<Ball> balls = new ArrayList<Ball>(List.of(ball1, ball2, ball3, ball4));
-//		List<Ball> sortedBalls = new ArrayList<Ball>(List.of(ball2, ball3, ball1, ball4));
-//		
-//		Collections.sort(balls, );
-//		
-//		assertEquals(balls, sortedBalls);
-//	}
 	
 }
