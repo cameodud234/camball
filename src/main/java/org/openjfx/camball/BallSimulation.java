@@ -99,6 +99,12 @@ public class BallSimulation extends AnimationTimer {
         	
         	if(collisions.containsCollisions()) {
         		Map<Ball, Ball> collidingBalls = collisions.getCollidingBalls();
+        		for(Ball ball: balls) {
+        			if(collidingBalls.containsKey(ball)) {
+        				Ball ball1 = ball;
+        				Ball ball2 = collisions.getCollidingBalls().get(ball);
+        			}
+        		}
         	}
         	
         	root.getChildren().clear();
