@@ -1,6 +1,7 @@
 package org.openjfx.camball;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -32,8 +33,6 @@ public class BallSimulation extends AnimationTimer {
     List<Ball> balls;
     List<BallState> ballStates;
     
-    Collisions collisions;
-    
     private final int ballCount;
 
 	Color chosenColor;
@@ -62,8 +61,6 @@ public class BallSimulation extends AnimationTimer {
 			BallState ballState = new BallState(width, height, physics);
 			ballStates.add(ballState);
 		}
-		
-		collisions = new Collisions(balls);
 		
 		lastTime = 0;
 		timer = 0;
@@ -94,18 +91,16 @@ public class BallSimulation extends AnimationTimer {
         		ballState.update();
         	}
         	
-        	collisions.updateBallStates(balls);
-        	collisions.calculateCollisions();
+        	Map<Ball, Ball> collidingBalls_Balls = Collisions.calculateCollisions(balls);
         	
-        	if(!collisions.getCollidingBalls().isEmpty()) {
-        		Map<Ball, Ball> collidingBalls = collisions.getCollidingBalls();
+        	if(!collidingBalls_Balls.isEmpty()) {
         		for(Ball ball: balls) {
-        			if(collidingBalls.containsKey(ball)) {
+        			if(collidingBalls_Balls.containsKey(ball)) {
         				Ball ball1 = ball;
-        				Ball ball2 = collisions.getCollidingBalls().get(ball);
+        				Ball ball2 = collidingBalls_Balls.get(ball);
         				List<Velocity> velocities;
         				try {
-        					velocities = collisions.calculateCollisionVelocities(ball1, ball2);
+        					velocities = Collisions.calculateCollisionVelocities(ball1, ball2);
         					ball1.setVelocity(velocities.get(0));
         					ball2.setVelocity(velocities.get(1));
         					int indexFind1 = 0;
