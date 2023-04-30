@@ -19,14 +19,14 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	private final double screenHeight;
 	private final Physics physics;
 	private final DoubleMatrix delta;
-	
-	private final Velocity velocity;
+
 	private final Position position;
 	private final double mass;
 	
 	private final List<Double> randomInitialPosition;
     private final List<Double> randomInitialVelocity;
     private final Random randomNumber;
+    private Velocity velocity;
     private double radius;
 	
 	Color chosenColor;
@@ -114,6 +114,10 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 
 	public double getScreenHeight() {
 		return screenHeight;
+	}
+	
+	public void setVelocity(Velocity velocity) {
+		this.velocity = new Velocity(velocity.getX(), velocity.getY());
 	}
 
 	public Velocity getVelocity() {

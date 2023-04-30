@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jblas.DoubleMatrix;
 import org.openjfx.objects.Ball;
 
 public class Collisions {
@@ -29,6 +30,34 @@ public class Collisions {
 			thisBall.setPosition(parameterBall.getPosition());
 			
 		}
+	}
+	
+	public List<Velocity> calculateCollisionVelocities(Ball o1, Ball o2) throws VelocityException { 
+		DoubleMatrix v1_before = o1.getVelocity().getVelocity();
+		DoubleMatrix v2_before = o2.getVelocity().getVelocity();
+		
+		
+		DoubleMatrix v1_afterFirstTerm = v1_before.mul( ((o1.getMass() - o2.getMass()) / (o1.getMass() + o2.getMass())) );
+			
+		DoubleMatrix v1_afterSecondTerm = v2_before.mul( 2 * o2.getMass() / (o1.getMass() + o2.getMass()) );
+		
+		DoubleMatrix v2_afterFirstTerm = v1_before.mul( 2 * o1.getMass() / (o1.getMass() + o2.getMass()) );
+		DoubleMatrix v2_afterSecondTerm = v2_before.mul( (o2.getMass() - o1.getMass()) / (o1.getMass() + o2.getMass()) );
+		
+		
+		DoubleMatrix v1_after = v1_afterFirstTerm.add(v1_afterSecondTerm);
+		DoubleMatrix v2_after = v2_afterFirstTerm.add(v2_afterSecondTerm);
+		
+		Velocity velocity1 = new Velocity(v1_after);
+		Velocity velocity2 = new Velocity(v2_after);
+		
+		List<Velocity> velocities = new ArrayList<>();
+		
+		velocities.add(velocity1);
+		velocities.add(velocity2);
+		
+		return velocities;
+		
 	}
 	
 	public void calculateCollisions() {

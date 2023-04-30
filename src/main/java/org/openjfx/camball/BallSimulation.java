@@ -11,6 +11,7 @@ import org.openjfx.objects.Ball;
 import org.openjfx.objects.BallState;
 import org.openjfx.physics.Collisions;
 import org.openjfx.physics.Physics;
+import org.openjfx.physics.Velocity;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -55,7 +56,7 @@ public class BallSimulation extends AnimationTimer {
 		balls = new ArrayList<Ball>();
 		ballStates = new ArrayList<BallState>();
 		
-		ballCount = 3;
+		ballCount = 2;
 		
 		for(int i = 0; i < ballCount; i++) {
 			BallState ballState = new BallState(width, height, physics);
@@ -68,7 +69,6 @@ public class BallSimulation extends AnimationTimer {
 		timer = 0;
 		
 	}
-	
     
     @Override
     public void handle(long now) {
@@ -88,21 +88,54 @@ public class BallSimulation extends AnimationTimer {
         				ballState.getRadius(), ballState.getColor(), ballState.getMass(), physics);
         		balls.add(ball);
         		
-        	}	
+        	}
         	
         	for(BallState ballState: ballStates) {
         		ballState.update();
-        	} 
+        	}
         	
         	collisions.updateBallStates(balls);
         	collisions.calculateCollisions();
         	
-        	if(collisions.containsCollisions()) {
+        	if(!collisions.getCollidingBalls().isEmpty()) {
         		Map<Ball, Ball> collidingBalls = collisions.getCollidingBalls();
         		for(Ball ball: balls) {
         			if(collidingBalls.containsKey(ball)) {
         				Ball ball1 = ball;
         				Ball ball2 = collisions.getCollidingBalls().get(ball);
+        				List<Velocity> velocities;
+        				try {
+        					velocities = collisions.calculateCollisionVelocities(ball1, ball2);
+        					ball1.setVelocity(velocities.get(0));
+        					ball2.setVelocity(velocities.get(1));
+        					int indexFind1 = 0;
+        					int indexFind2 = 0;
+        					for(int i = 0; i < ballCount; i++) {
+        						if(ball1.equals(balls.get(i))) {
+        							indexFind1 = i;
+        						}
+        					}
+        					for(int i = 0; i < ballCount; i++) { 
+        						if(ball2.equals(balls.get(i))) {
+        							indexFind2 = i;
+        						}
+        					}
+        					
+        					BallState newBallState1 = ballStates.get(indexFind1);
+        					BallState newBallState2 = ballStates.get(indexFind2);
+        					newBallState1.setVelocity(velocities.get(0));
+        					newBallState2.setVelocity(velocities.get(1));
+        					
+        					ballStates.set(indexFind1, newBallState1);
+        					ballStates.set(indexFind2, newBallState2);
+        					
+        					balls.remove(ball1);
+        					balls.remove(ball2);
+        					
+        					
+						} catch (Exception e) {
+							log.error(e.getCause() + ", " + e.getMessage());
+						}
         			}
         		}
         	}
