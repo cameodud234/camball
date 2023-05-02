@@ -55,7 +55,7 @@ public class BallSimulation extends AnimationTimer {
 		balls = new ArrayList<Ball>();
 		ballStates = new ArrayList<BallState>();
 		
-		ballCount = 2;
+		ballCount = 3;
 		
 		for(int i = 0; i < ballCount; i++) {
 			BallState ballState = new BallState(width, height, physics);
@@ -94,45 +94,7 @@ public class BallSimulation extends AnimationTimer {
         	Map<Ball, Ball> collidingBalls_Balls = Collisions.calculateCollisions(balls);
         	
         	if(!collidingBalls_Balls.isEmpty()) {
-        		for(Ball ball: balls) {
-        			if(collidingBalls_Balls.containsKey(ball)) {
-        				Ball ball1 = ball;
-        				Ball ball2 = collidingBalls_Balls.get(ball);
-        				List<Velocity> velocities;
-        				try {
-        					velocities = Collisions.calculateCollisionVelocities(ball1, ball2);
-        					ball1.setVelocity(velocities.get(0));
-        					ball2.setVelocity(velocities.get(1));
-        					int indexFind1 = 0;
-        					int indexFind2 = 0;
-        					for(int i = 0; i < ballCount; i++) {
-        						if(ball1.equals(balls.get(i))) {
-        							indexFind1 = i;
-        						}
-        					}
-        					for(int i = 0; i < ballCount; i++) { 
-        						if(ball2.equals(balls.get(i))) {
-        							indexFind2 = i;
-        						}
-        					}
-        					
-        					BallState newBallState1 = ballStates.get(indexFind1);
-        					BallState newBallState2 = ballStates.get(indexFind2);
-        					newBallState1.setVelocity(velocities.get(0));
-        					newBallState2.setVelocity(velocities.get(1));
-        					
-        					ballStates.set(indexFind1, newBallState1);
-        					ballStates.set(indexFind2, newBallState2);
-        					
-        					balls.remove(ball1);
-        					balls.remove(ball2);
-        					
-        					
-						} catch (Exception e) {
-							log.error(e.getCause() + ", " + e.getMessage());
-						}
-        			}
-        		}
+        		log.info("collidingBalls_Balls: [{}, {}]", collidingBalls_Balls.keySet());
         	}
         	
         	root.getChildren().clear();
