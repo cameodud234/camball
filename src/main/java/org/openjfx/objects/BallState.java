@@ -18,7 +18,6 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	private final double screenWidth;
 	private final double screenHeight;
 	private final Physics physics;
-	private final DoubleMatrix delta;
 
 	private final Position position;
 	private final double mass;
@@ -27,6 +26,7 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
     private final List<Double> randomInitialVelocity;
     private final Random randomNumber;
     private Velocity velocity;
+    private DoubleMatrix delta;
     private double radius;
 	
 	Color chosenColor;
@@ -72,6 +72,28 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 		
 //		delta = physics.getPixelMoveRate(velocity);
 		
+		
+		if(position.getX() - radius <= 0) {
+			delta.put(0, Math.abs(delta.get(0)));
+        }
+        else if(position.getX() + radius >= screenWidth) {
+        	delta.put(0, -Math.abs(delta.get(0)));
+        }
+        
+        if(position.getY() - radius <= 0) {
+        	delta.put(1, Math.abs(delta.get(1)));
+        }
+        else if(position.getY() + radius >= screenHeight) {
+        	delta.put(1, -Math.abs(delta.get(1)));
+        }
+        
+        position.setX(position.getX() + delta.get(0));
+        position.setY(position.getY() + delta.get(1));
+		
+	}
+	
+	public void update(Velocity velocity) {
+		delta = physics.getPixelMoveRate(velocity);
 		
 		if(position.getX() - radius <= 0) {
 			delta.put(0, Math.abs(delta.get(0)));

@@ -16,7 +16,6 @@ public class Collisions {
 		DoubleMatrix v1_before = o1.getVelocity().getVelocity();
 		DoubleMatrix v2_before = o2.getVelocity().getVelocity();
 		
-		
 		DoubleMatrix v1_afterFirstTerm = v1_before.mul( ((o1.getMass() - o2.getMass()) / (o1.getMass() + o2.getMass())) );
 			
 		DoubleMatrix v1_afterSecondTerm = v2_before.mul( 2 * o2.getMass() / (o1.getMass() + o2.getMass()) );
