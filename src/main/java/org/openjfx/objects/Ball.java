@@ -13,58 +13,23 @@ import javafx.scene.shape.Circle;
 
 public class Ball extends Circle {
 	
-	private Velocity velocity; // in meters/seconds^2
-	private Position position; // in meters
-	private double mass; // in kilograms
-	
 	private double boundWidth;
 	private double boundHeight;
-	private DoubleMatrix delta;
 	
-	public Ball(Velocity velocity, Position position, double radius, Color color, double mass,Physics physics) {
+	private Velocity velocity;
+	private double mass;
+	
+	public Ball(Velocity velocity, Position position, double radius, Color color, double mass, Physics physics) {
 		super(position.getX(), position.getY(), radius, color);
 		this.velocity = new Velocity(velocity.getX(), velocity.getY());
-		this.position = new Position(position.getX(), position.getY());
 		this.mass = mass;
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
-		DoubleMatrix physicsValues = physics.getPixelMoveRate(velocity);
-		delta = new DoubleMatrix(List.of(physicsValues.get(0), physicsValues.get(1)));
-	}
-	
-	
-	public void move(DoubleMatrix pixelMoveRate) {
-		if(super.getCenterX() - super.getRadius() <= 0) {
-			delta.put(0, Math.abs(pixelMoveRate.get(0)));
-        }
-        else if(super.getCenterX() + super.getRadius() >= boundWidth) {
-        	delta.put(0, -Math.abs(pixelMoveRate.get(0)));
-        }
-        
-        if(super.getCenterY() - super.getRadius() <= 0) {
-        	delta.put(1, Math.abs(pixelMoveRate.get(1)));
-        }
-        else if(super.getCenterY() + super.getRadius() >= boundHeight) {
-        	delta.put(1, -Math.abs(pixelMoveRate.get(1)));
-        }
-        
-        super.setCenterX(super.getCenterX() + delta.get(0));
-        super.setCenterY(super.getCenterY() + delta.get(1));
-    	
-    	position.setX(super.getCenterX());
-    	position.setY(super.getCenterY());
-	}
-	
-	public void setVelocity(Velocity velocity) {
-		this.velocity.setX(velocity.getX());
-		this.velocity.setY(velocity.getY());
 	}
 	
 	public void setPosition(Position position) {
 		super.setCenterX(position.getX());
 		super.setCenterY(position.getY());
-		this.position.setX(position.getX());
-		this.position.setY(position.getY());
 	}
 	
 	public void setMass(double mass) {
@@ -76,7 +41,7 @@ public class Ball extends Circle {
 	}
 	
 	public Position getPosition() {
-		return new Position(position.getX(), position.getY());
+		return new Position(super.getCenterX(), super.getCenterY());
 	}
 	
 	public double getMass() {
@@ -90,10 +55,6 @@ public class Ball extends Circle {
 		return boundHeight;
 	}
 	
-	public DoubleMatrix getDelta() {
-		return new DoubleMatrix(List.of(delta.get(0), delta.get(1)));
-	}
-	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -101,10 +62,10 @@ public class Ball extends Circle {
 		Ball ball = (Ball) o;
 		return Double.compare(ball.boundWidth, boundWidth) == 0 &&
 				Double.compare(ball.boundHeight, boundHeight) == 0 &&
-				Objects.equals(velocity, ball.velocity) &&
-				Objects.equals(position, ball.position) &&
-				Double.compare(mass, ball.getMass()) == 0 &&
-				Objects.equals(delta, ball.delta);
+				velocity.equals(ball.getVelocity()) &&
+				Double.compare(super.getCenterX(), ball.getCenterX()) == 0 &&
+				Double.compare(super.getCenterY(), ball.getCenterY()) == 0 &&
+				Double.compare(mass, ball.getMass()) == 0;
 	}
 
 }
