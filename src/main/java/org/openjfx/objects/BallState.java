@@ -19,37 +19,33 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	private final double screenHeight;
 	private final Physics physics;
 
-	private final Position position;
-	private final double mass;
-	
-	private final List<Double> randomInitialPosition;
-    private final List<Double> randomInitialVelocity;
-    private final Random randomNumber;
     private Velocity velocity;
+	private Position position;
+	private double mass;
     private DoubleMatrix delta;
     private double radius;
 	
 	Color chosenColor;
 	
-	public BallState(double screenWidth, double screenHeight, Physics physics) {
+	public BallState(Physics physics) {
     	
-    	this.screenWidth = screenWidth;
-    	this.screenHeight = screenHeight;
+    	this.screenWidth = physics.getScreenWidth();
+    	this.screenHeight = physics.getScreenHeight();
     	this.physics = physics;
-    	randomNumber = new Random();
+    	Random randomNumber = new Random();
     	double boundRadius = Math.min(randomNumber.nextInt(180, 200), Math.min(screenWidth, screenHeight) );
 		double[] boundPosition = {0 + boundRadius, Math.min(screenWidth, screenHeight) - boundRadius};
 		double[] boundVelocity = {-100, 100};
 		double[] boundMass = {1, 50};
 		
-		randomInitialVelocity = new ArrayList<Double>( 
+		List<Double> randomInitialVelocity = new ArrayList<>( 
 				List.of(
 						randomNumber.nextDouble(boundVelocity[0], boundVelocity[1]), 
 						randomNumber.nextDouble(boundVelocity[0], boundVelocity[1])
 				)
 		);
 		
-		randomInitialPosition = new ArrayList<Double>( 
+		List<Double> randomInitialPosition = new ArrayList<>( 
 				List.of(
 						randomNumber.nextDouble(boundPosition[0], boundPosition[1]), 
 						randomNumber.nextDouble(boundPosition[0], boundPosition[1])
@@ -66,13 +62,25 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 		Color randomColor = color[randomNumber.nextInt(0, color.length)];
 		chosenColor = randomColor;
     	
-    }     
+    }
+	
+	public BallState(Velocity velocity, Position position, double radius, Color color, double mass, Physics physics) {
+		
+		this.physics = new Physics(physics.getFramerate(), physics.getPixelToMeter(), physics.getScreenWidth(), physics.getScreenHeight());
+		screenWidth = physics.getScreenWidth();
+		screenHeight = physics.getScreenHeight();
+		this.velocity = new Velocity(velocity.getX(), velocity.getY());
+		this.position = new Position(position.getX(), position.getY());
+		this.mass = mass;
+		this.radius = radius;
+		this.chosenColor = color;
+		
+		delta = physics.getPixelMoveRate(velocity);
+		
+	}
 	
 	public void update() {
 		
-//		delta = physics.getPixelMoveRate(velocity);
-		
-		
 		if(position.getX() - radius <= 0) {
 			delta.put(0, Math.abs(delta.get(0)));
         }
@@ -92,27 +100,27 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 		
 	}
 	
-	public void update(Velocity velocity) {
-		delta = physics.getPixelMoveRate(velocity);
-		
-		if(position.getX() - radius <= 0) {
-			delta.put(0, Math.abs(delta.get(0)));
-        }
-        else if(position.getX() + radius >= screenWidth) {
-        	delta.put(0, -Math.abs(delta.get(0)));
-        }
-        
-        if(position.getY() - radius <= 0) {
-        	delta.put(1, Math.abs(delta.get(1)));
-        }
-        else if(position.getY() + radius >= screenHeight) {
-        	delta.put(1, -Math.abs(delta.get(1)));
-        }
-        
-        position.setX(position.getX() + delta.get(0));
-        position.setY(position.getY() + delta.get(1));
-		
-	}
+//	public void update(Velocity velocity) {
+//		delta = physics.getPixelMoveRate(velocity);
+//		
+//		if(position.getX() - radius <= 0) {
+//			delta.put(0, Math.abs(delta.get(0)));
+//        }
+//        else if(position.getX() + radius >= screenWidth) {
+//        	delta.put(0, -Math.abs(delta.get(0)));
+//        }
+//        
+//        if(position.getY() - radius <= 0) {
+//        	delta.put(1, Math.abs(delta.get(1)));
+//        }
+//        else if(position.getY() + radius >= screenHeight) {
+//        	delta.put(1, -Math.abs(delta.get(1)));
+//        }
+//        
+//        position.setX(position.getX() + delta.get(0));
+//        position.setY(position.getY() + delta.get(1));
+//		
+//	}
 	
 	public double getRadius() {
 		return radius;
@@ -131,15 +139,16 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	}
 
 	public double getScreenWidth() {
-		return screenWidth;
+		return physics.getScreenWidth();
 	}
 
 	public double getScreenHeight() {
-		return screenHeight;
+		return physics.getScreenHeight();
 	}
 	
 	public void setVelocity(Velocity velocity) {
 		this.velocity = new Velocity(velocity.getX(), velocity.getY());
+		delta = physics.getPixelMoveRate(velocity);
 	}
 
 	public Velocity getVelocity() {
@@ -153,14 +162,22 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
 	public double getMass() {
 		return mass;
 	}
-
-	public List<Double> getRandomInitialPosition() {
-		return randomInitialPosition;
+	
+	public Physics getPhysics() {
+		return physics;
 	}
-
-	public List<Double> getRandomInitialVelocity() {
-		return randomInitialVelocity;
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		BallState ballState = (BallState) o;
+		return physics.equals(ballState.physics) &&
+				velocity.equals(ballState.getVelocity()) &&
+				chosenColor.equals(ballState.getColor()) &&
+				Double.compare(radius, ballState.getRadius()) == 0 &&
+				position.equals(ballState.getPosition()) &&
+				Double.compare(mass, ballState.getMass()) == 0;
 	}
-    
 
 }

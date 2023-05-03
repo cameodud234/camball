@@ -27,12 +27,7 @@ public class TestBall extends TestBallMoveTestCases {
 	double screenHeight = 700;
 	double pixelToMeter = 20;
 	Physics physics = new Physics(framerate, pixelToMeter, screenWidth, screenHeight);
-	Ball ball = new Ball(velocity, position, radius, color, mass, physics);
-	
-	@Test
-	public void testBallConstructorVelocity() {
-		assertEquals(ball.getVelocity(), velocity);
-	}
+	Ball ball = new Ball(position, radius, color, physics);
 	
 	@Test
 	public void testBallConstructorPosition() {
@@ -42,8 +37,12 @@ public class TestBall extends TestBallMoveTestCases {
 	}
 	
 	@Test
-	public void testBallConstructorMass() {
-		assertEquals(ball.getMass(), mass);
+	public void testBallConstructorCenterXY() {
+		double centerX = 34;
+		double centerY = 235;
+		Ball newBall = new Ball(centerX, centerY, centerY, color, physics);
+		assertEquals(ball.getCenterX(), centerX);
+		assertEquals(ball.getCenterY(), centerY);
 	}
 	 
 	@Test
@@ -66,30 +65,18 @@ public class TestBall extends TestBallMoveTestCases {
 		assertEquals(ball.getFill(), color);
 	}
 	
-	@Test
-	public void testBallSetVelocity() {
-		Velocity newVelocity = new Velocity(45,87);
-		Ball newBall = new Ball(newVelocity, position, radius, color, mass, physics);
-		assertEquals(newBall.getVelocity(), newVelocity);
-	}
 	
 	@Test
 	public void testBallSetPosition() {
 		Position newPosition = new Position(240, 300);
-		Ball newBall = new Ball(velocity, newPosition, radius, color, mass, physics);
+		Ball newBall = new Ball(newPosition, radius, color, physics);
 		assertEquals(newBall.getPosition(), newPosition);
 	}
-	
-	@Test
-	public void testBallSetMass() {
-		double newMass = 50;
-		Ball newBall = new Ball(velocity, position, radius, color, newMass, physics);
-		assertEquals(newBall.getMass(), newMass);
-	}
+
 	
 	@Test
 	public void testBallEquals() {
-		Ball newBall = new Ball(velocity, position, radius, color, mass, physics);
+		Ball newBall = new Ball(position, radius, color, physics);
 		assertEquals(ball, newBall);
 	}
 	
@@ -102,24 +89,8 @@ public class TestBall extends TestBallMoveTestCases {
 		double newMass = 34;
 		Physics newPhysics = new Physics(60, pixelToMeter, 1000, 1000);
 		
-		Ball newBall = new Ball(newVelocity, newPosition, newRadius, newColor, newMass, newPhysics);
+		Ball newBall = new Ball(newPosition, newRadius, newColor, newPhysics);
 		assertNotEquals(ball, newBall);
-	}
-	
-	@ParameterizedTest
-	@MethodSource("TestBallMoveTestCasesArgs")
-	public void testBallMove(Velocity velocity, Position position, Position finalPosition) {
-		Ball newBall = new Ball(velocity, position, radius, color, mass, physics);
-		DoubleMatrix pixelMoveRate = physics.getPixelMoveRate(velocity);
-//		newBall.move(pixelMoveRate);
-//		double decimalPlaces = 2;
-//		assertTrue(equalsWithTolerance(newBall.getPosition().getX(), finalPosition.getX(), decimalPlaces));
-//	    assertTrue(equalsWithTolerance(newBall.getPosition().getY(), finalPosition.getY(), decimalPlaces));
-	}
-	
-	public static boolean equalsWithTolerance(double a, double b, double decimalPlaces) {
-	    double tolerance = Math.pow(10, -decimalPlaces);
-	    return Math.abs(a - b) < tolerance;
 	}
 
 }

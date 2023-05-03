@@ -16,13 +16,14 @@ public class Ball extends Circle {
 	private double boundWidth;
 	private double boundHeight;
 	
-	private Velocity velocity;
-	private double mass;
+	public Ball(double centerX, double centerY, double radius, Color color, Physics physics) {
+		super(centerX, centerY, radius, color);
+		boundWidth = physics.getScreenWidth();
+		boundHeight = physics.getScreenHeight();
+	}
 	
-	public Ball(Velocity velocity, Position position, double radius, Color color, double mass, Physics physics) {
+	public Ball(Position position, double radius, Color color, Physics physics) {
 		super(position.getX(), position.getY(), radius, color);
-		this.velocity = new Velocity(velocity.getX(), velocity.getY());
-		this.mass = mass;
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
 	}
@@ -32,20 +33,8 @@ public class Ball extends Circle {
 		super.setCenterY(position.getY());
 	}
 	
-	public void setMass(double mass) {
-		this.mass = mass;
-	}
-	
-	public Velocity getVelocity() {
-		return new Velocity(velocity.getX(), velocity.getY());
-	}
-	
 	public Position getPosition() {
 		return new Position(super.getCenterX(), super.getCenterY());
-	}
-	
-	public double getMass() {
-		return mass;
 	}
 	
 	public double getBoundWidth() {
@@ -62,10 +51,10 @@ public class Ball extends Circle {
 		Ball ball = (Ball) o;
 		return Double.compare(ball.boundWidth, boundWidth) == 0 &&
 				Double.compare(ball.boundHeight, boundHeight) == 0 &&
-				velocity.equals(ball.getVelocity()) &&
+				super.getFill().equals(ball.getFill()) &&
+				Double.compare(super.getRadius(), ball.getRadius()) == 0 &&
 				Double.compare(super.getCenterX(), ball.getCenterX()) == 0 &&
-				Double.compare(super.getCenterY(), ball.getCenterY()) == 0 &&
-				Double.compare(mass, ball.getMass()) == 0;
+				Double.compare(super.getCenterY(), ball.getCenterY()) == 0;
 	}
 
 }
