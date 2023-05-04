@@ -52,7 +52,7 @@ public class BallSimulation extends AnimationTimer {
 		
 		ballStates = new HashSet<>();
 	
-		BallState ballState1 = new BallState(new Velocity(20, -20), new Position(400, physics.getScreenHeight()/2), 
+		BallState ballState1 = new BallState(new Velocity(20, 0), new Position(400, physics.getScreenHeight()/2), 
 				200, Color.ANTIQUEWHITE, 5, physics);
 		
 		BallState ballState2 = new BallState(new Velocity(-20, 0), new Position(physics.getScreenWidth() - 200, 
