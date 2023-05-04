@@ -147,6 +147,21 @@ public class Collisions {
 
 	private static boolean isColliding(BallState o1, BallState o2) {
 		
+		DoubleMatrix position1 = o1.getPosition().getPosition();
+		DoubleMatrix position2 = o1.getPosition().getPosition();
+		
+		DoubleMatrix velocity1 = o1.getVelocity().getVelocity();
+		DoubleMatrix velocity2 = o1.getVelocity().getVelocity();
+		
+		DoubleMatrix relativePosition = position2.sub(position1);
+		DoubleMatrix relativeVelocity = velocity2.sub(velocity1);
+		
+		double orientation = relativePosition.dot(relativeVelocity);
+		
+		if(orientation > 0) {
+			return false;
+		}
+		
 		if(Double.compare(distance(o1, o2), o1.getRadius() + o2.getRadius()) == 1) {
 			return false;
 		}
