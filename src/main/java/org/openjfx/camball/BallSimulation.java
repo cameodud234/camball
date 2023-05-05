@@ -103,9 +103,9 @@ public class BallSimulation extends AnimationTimer {
         	
         	Set<Ball> balls = new HashSet<>();
         	for(BallState ballState: ballStates) {
+        		ballState.update();
         		Ball ball = new Ball(ballState.getPosition(), ballState.getRadius(), ballState.getColor(), physics);
             	balls.add(ball);
-            	ballState.update();
         	}
         	
         	root.getChildren().clear();

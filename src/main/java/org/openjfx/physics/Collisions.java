@@ -111,7 +111,6 @@ public class Collisions {
 		
 	}
 	
-	
 	private static class BallPositionComparator implements Comparator<BallState> {
 		
 		public char axis;
@@ -139,19 +138,24 @@ public class Collisions {
 				return Double.compare(o1.getPosition().getX(), o2.getPosition().getX());
 			}
 			return Double.compare(o1.getPosition().getY(), o2.getPosition().getY());
-			
-			
 		}
 	}
-	
 
 	private static boolean isColliding(BallState o1, BallState o2) {
 		
+		if(Double.compare(distance(o1, o2), o1.getRadius() + o2.getRadius()) == 1) {
+			return false;
+		}
+		
+		// Section below handles case where we have 
+		// a "collision" where the balls haven't moved fast 
+		// enough to get out of the collision detection zone.
+		
 		DoubleMatrix position1 = o1.getPosition().getPosition();
-		DoubleMatrix position2 = o1.getPosition().getPosition();
+		DoubleMatrix position2 = o2.getPosition().getPosition();
 		
 		DoubleMatrix velocity1 = o1.getVelocity().getVelocity();
-		DoubleMatrix velocity2 = o1.getVelocity().getVelocity();
+		DoubleMatrix velocity2 = o2.getVelocity().getVelocity();
 		
 		DoubleMatrix relativePosition = position2.sub(position1);
 		DoubleMatrix relativeVelocity = velocity2.sub(velocity1);
@@ -159,10 +163,6 @@ public class Collisions {
 		double orientation = relativePosition.dot(relativeVelocity);
 		
 		if(orientation > 0) {
-			return false;
-		}
-		
-		if(Double.compare(distance(o1, o2), o1.getRadius() + o2.getRadius()) == 1) {
 			return false;
 		}
 		

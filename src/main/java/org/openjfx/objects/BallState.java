@@ -97,30 +97,12 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
         
         position.setX(position.getX() + delta.get(0));
         position.setY(position.getY() + delta.get(1));
+        
+        DoubleMatrix newVelocity = delta.mul(physics.getFramerate() / physics.getPixelToMeter());
+        velocity.setX(newVelocity.get(0));
+        velocity.setY(newVelocity.get(1));
 		
 	}
-	
-//	public void update(Velocity velocity) {
-//		delta = physics.getPixelMoveRate(velocity);
-//		
-//		if(position.getX() - radius <= 0) {
-//			delta.put(0, Math.abs(delta.get(0)));
-//        }
-//        else if(position.getX() + radius >= screenWidth) {
-//        	delta.put(0, -Math.abs(delta.get(0)));
-//        }
-//        
-//        if(position.getY() - radius <= 0) {
-//        	delta.put(1, Math.abs(delta.get(1)));
-//        }
-//        else if(position.getY() + radius >= screenHeight) {
-//        	delta.put(1, -Math.abs(delta.get(1)));
-//        }
-//        
-//        position.setX(position.getX() + delta.get(0));
-//        position.setY(position.getY() + delta.get(1));
-//		
-//	}
 	
 	public double getRadius() {
 		return radius;
