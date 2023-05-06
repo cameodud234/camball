@@ -52,12 +52,35 @@ public class BallSimulation extends AnimationTimer {
 		
 		ballStates = new HashSet<>();
 		
-		int ballCount = 200;
+//		int ballCount = 33;
+//		
+//		for(int i = 0; i < ballCount; i++) {
+//			ballStates.add(new BallState(physics));
+//		}
 		
-		for(int i = 0; i < ballCount; i++) {
-			ballStates.add(new BallState(physics));
-		}
 		
+		double radius1 = 100;
+		double mass1 = 800;
+		Position position1 = new Position(Math.min(200, physics.getScreenWidth() + radius1), pixelToMeter);
+		Velocity velocity1 = new Velocity(50, 50);
+		
+		double radius2 = 100;
+		double mass2 = 2 * mass1;
+		Position position2 = new Position(physics.getScreenWidth() - Math.min(200, physics.getScreenWidth() - radius1), physics.getScreenHeight()/2);
+		Velocity velocity2 = new Velocity(-50, 20);
+		
+		double radius3 = 100;
+		double mass3 = 100;
+		Position position3 = new Position(Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/4);
+		Velocity velocity3 = new Velocity(-10, -10);
+		
+		BallState ballState1 = new BallState(velocity1, position1, radius1, Color.ALICEBLUE, mass1, physics);
+		BallState ballState2 = new BallState(velocity2, position2, radius2, Color.BEIGE, mass2, physics);
+		BallState ballState3 = new BallState(velocity3, position3, radius3, Color.CYAN, mass3, physics);
+		
+		ballStates.add(ballState1);
+		ballStates.add(ballState2);
+		ballStates.add(ballState3);
 		
 		lastTime = 0;
 		timer = 0;
