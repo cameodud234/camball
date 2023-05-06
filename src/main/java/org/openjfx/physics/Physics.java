@@ -61,7 +61,9 @@ public class Physics {
 		if(o == null || getClass() != o.getClass()) return false;
 		Physics physics = (Physics) o;
 		return Double.compare(framerate, physics.getFramerate()) == 0 &&
-				Double.compare(pixelToMeter, getPixelToMeter()) == 0;
+				Double.compare(pixelToMeter, physics.getPixelToMeter()) == 0 &&
+				Double.compare(screenWidth, physics.getScreenWidth()) == 0 &&
+				Double.compare(screenHeight, physics.getScreenHeight()) == 0;
 	}
 
 }
