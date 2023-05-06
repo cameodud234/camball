@@ -51,15 +51,28 @@ public class BallSimulation extends AnimationTimer {
 		this.pixelToMeter = pixelToMeter;
 		
 		ballStates = new HashSet<>();
-	
-		BallState ballState1 = new BallState(new Velocity(50, 0), new Position(400, physics.getScreenHeight()/2), 
-				200, Color.ANTIQUEWHITE, 1, physics);
 		
-		BallState ballState2 = new BallState(new Velocity(-50, 0), new Position(physics.getScreenWidth() - 200, 
-				physics.getScreenHeight()/2), 200, Color.BLUEVIOLET, 800, physics);
+		double radius1 = 30;
+		double mass1 = 1;
+		Position position1 = new Position(Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/2);
+		
+		double radius2 = 30;
+		double mass2 = 100;
+		Position position2 = new Position(physics.getScreenWidth() - Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/2);
+		
+		double radius3 = 30;
+		double mass3 = 1000;
+		Position position3 = new Position(100, 100);
+	
+		BallState ballState1 = new BallState(new Velocity(1, 3), position1, radius1, Color.ANTIQUEWHITE, mass1, physics);
+		
+		BallState ballState2 = new BallState(new Velocity(-40, 0), position2, radius2, Color.BLUEVIOLET, mass2, physics);
+		
+		BallState ballState3 = new BallState(new Velocity(5, 9), position3, radius3, Color.CYAN, mass3, physics);
 		
 		ballStates.add(ballState1);
 		ballStates.add(ballState2);
+		ballStates.add(ballState3);
 		
 		lastTime = 0;
 		timer = 0;

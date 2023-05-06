@@ -1,6 +1,7 @@
 package org.openjfx.physics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -19,6 +20,14 @@ public class Collisions {
 		DoubleMatrix v1_before = o1.getVelocity().getVelocity();
 		DoubleMatrix v2_before = o2.getVelocity().getVelocity();
 		
+		DoubleMatrix position1 = o1.getPosition().getPosition();
+		DoubleMatrix position2 = o2.getPosition().getPosition();
+		
+		DoubleMatrix positionVector = position2.sub(position1);
+		DoubleMatrix velocityVector = v2_before.sub(v1_before);
+		
+		double epsilon = Math.pow(10, -4);
+		
 		DoubleMatrix v1_afterFirstTerm = v1_before.mul( ((o1.getMass() - o2.getMass()) / (o1.getMass() + o2.getMass())) );
 		
 		DoubleMatrix v1_afterSecondTerm = v2_before.mul( 2 * o2.getMass() / (o1.getMass() + o2.getMass()) );
@@ -26,14 +35,33 @@ public class Collisions {
 		DoubleMatrix v2_afterFirstTerm = v1_before.mul( 2 * o1.getMass() / (o1.getMass() + o2.getMass()) );
 		DoubleMatrix v2_afterSecondTerm = v2_before.mul( (o2.getMass() - o1.getMass()) / (o1.getMass() + o2.getMass()) );
 		
-		
 		DoubleMatrix v1_after = v1_afterFirstTerm.add(v1_afterSecondTerm);
 		DoubleMatrix v2_after = v2_afterFirstTerm.add(v2_afterSecondTerm);
 		
+		
+		double dot_position_velocity = Math.abs(positionVector.dot(velocityVector));
+		double magnitude_position_velocity = positionVector.norm2() * velocityVector.norm2();
+		
+		if(Double.compare(Math.abs(dot_position_velocity - magnitude_position_velocity), epsilon) > 0) {
+			Logger log = LogManager.getLogger(Collisions.class);
+			log.info("Difference in collision detected.");
+			double radianVector = Math.acos(dot_position_velocity / magnitude_position_velocity);
+//			double angleVector = Math.toDegrees(radianVector);
+		
+			DoubleMatrix rotationMatrix = new DoubleMatrix(
+					new double[][] {
+						{ Math.cos(radianVector), -Math.sin(radianVector) },
+						{ Math.sin(radianVector), Math.cos(radianVector) }
+					}
+			);
+			
+			v1_after = rotationMatrix.mmul(v1_after);
+			v2_after = rotationMatrix.mmul(v2_after);
+			
+		}
+		
 		Velocity velocity1 = new Velocity(v1_after);
 		Velocity velocity2 = new Velocity(v2_after);
-		
-		double epsilon = Math.pow(10, -4);
 		
 		if(Double.compare(Math.abs(velocity1.getX()), epsilon) < 0) {
 			velocity1.setX(0);
@@ -47,6 +75,8 @@ public class Collisions {
 		if(Double.compare(Math.abs(velocity2.getY()), epsilon) < 0) {
 			velocity2.setY(0);
 		}
+		
+		
 		List<Velocity> velocities = new ArrayList<>();
 		
 		velocities.add(velocity1);
@@ -148,8 +178,9 @@ public class Collisions {
 		}
 		
 		// Section below handles case where we have 
-		// a "collision" where the balls haven't moved fast 
-		// enough to get out of the collision detection zone.
+		// a "collision" where the balls are moving away from 
+		// each other but have not had enough time to get out 
+		// of the collision detection zone.
 		
 		DoubleMatrix position1 = o1.getPosition().getPosition();
 		DoubleMatrix position2 = o2.getPosition().getPosition();

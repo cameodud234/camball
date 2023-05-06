@@ -27,6 +27,7 @@ public class App extends Application {
 		final double width = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
 		final double height = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
 		
+		
 		final Logger log = LogManager.getLogger(App.class);
 		
 		final double framerate = 240;
