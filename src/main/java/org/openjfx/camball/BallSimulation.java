@@ -52,23 +52,31 @@ public class BallSimulation extends AnimationTimer {
 		
 		ballStates = new HashSet<>();
 		
-		double radius1 = 30;
-		double mass1 = 1;
-		Position position1 = new Position(Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/2);
+//		int ballCount = 33;
+//		
+//		for(int i = 0; i < ballCount; i++) {
+//			ballStates.add(new BallState(physics));
+//		}
 		
-		double radius2 = 30;
-		double mass2 = 100;
-		Position position2 = new Position(physics.getScreenWidth() - Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/2);
 		
-		double radius3 = 30;
-		double mass3 = 1000;
-		Position position3 = new Position(100, 100);
-	
-		BallState ballState1 = new BallState(new Velocity(1, 3), position1, radius1, Color.ANTIQUEWHITE, mass1, physics);
+		double radius1 = 100;
+		double mass1 = 800;
+		Position position1 = new Position(Math.min(200, physics.getScreenWidth() + radius1), pixelToMeter);
+		Velocity velocity1 = new Velocity(50, 50);
 		
-		BallState ballState2 = new BallState(new Velocity(-40, 0), position2, radius2, Color.BLUEVIOLET, mass2, physics);
+		double radius2 = 100;
+		double mass2 = 2 * mass1;
+		Position position2 = new Position(physics.getScreenWidth() - Math.min(200, physics.getScreenWidth() - radius1), physics.getScreenHeight()/2);
+		Velocity velocity2 = new Velocity(-50, 20);
 		
-		BallState ballState3 = new BallState(new Velocity(5, 9), position3, radius3, Color.CYAN, mass3, physics);
+		double radius3 = 100;
+		double mass3 = 100;
+		Position position3 = new Position(Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/4);
+		Velocity velocity3 = new Velocity(-10, -10);
+		
+		BallState ballState1 = new BallState(velocity1, position1, radius1, Color.ALICEBLUE, mass1, physics);
+		BallState ballState2 = new BallState(velocity2, position2, radius2, Color.BEIGE, mass2, physics);
+		BallState ballState3 = new BallState(velocity3, position3, radius3, Color.CYAN, mass3, physics);
 		
 		ballStates.add(ballState1);
 		ballStates.add(ballState2);
