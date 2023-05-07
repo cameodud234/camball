@@ -20,6 +20,7 @@ import org.openjfx.physics.Velocity;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class BallSimulation extends AnimationTimer {
 	
@@ -33,7 +34,9 @@ public class BallSimulation extends AnimationTimer {
     private final double width;
     private final double height;
 
-	Set<BallState> ballStates;
+	private Set<BallState> ballStates;
+	private List<Circle> ballTrail;
+	
 	 
 	private double lastTime;
 	double timer;
@@ -42,7 +45,7 @@ public class BallSimulation extends AnimationTimer {
 		
 		this.root = root;
 		this.width = width;
-		this.height = height;
+		this.height = height; 
 		
 		this.physics = new Physics(framerate, pixelToMeter, width, height);
 		randomNumber = new Random();
@@ -52,35 +55,37 @@ public class BallSimulation extends AnimationTimer {
 		
 		ballStates = new HashSet<>();
 		
-//		int ballCount = 33;
-//		
-//		for(int i = 0; i < ballCount; i++) {
-//			ballStates.add(new BallState(physics));
-//		}
+		int ballCount = 1000;
+		
+		for(int i = 0; i < ballCount; i++) {
+			ballStates.add(new BallState(physics));
+		}
 		
 		
 		double radius1 = 100;
-		double mass1 = 800;
-		Position position1 = new Position(Math.min(200, physics.getScreenWidth() + radius1), pixelToMeter);
-		Velocity velocity1 = new Velocity(50, 50);
-		
-		double radius2 = 100;
-		double mass2 = 2 * mass1;
-		Position position2 = new Position(physics.getScreenWidth() - Math.min(200, physics.getScreenWidth() - radius1), physics.getScreenHeight()/2);
-		Velocity velocity2 = new Velocity(-50, 20);
-		
-		double radius3 = 100;
-		double mass3 = 100;
-		Position position3 = new Position(Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/4);
-		Velocity velocity3 = new Velocity(-10, -10);
-		
+		double mass1 = 1500;
+		Position position1 = new Position(physics.getScreenWidth() - radius1, physics.getScreenHeight()/2);
+		Velocity velocity1 = new Velocity(100, 100);
 		BallState ballState1 = new BallState(velocity1, position1, radius1, Color.ALICEBLUE, mass1, physics);
-		BallState ballState2 = new BallState(velocity2, position2, radius2, Color.BEIGE, mass2, physics);
-		BallState ballState3 = new BallState(velocity3, position3, radius3, Color.CYAN, mass3, physics);
-		
 		ballStates.add(ballState1);
-		ballStates.add(ballState2);
-		ballStates.add(ballState3);
+//		
+//		double radius2 = 100;
+//		double mass2 = 2;
+//		Position position2 = new Position(physics.getScreenWidth() - Math.min(200, physics.getScreenWidth() - radius1), physics.getScreenHeight()/2);
+//		Velocity velocity2 = new Velocity(-50, 20);
+////		
+//		double radius3 = 100;
+//		double mass3 = 100;
+//		Position position3 = new Position(Math.min(200, physics.getScreenWidth() + radius1), physics.getScreenHeight()/4);
+//		Velocity velocity3 = new Velocity(-10, -10);
+////		
+
+//		BallState ballState2 = new BallState(velocity2, position2, radius2, Color.BEIGE, mass2, physics);
+//		BallState ballState3 = new BallState(velocity3, position3, radius3, Color.CYAN, mass3, physics);
+////		
+
+//		ballStates.add(ballState2);
+//		ballStates.add(ballState3);
 		
 		lastTime = 0;
 		timer = 0;
