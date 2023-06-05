@@ -55,7 +55,7 @@ public class BallSimulation extends AnimationTimer {
 		
 		ballStates = new HashSet<>();
 		
-		int ballCount = 1000;
+		int ballCount = 20;
 		
 		for(int i = 0; i < ballCount; i++) {
 			ballStates.add(new BallState(physics));
