@@ -41,8 +41,8 @@ public class TestBall extends TestBallMoveTestCases {
 		double centerX = 34;
 		double centerY = 235;
 		Ball newBall = new Ball(centerX, centerY, centerY, color, physics);
-		assertEquals(ball.getCenterX(), centerX);
-		assertEquals(ball.getCenterY(), centerY);
+		assertEquals(newBall.getCenterX(), centerX);
+		assertEquals(newBall.getCenterY(), centerY);
 	}
 	 
 	@Test

@@ -19,6 +19,7 @@ import org.openjfx.physics.Velocity;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -127,15 +128,15 @@ public class BallSimulation extends AnimationTimer {
         		}
         	}
         	
-        	Set<Ball> balls = new HashSet<>();
+        	Set<Circle> circles = new HashSet<>();
         	for(BallState ballState: ballStates) {
         		ballState.update();
-        		Ball ball = new Ball(ballState.getPosition(), ballState.getRadius(), ballState.getColor(), physics);
-            	balls.add(ball);
+        		Circle circle = new Circle(ballState.getPosition().getX(), ballState.getPosition().getY(), ballState.getRadius(), ballState.getColor());
+            	circles.add(circle);
         	}
         	
         	root.getChildren().clear();
-        	root.getChildren().addAll(balls.stream().toList());
+        	root.getChildren().addAll(circles);
             lastTime = now;
             timer++;
             log.info("The current frame is: {}", timer);
