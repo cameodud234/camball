@@ -1,47 +1,84 @@
 package org.openjfx.objects;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import org.jblas.DoubleMatrix;
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
-import org.openjfx.physics.Velocity;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class Ball extends Circle {
+public class Ball {
 	
 	private double boundWidth;
 	private double boundHeight;
+	private Circle circle;
 	
 	public Ball(double centerX, double centerY, double radius, Color color, Physics physics) {
-		super(centerX, centerY, radius, color);
+		Circle circle = new Circle(centerX, centerY, radius, color);
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
 	}
 	
 	public Ball(Position position, double radius, Color color, Physics physics) {
-		super(position.getX(), position.getY(), radius, color);
+		Circle circle = new Circle(position.getX(), position.getY(), radius, color);
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
 	}
 	
 	public void setPosition(Position position) {
-		super.setCenterX(position.getX());
-		super.setCenterY(position.getY());
+		circle.setCenterX(position.getX());
+		circle.setCenterY(position.getY());
 	}
 	
 	public Position getPosition() {
-		return new Position(super.getCenterX(), super.getCenterY());
+		return new Position(circle.getCenterX(), circle.getCenterY());
+	}
+	
+	public void setCenterX(double centerX) {
+		circle.setCenterX(centerX);
+	}
+	
+	public double getCenterX() {
+		return circle.getCenterX();
+	}
+	
+	public void setCenterY(double centerY) {
+		circle.setCenterY(centerY);
+	}
+	
+	public double getCenterY() {
+		return circle.getCenterY();
 	}
 	
 	public double getBoundWidth() {
 		return boundWidth;
 	}
+	
 	public double getBoundHeight() {
 		return boundHeight;
+	}
+	
+	public void setFill(Color color) {
+		circle.setFill(color);
+	}
+	
+	public Paint getFill() {
+		return circle.getFill();
+	}
+	
+	public void setRadius(double radius) {
+		circle.setRadius(radius);
+	}
+	
+	public double getRadius() {
+		return circle.getRadius();
+	}
+	
+	public Circle getUnderlyingFXObject() {
+		return circle;
 	}
 	
 	@Override
@@ -51,10 +88,10 @@ public class Ball extends Circle {
 		Ball ball = (Ball) o;
 		return Double.compare(ball.boundWidth, boundWidth) == 0 &&
 				Double.compare(ball.boundHeight, boundHeight) == 0 &&
-				super.getFill().equals(ball.getFill()) &&
-				Double.compare(super.getRadius(), ball.getRadius()) == 0 &&
-				Double.compare(super.getCenterX(), ball.getCenterX()) == 0 &&
-				Double.compare(super.getCenterY(), ball.getCenterY()) == 0;
+				circle.getFill().equals(ball.getFill()) &&
+				Double.compare(getRadius(), ball.getRadius()) == 0 &&
+				Double.compare(getCenterX(), ball.getCenterX()) == 0 &&
+				Double.compare(getCenterY(), ball.getCenterY()) == 0;
 	}
 
 }

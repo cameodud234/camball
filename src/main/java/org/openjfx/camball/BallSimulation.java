@@ -19,6 +19,7 @@ import org.openjfx.physics.Velocity;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -135,7 +136,7 @@ public class BallSimulation extends AnimationTimer {
         	}
         	
         	root.getChildren().clear();
-        	root.getChildren().addAll(balls.stream().toList());
+        	root.getChildren().addAll();
             lastTime = now;
             timer++;
             log.info("The current frame is: {}", timer);
