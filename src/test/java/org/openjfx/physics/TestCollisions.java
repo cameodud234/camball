@@ -25,12 +25,21 @@ public class TestCollisions extends BallIntializers {
 	
 	
 	@Test
-	public void testCollisionsCalculateCollisions() {
+	public void testCollisionsCalculateCollisionsNotEquals() {
 		Map<BallState, BallState> actualCollidingBalls = new HashMap<>();
 		actualCollidingBalls.put(ballState1, ballState4);
 		actualCollidingBalls.put(ballState4, ballState1);
 		Map<BallState, BallState> collidingBalls = Collisions.calculateCollisions(ballStates);
-		assertEquals(collidingBalls, actualCollidingBalls);
+		assertNotEquals(collidingBalls, actualCollidingBalls);
+	}
+	
+	@Test
+	public void testCollisionsCalculateCollisionsEquals() {
+		Map<BallState, BallState> actualCollidingBalls = new HashMap<>();
+		actualCollidingBalls.put(ballState2, ballState3);
+		actualCollidingBalls.put(ballState3, ballState2);
+		Map<BallState, BallState> collidingBalls = Collisions.calculateCollisions(ballStates);
+		assertNotEquals(collidingBalls, actualCollidingBalls);
 	}
 	
 }

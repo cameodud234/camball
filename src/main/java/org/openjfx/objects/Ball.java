@@ -1,8 +1,5 @@
 package org.openjfx.objects;
 
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 import org.openjfx.physics.Physics;
 import org.openjfx.physics.Position;
 
@@ -17,13 +14,13 @@ public class Ball {
 	private Circle circle;
 	
 	public Ball(double centerX, double centerY, double radius, Color color, Physics physics) {
-		Circle circle = new Circle(centerX, centerY, radius, color);
+		circle = new Circle(centerX, centerY, radius, color);
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
 	}
 	
 	public Ball(Position position, double radius, Color color, Physics physics) {
-		Circle circle = new Circle(position.getX(), position.getY(), radius, color);
+		circle = new Circle(position.getX(), position.getY(), radius, color);
 		boundWidth = physics.getScreenWidth();
 		boundHeight = physics.getScreenHeight();
 	}
