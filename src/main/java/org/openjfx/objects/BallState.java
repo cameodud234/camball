@@ -34,10 +34,10 @@ private static final Color[] color = {Color.ALICEBLUE, Color.BLUE, Color.RED, Co
     	this.physics = physics;
     	Random randomNumber = new Random();
 //    	double boundRadius = Math.min(randomNumber.nextInt(80, 100), Math.min(screenWidth, screenHeight) );
-    	double boundRadius = Math.min(20, Math.min(screenWidth, screenHeight) );
+    	double boundRadius = Math.min(50, Math.min(screenWidth, screenHeight) );
 		double[] boundPosition = {0 + boundRadius, Math.min(screenWidth, screenHeight) - boundRadius};
 		double[] boundVelocity = {-100, 100};
-		double[] boundMass = {30, 50};
+		double[] boundMass = {3, 50};
 		
 		List<Double> randomInitialVelocity = new ArrayList<>( 
 				List.of(

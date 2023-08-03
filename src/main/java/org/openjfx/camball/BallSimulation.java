@@ -56,19 +56,12 @@ public class BallSimulation extends AnimationTimer {
 		
 		ballStates = new HashSet<>();
 		
-		int ballCount = 20;
+		int ballCount = 10;
 		
 		for(int i = 0; i < ballCount; i++) {
 			ballStates.add(new BallState(physics));
 		}
 		
-		
-		double radius1 = 100;
-		double mass1 = 1500;
-		Position position1 = new Position(physics.getScreenWidth() - radius1, physics.getScreenHeight()/2);
-		Velocity velocity1 = new Velocity(100, 100);
-		BallState ballState1 = new BallState(velocity1, position1, radius1, Color.ALICEBLUE, mass1, physics);
-		ballStates.add(ballState1);
 //		
 //		double radius2 = 100;
 //		double mass2 = 2;

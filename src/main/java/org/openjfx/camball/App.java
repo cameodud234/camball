@@ -22,7 +22,7 @@ public class App extends Application {
 	public void start(Stage stage) {
 		
 		final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-		final double screenMaxBound = 0.90;
+		final double screenMaxBound = 1;
 		
 		final double width = screenBounds.getWidth() - ((1 - screenMaxBound) * screenBounds.getWidth());
 		final double height = screenBounds.getHeight() - ((1 - screenMaxBound) * screenBounds.getHeight());
@@ -31,7 +31,7 @@ public class App extends Application {
 		final Logger log = LogManager.getLogger(App.class);
 		
 		final double framerate = 240;
-		final double pixelToMeter = 60;
+		final double pixelToMeter = 30;
 	  
 		Group root = new Group();
    	  
